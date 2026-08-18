@@ -1,0 +1,53 @@
+# Adapter registry — add your LoRA adapters here.
+# The controller loads this file on startup and hot-reloads via POST /registry/reload.
+#
+# Each adapter must have:
+#   path        - absolute path (or HuggingFace repo ID) to the adapter weights
+#   description - plain-English description of what this adapter does (fed to the planner)
+#   rank        - LoRA rank used during training
+#   base_model  - HuggingFace model ID this adapter was trained on
+#   tags        - optional list of capability tags for filtering
+
+adapters:
+
+  sql:
+    path: SujanKarki/Llama-3.2-3B-Instruct_text_to_sql_lora_newdataset
+    description: "Translates natural language questions into SQL queries for relational databases"
+    rank: 128
+    base_model: meta-llama/Llama-3.2-3B-Instruct
+    tags: [sql, code, database]
+
+  summarizer:
+    path: Freddthink/llama3.2-3B-instruct-summarization-lora
+    description: "Summarizes long documents and passages into concise, accurate form"
+    rank: 6
+    base_model: meta-llama/Llama-3.2-3B-Instruct
+    tags: [summarization, nlp]
+
+  legal:
+    path: sartajbhuvaji/Legal-Llama-3.2-3B-Instruct
+    description: "Interprets legal documents, answers legal questions, and drafts legal text"
+    rank: 32
+    base_model: meta-llama/Llama-3.2-3B-Instruct
+    tags: [legal, professional]
+
+  medical:
+    path: selmaXI/medical_llama-3.2-3b-instruct
+    description: "Answers clinical and medical questions based on healthcare knowledge"
+    rank: 64
+    base_model: meta-llama/Llama-3.2-3B-Instruct
+    tags: [medical, clinical, healthcare]
+
+  code:
+    path: caizefeng18/llama-3.2-3b-instruct-python-alpaca-finetune-QLoRA-adapter
+    description: "Generates, explains, and debugs Python code from natural language instructions"
+    rank: 64
+    base_model: meta-llama/Llama-3.2-3B-Instruct
+    tags: [code, python, programming]
+
+  grammar:
+    path: Natthakit/Llama-3.2-3B-Instruct-DeepCorrector-Adapter-E5
+    description: "Corrects grammar, spelling, and style errors in English text"
+    rank: 32
+    base_model: meta-llama/Llama-3.2-3B-Instruct
+    tags: [grammar, correction, writing]
