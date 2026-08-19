@@ -29,7 +29,7 @@ class ContinuousScheduler:
         async with httpx.AsyncClient(timeout=self._timeout) as client:
             resp = await client.get(f"{self._controller_url}/adapters/loaded")
             resp.raise_for_status()
-            return {item["name"] for item in resp.json()}
+            return set(resp.json().keys())
 
     async def prefetch(self, adapters: list[str]) -> list[SchedulingEvent]:
         """Load adapters concurrently ahead of their scheduled use.
