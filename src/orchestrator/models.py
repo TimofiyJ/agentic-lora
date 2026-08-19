@@ -1,5 +1,22 @@
+from typing import Literal
 from pydantic import BaseModel
 from datetime import datetime
+
+
+class SchedulingEvent(BaseModel):
+    """A single adapter lifecycle event recorded during execution.
+
+    Attributes:
+        event: Type of event — prefetch, unload, or prefetch_error.
+        adapter: Name of the adapter involved.
+        timestamp: Wall-clock time of the event.
+        latency_ms: Time taken for the controller call in milliseconds.
+    """
+
+    event: Literal["prefetch", "unload", "prefetch_error"]
+    adapter: str
+    timestamp: datetime
+    latency_ms: float
 
 
 class PlanStep(BaseModel):
@@ -33,6 +50,8 @@ class StepResult(BaseModel):
     output: str
     success: bool
     replanned_after: bool = False
+    latency_ms: float = 0.0
+    adapter_was_preloaded: bool = False
 
 
 class TaskRequest(BaseModel):
@@ -42,11 +61,15 @@ class TaskRequest(BaseModel):
         query: The user's natural-language task description.
         replan_on_failure: Regenerate the plan if any step fails.
         always_replan: Regenerate the plan after every completed step.
+        prefetch: Lookahead-load next-wave adapters while current wave runs.
+        unload_after: Unload all task adapters from GPU when the task finishes.
     """
 
     query: str
     replan_on_failure: bool = True
     always_replan: bool = False
+    prefetch: bool = True
+    unload_after: bool = True
 
 
 class TaskResult(BaseModel):
@@ -58,3 +81,4 @@ class TaskResult(BaseModel):
     final_output: str
     replanned: bool
     created_at: datetime
+    scheduling_events: list[SchedulingEvent] = []

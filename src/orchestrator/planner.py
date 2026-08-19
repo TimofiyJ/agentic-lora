@@ -95,29 +95,41 @@ class Planner:
             reasoning=data.get("reasoning", ""),
         )
 
-    async def plan(self, query: str) -> Plan:
+    async def plan(self, query: str, loaded_adapters: set[str] | None = None) -> Plan:
         """Generate an initial execution plan for a user query.
 
         Args:
             query: The user's natural-language task.
+            loaded_adapters: Adapter names currently resident in GPU; the planner
+                will prefer them to avoid unnecessary load latency.
 
         Returns:
             A Plan with steps and optional reasoning.
         """
         adapters = await self._get_adapters()
-        user_message = (
-            f"Available adapters:\n{self._format_adapter_list(adapters)}\n\n"
-            f"User query: {query}"
-        )
+        user_message = f"Available adapters:\n{self._format_adapter_list(adapters)}\n\n"
+        if loaded_adapters:
+            names = ", ".join(sorted(loaded_adapters))
+            user_message += (
+                f"Currently loaded in GPU (no load penalty): {names}\n"
+                f"Prefer these adapters when they can handle the task.\n\n"
+            )
+        user_message += f"User query: {query}"
         raw = await self._call_llm(user_message)
         return self._parse_plan(raw)
 
-    async def replan(self, query: str, completed: list[StepResult]) -> Plan:
+    async def replan(
+        self,
+        query: str,
+        completed: list[StepResult],
+        loaded_adapters: set[str] | None = None,
+    ) -> Plan:
         """Regenerate the plan given the results of already-completed steps.
 
         Args:
             query: The original user query.
             completed: Step results produced so far.
+            loaded_adapters: Adapter names currently resident in GPU.
 
         Returns:
             A revised Plan for the remaining work.
@@ -127,8 +139,14 @@ class Planner:
             f"Step {r.step_id} ({r.adapter}) — {'OK' if r.success else 'FAILED'}: {r.output[:300]}"
             for r in completed
         )
-        user_message = (
-            f"Available adapters:\n{self._format_adapter_list(adapters)}\n\n"
+        user_message = f"Available adapters:\n{self._format_adapter_list(adapters)}\n\n"
+        if loaded_adapters:
+            names = ", ".join(sorted(loaded_adapters))
+            user_message += (
+                f"Currently loaded in GPU (no load penalty): {names}\n"
+                f"Prefer these adapters when they can handle the task.\n\n"
+            )
+        user_message += (
             f"User query: {query}\n\n"
             f"Steps completed so far:\n{history}\n\n"
             f"Generate a revised plan for any remaining work. "

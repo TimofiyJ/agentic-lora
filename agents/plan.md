@@ -105,29 +105,58 @@ Train 5-6 purpose-built LoRA adapters from document corpora so the planner has a
 - Makes the benchmark (RQ4) more rigorous — task sequences have clear correct adapter sequences
 - The Doc-to-LoRA pipeline itself is a reusable contribution for the LoRA registry platform (Phase 6)
 
-### Phase 2: Continuous Planner + System-Aware Scheduling (RQ1)
+### Phase 2: Automated Deployment (`scripts/deploy.py`)
+Single-command deployment to vast.ai: search cheapest GPU, rent, copy code, install deps, start all 3 services, poll until healthy, run end-to-end test, optionally destroy.
+
+```
+python scripts/deploy.py [--keep] [--instance-id ID] [--gpu-ram N] [--disk N]
+```
+
+### Phase 3: Continuous Planner + System-Aware Scheduling (RQ1)
 - Build continuous planning loop with reactive replanning
 - Implement system-aware scheduling (prefetching, caching, memory management)
 - Adapter lifecycle management: load on demand, unload immediately after task completion
 
-### Phase 3: Planner Architecture Comparison (RQ2)
+### Phase 4: Planner Architecture Comparison (RQ2)
 - Build small planner model (prompted → fine-tuned → RL-trained progression)
 - Compare against self-routing baseline (large model routes itself)
 - Evaluate latency, cost, and quality tradeoffs
 
-### Phase 4: Adapter Representation & Clustering Study (RQ3)
+### Phase 5: Adapter Representation & Clustering Study (RQ3)
 - Implement multiple representation strategies
 - Run clustering experiments on adapter weight spaces
 - Visualize LoRA landscape, analyze structure
 - Integrate best representation into the planner
 
-### Phase 5: Benchmark + Evaluation (RQ4)
+### Phase 6: Benchmark + Evaluation (RQ4)
 - Design multi-step task benchmark with ground-truth adapter sequences
 - Implement baselines (no adapter, single adapter, oracle, self-routing)
 - Run full evaluation: quality, latency, GPU-Time Efficiency, scaling behavior
 - Ablation studies on adapter pool size, task complexity, representation method
 
-### Phase 6: LoRA Registry Platform
+### Phase 7: Tau Agent Wrapper (HuggingFace Integration)
+Wrap the thesis system as a set of Tau tools so the full LoRA orchestration stack runs inside [HuggingFace Tau](https://github.com/huggingface/tau) — a minimalist, provider-neutral terminal coding agent.
+
+**Concept:** Tau tools are typed async functions with schemas. We expose adapter management and inference as Tau tools, then let the Tau agent loop handle planning and execution. This replaces (or sits alongside) our custom orchestrator with Tau's native agent loop, giving us a clean comparison point between our bespoke planner and a general-purpose agent framework doing the same job.
+
+**Implementation steps:**
+1. Implement Tau tools:
+   - `load_adapter(name: str)` — loads a LoRA adapter via the controller API
+   - `unload_adapter(name: str)` — unloads a resident adapter
+   - `infer(adapter: str, prompt: str)` — runs inference through a loaded adapter
+   - `list_adapters()` — returns available adapters with descriptions for the agent to reason about
+2. Wire tools into a `tau_agent` loop backed by the vLLM base model via `tau_ai`
+3. Run the same multi-step benchmark tasks through Tau and compare against our custom orchestrator (RQ2 extension)
+4. Build an optional `AgentHarness`-based TUI frontend for interactive demos
+5. Package as a reusable Tau extension and publish to HuggingFace Hub
+
+**Why this matters:**
+- Provides a real-world agent framework baseline for RQ2 — does our custom planner outperform Tau's general agent loop on LoRA-switching tasks?
+- Validates that the controller API is general enough to be consumed by external agent frameworks without modification
+- The Tau frontend makes the system accessible as an interactive terminal demo for the thesis defense
+- Positions the work as ecosystem-compatible, not just a standalone research artifact
+
+### Phase 8: LoRA Registry Platform (was Phase 7 / Phase 6)
 Build an open platform (analogous to HuggingFace but specialized for LoRA adapters) where:
 - **Publishing**: Users upload LoRA adapters with structured metadata — base model, task description, training data summary, hyperparameters, adapter rank/architecture
 - **Benchmarks**: Each adapter has standardized benchmark results (auto-evaluated on upload); community can submit additional benchmark runs
