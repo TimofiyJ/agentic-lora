@@ -1,0 +1,22 @@
+[
+  {"id": "sql_summarize_01", "query": "Write a SQL query that finds total revenue by region for Q3, then summarize the result in plain English for a non-technical stakeholder.", "adapters_expected": ["sql", "summarizer"]},
+  {"id": "sql_grammar_01", "query": "Write a SQL query to find the top 10 customers by lifetime spend, then correct any grammar issues in the explanation of what the query does.", "adapters_expected": ["sql", "grammar"]},
+  {"id": "code_grammar_01", "query": "Write a Python function that validates email addresses, then proofread the docstring and comments for grammar.", "adapters_expected": ["code", "grammar"]},
+  {"id": "code_summarize_01", "query": "Write a Python function that merges two sorted lists, then summarize what the function does in one sentence.", "adapters_expected": ["code", "summarizer"]},
+  {"id": "legal_summarize_01", "query": "Draft a short confidentiality clause for a software license agreement, then summarize its key obligations for a business audience.", "adapters_expected": ["legal", "summarizer"]},
+  {"id": "legal_grammar_01", "query": "Draft a short non-disclosure agreement clause, then correct any grammar or spelling errors in it.", "adapters_expected": ["legal", "grammar"]},
+  {"id": "medical_summarize_01", "query": "Explain the symptoms and treatment of type 2 diabetes, then summarize the explanation into three bullet points.", "adapters_expected": ["medical", "summarizer"]},
+  {"id": "medical_grammar_01", "query": "Explain the common causes of hypertension, then correct any grammar errors in the explanation.", "adapters_expected": ["medical", "grammar"]},
+  {"id": "medical_legal_01", "query": "Explain the medical risks of a new investigational drug, then draft a legal disclaimer for a pharmaceutical brochure based on that explanation.", "adapters_expected": ["medical", "legal"]},
+  {"id": "code_sql_01", "query": "Write a Python script that connects to a database, then write the SQL query the script should run to fetch inactive users.", "adapters_expected": ["code", "sql"]},
+  {"id": "sql_summarize_grammar_01", "query": "Write a SQL query for monthly signups over the last year, summarize the trend it would reveal, then proofread the summary for grammar.", "adapters_expected": ["sql", "summarizer", "grammar"]},
+  {"id": "code_summarize_grammar_01", "query": "Write a Python function that deduplicates a list while preserving order, summarize what it does, then proofread the summary for grammar.", "adapters_expected": ["code", "summarizer", "grammar"]},
+  {"id": "legal_summarize_grammar_01", "query": "Draft a simple indemnification clause, summarize it in plain English, then proofread the summary for grammar.", "adapters_expected": ["legal", "summarizer", "grammar"]},
+  {"id": "medical_summarize_grammar_01", "query": "Explain how vaccines train the immune system, summarize the explanation into two sentences, then proofread the summary for grammar.", "adapters_expected": ["medical", "summarizer", "grammar"]},
+  {"id": "single_sql_01", "query": "Write a SQL query to list all orders placed in the last 30 days.", "adapters_expected": ["sql"]},
+  {"id": "single_code_01", "query": "Write a Python function that reverses a singly linked list.", "adapters_expected": ["code"]},
+  {"id": "single_legal_01", "query": "Draft a simple confidentiality clause for an employment contract.", "adapters_expected": ["legal"]},
+  {"id": "single_medical_01", "query": "Explain what hypertension is and its common causes.", "adapters_expected": ["medical"]},
+  {"id": "single_grammar_01", "query": "Correct the grammar in this sentence: 'Me and him goes to the store yesterday.'", "adapters_expected": ["grammar"]},
+  {"id": "single_summarizer_01", "query": "Summarize the plot of a story about a hero's journey in two sentences.", "adapters_expected": ["summarizer"]}
+]
