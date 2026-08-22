@@ -12,14 +12,14 @@ from pathlib import Path
 
 import httpx
 
-from .metrics import count_adapter_switches, summarize
+from .metrics import count_adapter_switches, score_plan, summarize
 
 
 def build_success_record(task: dict, result: dict, latency_s: float) -> dict:
     """Build a per-task result record from a successful TaskResult response.
 
     Args:
-        task: Task spec with at least "id" and "query".
+        task: Task spec with at least "id", "query", and "adapters_expected".
         result: Parsed TaskResult JSON from the orchestrator.
         latency_s: Wall-clock seconds for the HTTP round trip.
 
@@ -27,6 +27,8 @@ def build_success_record(task: dict, result: dict, latency_s: float) -> dict:
         Per-task record dict for the results file.
     """
     steps = result.get("steps", [])
+    actual_adapters = [s["adapter"] for s in steps]
+    plan_score = score_plan(actual_adapters, task["adapters_expected"])
     return {
         "id": task["id"],
         "query": task["query"],
@@ -36,6 +38,10 @@ def build_success_record(task: dict, result: dict, latency_s: float) -> dict:
         "adapter_switches": count_adapter_switches(steps),
         "replanned": result.get("replanned", False),
         "final_output": result.get("final_output", ""),
+        "plan_precision": plan_score["precision"],
+        "plan_recall": plan_score["recall"],
+        "plan_f1": plan_score["f1"],
+        "plan_order_correct": plan_score["order_correct"],
     }
 
 
