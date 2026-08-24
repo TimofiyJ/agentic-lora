@@ -16,23 +16,26 @@ load_dotenv()
 
 from .executor import Executor
 from .planner import Planner
+from .scheduler import ContinuousScheduler
 from .models import TaskRequest, TaskResult
 
 
 planner: Planner
+scheduler: ContinuousScheduler
 executor: Executor
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    global planner, executor
+    global planner, scheduler, executor
     vllm_url = os.getenv("VLLM_URL", "http://localhost:8000")
     controller_url = os.getenv("CONTROLLER_URL", "http://localhost:8001")
     model = os.getenv("PLANNER_MODEL", "meta-llama/Llama-3.2-3B-Instruct")
     timeout = float(os.getenv("ORCHESTRATOR_TIMEOUT", "60"))
 
     planner = Planner(vllm_url, controller_url, model, timeout)
-    executor = Executor(controller_url, planner, timeout)
+    scheduler = ContinuousScheduler(controller_url, timeout)
+    executor = Executor(controller_url, planner, scheduler, timeout)
     yield
 
 
@@ -49,17 +52,20 @@ async def run_task(body: TaskRequest):
     """Submit a task for planning and execution.
 
     Args:
-        body: Task request with query and replanning flags.
+        body: Task request with query, replanning flags, and scheduling options.
 
     Returns:
-        TaskResult with per-step outputs, final answer, and plan metadata.
+        TaskResult with per-step outputs, scheduling events, and plan metadata.
     """
-    plan = await planner.plan(body.query)
+    loaded_adapters = await scheduler.get_loaded()
+    plan = await planner.plan(body.query, loaded_adapters)
     return await executor.execute(
         query=body.query,
         plan=plan,
         replan_on_failure=body.replan_on_failure,
         always_replan=body.always_replan,
+        prefetch=body.prefetch,
+        unload_after=body.unload_after,
     )
 
 
