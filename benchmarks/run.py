@@ -7,7 +7,9 @@ endpoint, measures latency, and writes results to a timestamped JSON file.
 import argparse
 import json
 import time
-from datetime import UTC, datetime
+from datetime import datetime, timezone
+
+UTC = timezone.utc
 from pathlib import Path
 
 import httpx

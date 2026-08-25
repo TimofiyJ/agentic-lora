@@ -78,13 +78,31 @@ Install controller/orchestrator dependencies into the same venv:
 
 ## 5. Start vLLM
 
+vast.ai instances typically ship Python 3.10 with no system CUDA toolkit (only the
+driver) and no `nvcc` on `PATH`. vLLM's FlashInfer sampler JIT-compiles a CUDA kernel
+on first request and needs a working `nvcc` — without it, or with a `pip`-installed
+`nvcc` whose bundled headers don't match the pinned FlashInfer `cccl` headers, engine
+startup fails deep in warmup with `CUDA compiler and CUDA toolkit headers are
+incompatible`. The reliable fix is to skip that JIT path entirely:
+
+```bash
+VLLM_USE_FLASHINFER_SAMPLER=0 VLLM_ALLOW_RUNTIME_LORA_UPDATING=True HUGGING_FACE_HUB_TOKEN=$(grep HF_TOKEN ~/.env | cut -d= -f2) nohup ~/venv/bin/vllm serve meta-llama/Llama-3.2-3B-Instruct --enable-lora --max-loras 4 --max-lora-rank 128 --max-model-len 65536 --port 8000 > ~/vllm.log 2>&1 &
+```
+
+`--max-model-len 65536` needs ~7 GiB of KV cache; on a 12-16 GB card that doesn't
+leave enough headroom after model weights + CUDA graphs and startup fails with
+`ValueError: ... KV cache memory ...`. Size it to the card instead — e.g.
+`--max-model-len 32768 --gpu-memory-utilization 0.90` fits comfortably on a 16 GB GPU.
+The startup log prints the exact affordable token count if you get this wrong.
+
 Run in the background with nohup:
 
 ```bash
-VLLM_ALLOW_RUNTIME_LORA_UPDATING=True HUGGING_FACE_HUB_TOKEN=$(grep HF_TOKEN ~/.env | cut -d= -f2) nohup ~/venv/bin/vllm serve meta-llama/Llama-3.2-3B-Instruct --enable-lora --max-loras 4 --max-lora-rank 128 --max-model-len 65536 --port 8000 > ~/vllm.log 2>&1 &
+VLLM_USE_FLASHINFER_SAMPLER=0 VLLM_ALLOW_RUNTIME_LORA_UPDATING=True HUGGING_FACE_HUB_TOKEN=$(grep HF_TOKEN ~/.env | cut -d= -f2) nohup ~/venv/bin/vllm serve meta-llama/Llama-3.2-3B-Instruct --enable-lora --max-loras 4 --max-lora-rank 128 --max-model-len 32768 --gpu-memory-utilization 0.90 --port 8000 > ~/vllm.log 2>&1 &
 ```
 
-Wait for startup (takes ~60s to download + load the model):
+Wait for startup (takes ~60s to download + load the model, plus 1-2 min for
+torch.compile and CUDA graph capture):
 
 ```bash
 tail -f ~/vllm.log
