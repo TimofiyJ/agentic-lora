@@ -3,51 +3,74 @@
 #
 # Each adapter must have:
 #   path        - absolute path (or HuggingFace repo ID) to the adapter weights
+#                 ("__passthrough__" for a passthrough entry — no real LoRA)
 #   description - plain-English description of what this adapter does (fed to the planner)
-#   rank        - LoRA rank used during training
+#   rank        - LoRA rank used during training (0 for passthrough)
 #   base_model  - HuggingFace model ID this adapter was trained on
+#   passthrough - optional, default false. If true, the controller routes
+#                 inference straight to base_model with no LoRA loaded.
 #   tags        - optional list of capability tags for filtering
 
 adapters:
 
-  sql:
-    path: SujanKarki/Llama-3.2-3B-Instruct_text_to_sql_lora_newdataset
-    description: "Translates natural language questions into SQL queries for relational databases"
-    rank: 128
-    base_model: meta-llama/Llama-3.2-3B-Instruct
-    tags: [sql, code, database]
-
-  summarizer:
-    path: Freddthink/llama3.2-3B-instruct-summarization-lora
-    description: "Summarizes long documents and passages into concise, accurate form"
-    rank: 6
-    base_model: meta-llama/Llama-3.2-3B-Instruct
-    tags: [summarization, nlp]
-
-  legal:
-    path: sartajbhuvaji/Legal-Llama-3.2-3B-Instruct
-    description: "Interprets legal documents, answers legal questions, and drafts legal text"
-    rank: 32
-    base_model: meta-llama/Llama-3.2-3B-Instruct
-    tags: [legal, professional]
+  # sql adapter disabled — every text-to-sql LoRA found for
+  # meta-llama/Llama-3.1-8B-Instruct bundles a full dense lm_head (and
+  # likely embed_tokens) weight alongside the LoRA deltas, which vLLM's
+  # LoRA loader rejects with "lm_head.weight is unsupported LoRA weight".
+  # adapter_config.json's target_modules does NOT reveal this — the only
+  # way to catch it is checking actual adapter_model.safetensors file size
+  # against the expected size for its declared rank (~book-keeping: rank r
+  # LoRA on N proj modules across L layers ≈ N * L * 2 * r * hidden_size *
+  # 2 bytes). Confirmed 2026-08-26 on three separate candidates:
+  #   - philschmid/code-llama-3-1-8b-text-to-sql-lora (r=256, 4 attn+mlp
+  #     modules, expected ~300 MiB, actual 4.78 GiB — live vLLM load 500s)
+  #   - SujanKarki/Meta_Llama3.1_8b_instruct_text_to_sql_lora (r=128, 4 attn
+  #     modules, expected ~250 MiB, actual 2.53 GiB — same author who made
+  #     the original disabled 3B sql adapter, same systematic pattern)
+  #   - analogalok/llama3.1_instruct_8b_SQL_LORA — repo has no weight files
+  #     at all, dead upload
+  # No further Hub candidates target this exact base model. Re-enable once
+  # one exists, or once this stack serves a different base model.
+  #
+  # sql:
+  #   path: philschmid/code-llama-3-1-8b-text-to-sql-lora
+  #   description: "Translates natural language questions into SQL queries for relational databases. Expects raw schema+question text, not a chat instruction."
+  #   rank: 256
+  #   base_model: meta-llama/Llama-3.1-8B-Instruct
+  #   tags: [sql, code, database]
 
   medical:
-    path: selmaXI/medical_llama-3.2-3b-instruct
-    description: "Answers clinical and medical questions based on healthcare knowledge"
-    rank: 64
-    base_model: meta-llama/Llama-3.2-3B-Instruct
+    path: zjudai/flowertune-medical-lora-llama-3.1-8b-instruct
+    description: "Answers clinical and medical questions based on healthcare knowledge (PubMedQA/MedMCQA/MedQA/CareQA-trained)"
+    rank: 32
+    base_model: meta-llama/Llama-3.1-8B-Instruct
     tags: [medical, clinical, healthcare]
 
-  code:
-    path: caizefeng18/llama-3.2-3b-instruct-python-alpaca-finetune-QLoRA-adapter
-    description: "Generates, explains, and debugs Python code from natural language instructions"
-    rank: 64
-    base_model: meta-llama/Llama-3.2-3B-Instruct
-    tags: [code, python, programming]
+  legal:
+    path: zjudai/flowertune-general-nlp-lora-llama-3.1-8b-instruct
+    description: "Interprets legal documents, answers legal questions, and drafts legal text. General instruction-following LoRA (Alpaca-GPT4), not legal-specialized — no domain-specific legal LoRA with credible provenance was found for this base model."
+    rank: 32
+    base_model: meta-llama/Llama-3.1-8B-Instruct
+    tags: [legal, professional]
 
   grammar:
-    path: Natthakit/Llama-3.2-3B-Instruct-DeepCorrector-Adapter-E5
-    description: "Corrects grammar, spelling, and style errors in English text"
+    path: zjudai/flowertune-general-nlp-lora-llama-3.1-8b-instruct
+    description: "Corrects grammar, spelling, and style errors in English text. General instruction-following LoRA (Alpaca-GPT4), not grammar-specialized — no domain-specific grammar LoRA with credible provenance was found for this base model."
     rank: 32
-    base_model: meta-llama/Llama-3.2-3B-Instruct
+    base_model: meta-llama/Llama-3.1-8B-Instruct
     tags: [grammar, correction, writing]
+
+  summarizer:
+    path: zjudai/flowertune-general-nlp-lora-llama-3.1-8b-instruct
+    description: "Summarizes long documents and passages into concise, accurate form. General instruction-following LoRA (Alpaca-GPT4), not summarization-specialized — no domain-specific summarization LoRA with credible provenance was found for this base model."
+    rank: 32
+    base_model: meta-llama/Llama-3.1-8B-Instruct
+    tags: [summarization, nlp]
+
+  code:
+    path: "__passthrough__"
+    description: "Generates, explains, and debugs Python code from natural language instructions. Runs on the base model directly — no LoRA improved on this over the base model's own Python ability."
+    rank: 0
+    base_model: meta-llama/Llama-3.1-8B-Instruct
+    passthrough: true
+    tags: [code, python, programming]

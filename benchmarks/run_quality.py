@@ -61,6 +61,35 @@ def build_error_record(task: dict, error: str) -> dict:
     }
 
 
+def build_skipped_record(task: dict, reason: str) -> dict:
+    """Build a per-task result record for a task whose adapter isn't registered.
+
+    Kept distinct from build_error_record: a missing/disabled adapter is a
+    known, expected condition (see adapters.yaml), not a benchmark failure.
+
+    Args:
+        task: Task dict with at least "id" and "domain".
+        reason: Human-readable skip reason.
+
+    Returns:
+        Per-task record dict marked as skipped.
+    """
+    return {
+        "id": task["id"],
+        "domain": task["domain"],
+        "success": False,
+        "skipped": True,
+        "reason": reason,
+    }
+
+
+# Domains whose ground truth expects a raw text continuation (e.g. HumanEval-style
+# code fill-in) rather than a reply to an instruction — these bypass the chat
+# template and hit vLLM's /v1/completions directly. Every other domain is phrased
+# as an instruction to the Instruct-tuned base model and needs the chat template.
+RAW_COMPLETION_DOMAINS = {"code", "sql"}
+
+
 def run_benchmark(tasks: list[dict], controller_url: str, client: httpx.Client) -> list[dict]:
     """Run every task sequentially against the LoRA controller.
 
@@ -72,13 +101,25 @@ def run_benchmark(tasks: list[dict], controller_url: str, client: httpx.Client) 
     Returns:
         Per-task result records, in task order.
     """
+    registered = {a["name"] for a in client.get(f"{controller_url}/adapters").json()}
+
     records = []
     for task in tasks:
+        if task["adapter"] not in registered:
+            records.append(build_skipped_record(
+                task, f"adapter '{task['adapter']}' not in registry (see adapters.yaml)"
+            ))
+            continue
         start = time.monotonic()
         try:
             resp = client.post(
                 f"{controller_url}/infer/{task['adapter']}",
-                json={"prompt": task["prompt"], "max_tokens": 512, "temperature": 0.3},
+                json={
+                    "prompt": task["prompt"],
+                    "max_tokens": 512,
+                    "temperature": 0.3,
+                    "raw_completion": task["domain"] in RAW_COMPLETION_DOMAINS,
+                },
             )
             resp.raise_for_status()
             result = resp.json()

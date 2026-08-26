@@ -60,15 +60,17 @@ class VLLMClient:
         max_tokens: int = 256,
         temperature: float = 0.7,
         stop: list[str] | None = None,
+        repetition_penalty: float = 1.0,
     ) -> dict:
-        """Call vLLM's /v1/completions endpoint.
+        """Call vLLM's /v1/completions endpoint (raw text continuation, no chat template).
 
         Args:
             model: Adapter name to use (vLLM routes to the loaded LoRA by name).
-            prompt: Input text.
+            prompt: Input text, sent to the model verbatim.
             max_tokens: Maximum tokens to generate.
             temperature: Sampling temperature.
             stop: Optional stop sequences.
+            repetition_penalty: vLLM sampling penalty for repeated tokens (1.0 = off).
 
         Returns:
             Raw vLLM completions response dict.
@@ -81,11 +83,56 @@ class VLLMClient:
             "prompt": prompt,
             "max_tokens": max_tokens,
             "temperature": temperature,
+            "repetition_penalty": repetition_penalty,
         }
         if stop:
             payload["stop"] = stop
         async with httpx.AsyncClient(timeout=self._timeout) as client:
             resp = await client.post(f"{self._base}/v1/completions", json=payload)
+            resp.raise_for_status()
+            return resp.json()
+
+    async def chat_completions(
+        self,
+        model: str,
+        prompt: str,
+        max_tokens: int = 256,
+        temperature: float = 0.7,
+        stop: list[str] | None = None,
+        repetition_penalty: float = 1.0,
+    ) -> dict:
+        """Call vLLM's /v1/chat/completions endpoint.
+
+        Wraps `prompt` as a single user message; vLLM applies the base model's
+        chat template server-side. Required for Instruct-tuned base models —
+        feeding an instruction straight through /v1/completions has no
+        assistant-turn framing and the model free-runs instead of replying.
+
+        Args:
+            model: Adapter name to use (vLLM routes to the loaded LoRA by name).
+            prompt: User message content.
+            max_tokens: Maximum tokens to generate.
+            temperature: Sampling temperature.
+            stop: Optional stop sequences.
+            repetition_penalty: vLLM sampling penalty for repeated tokens (1.0 = off).
+
+        Returns:
+            Raw vLLM chat/completions response dict.
+
+        Raises:
+            httpx.HTTPStatusError: If vLLM returns a non-2xx response.
+        """
+        payload: dict = {
+            "model": model,
+            "messages": [{"role": "user", "content": prompt}],
+            "max_tokens": max_tokens,
+            "temperature": temperature,
+            "repetition_penalty": repetition_penalty,
+        }
+        if stop:
+            payload["stop"] = stop
+        async with httpx.AsyncClient(timeout=self._timeout) as client:
+            resp = await client.post(f"{self._base}/v1/chat/completions", json=payload)
             resp.raise_for_status()
             return resp.json()
 

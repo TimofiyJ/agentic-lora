@@ -9,6 +9,7 @@ from benchmarks.quality_metrics import (
     score_medical,
     score_sql,
     score_summarizer,
+    strip_preamble,
     summarize_quality,
     token_f1,
 )
@@ -84,6 +85,53 @@ def test_token_f1_no_overlap():
 
 def test_token_f1_empty_prediction():
     assert token_f1("", "supply contract") == 0.0
+
+
+def test_strip_preamble_removes_heres_the_corrected_version():
+    assert strip_preamble("Here's the corrected sentence: he goes to school") == "he goes to school"
+
+
+def test_strip_preamble_removes_labeled_prefix():
+    assert strip_preamble("Corrected sentence: he goes to school") == "he goes to school"
+    assert strip_preamble("Summary: the market rose today") == "the market rose today"
+    assert strip_preamble("Answer: supply contract") == "supply contract"
+
+
+def test_strip_preamble_strips_surrounding_quotes():
+    assert strip_preamble('"he goes to school"') == "he goes to school"
+
+
+def test_strip_preamble_no_match_returns_unchanged():
+    assert strip_preamble("he goes to school") == "he goes to school"
+
+
+def test_strip_preamble_empty_string():
+    assert strip_preamble("") == ""
+
+
+def test_score_legal_strips_preamble_before_scoring():
+    task = {"meta": {"answers": ["supply contract"]}}
+    result = score_legal("Here's the answer: supply contract", task)
+    assert result == {"score": 1.0, "passed": True}
+
+
+def test_score_grammar_strips_preamble_before_scoring():
+    task = {"meta": {"corrections": ["the cat sat on the mat"]}}
+    result = score_grammar("Corrected sentence: the cat sat on the mat", task)
+    assert result == {"score": 1.0, "passed": True}
+
+
+def test_score_summarizer_strips_preamble_before_scoring():
+    task = {"reference": "the market rose sharply today"}
+    result = score_summarizer("Summary: the market rose sharply today", task)
+    assert result["score"] == 1.0
+    assert result["passed"] is True
+
+
+def test_score_medical_strips_preamble_before_scoring():
+    task = {"reference": "take ibuprofen and rest"}
+    result = score_medical("Answer: take ibuprofen and rest", task)
+    assert result == {"score": 1.0, "passed": True}
 
 
 def test_score_legal_takes_max_across_gold_spans():
@@ -177,6 +225,7 @@ def test_summarize_quality_no_success_returns_empty():
     assert result == {
         "n_tasks": 1,
         "n_success": 0,
+        "n_skipped": 0,
         "by_domain": {},
         "overall_avg_score": 0.0,
     }

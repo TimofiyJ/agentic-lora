@@ -45,6 +45,12 @@ def build_code_task(row: dict, n: int) -> dict:
     }
 
 
+LEGAL_INSTRUCTION = (
+    "Answer using a direct quote from the contract text above. "
+    "Output only the quoted answer, with no explanation or preamble."
+)
+
+
 def build_legal_task(row: dict, n: int) -> dict:
     """Build a legal quality task from an alex-apostolo/filtered-cuad row."""
     answers = row["answers"]["text"]
@@ -53,10 +59,16 @@ def build_legal_task(row: dict, n: int) -> dict:
         "id": f"quality_legal_{n:02d}",
         "domain": "legal",
         "adapter": "legal",
-        "prompt": f"{context}\n\nQuestion: {row['question']}",
+        "prompt": f"{context}\n\nQuestion: {row['question']}\n\n{LEGAL_INSTRUCTION}",
         "reference": answers[0] if answers else "",
         "meta": {"answers": answers},
     }
+
+
+MEDICAL_INSTRUCTION = (
+    "Answer the following medical question directly and concisely. "
+    "Output only the answer, with no explanation or preamble."
+)
 
 
 def build_medical_task(row: dict, n: int) -> dict:
@@ -65,10 +77,16 @@ def build_medical_task(row: dict, n: int) -> dict:
         "id": f"quality_medical_{n:02d}",
         "domain": "medical",
         "adapter": "medical",
-        "prompt": row["input"],
+        "prompt": f"{MEDICAL_INSTRUCTION}\n\n{row['input']}",
         "reference": row["output"],
         "meta": {},
     }
+
+
+GRAMMAR_INSTRUCTION = (
+    "Correct the grammar and spelling in the following sentence. "
+    "Output only the corrected sentence, with no explanation or preamble."
+)
 
 
 def build_grammar_task(row: dict, n: int) -> dict:
@@ -78,19 +96,26 @@ def build_grammar_task(row: dict, n: int) -> dict:
         "id": f"quality_grammar_{n:02d}",
         "domain": "grammar",
         "adapter": "grammar",
-        "prompt": row["sentence"],
+        "prompt": f"{GRAMMAR_INSTRUCTION}\n\n{row['sentence']}",
         "reference": corrections[0] if corrections else "",
         "meta": {"corrections": corrections},
     }
 
 
+SUMMARIZER_INSTRUCTION = (
+    "Summarize the following article in 2-3 sentences. "
+    "Output only the summary, with no explanation or preamble."
+)
+
+
 def build_summarizer_task(row: dict, n: int) -> dict:
     """Build a summarizer quality task from an abisee/cnn_dailymail row."""
+    context = row["article"][:MAX_PROMPT_CHARS]
     return {
         "id": f"quality_summarizer_{n:02d}",
         "domain": "summarizer",
         "adapter": "summarizer",
-        "prompt": row["article"][:MAX_PROMPT_CHARS],
+        "prompt": f"{SUMMARIZER_INSTRUCTION}\n\n{context}",
         "reference": row["highlights"],
         "meta": {},
     }

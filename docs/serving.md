@@ -10,7 +10,7 @@ Step-by-step reproduction of the environment on a rented GPU instance.
 
 | Spec | Minimum | Recommended |
 |---|---|---|
-| VRAM | 12 GB | 24 GB |
+| VRAM | 24 GB | 24 GB+ |
 | Disk | 40 GB | 60 GB |
 | RAM | 16 GB | 32 GB |
 | CUDA | 12.1+ | 12.4+ |
@@ -46,8 +46,8 @@ nvidia-smi
 
 ## 3. HuggingFace Token
 
-`meta-llama/Llama-3.2-3B-Instruct` is a gated model — you must accept the license at
-`https://huggingface.co/meta-llama/Llama-3.2-3B-Instruct` and have an access token.
+`meta-llama/Llama-3.1-8B-Instruct` is a gated model — you must accept the license at
+`https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct` and have an access token.
 
 Create `~/.env` on the server (never commit this file):
 
@@ -71,7 +71,7 @@ python3 -m venv ~/venv
 Install controller/orchestrator dependencies into the same venv:
 
 ```bash
-~/venv/bin/pip install fastapi uvicorn httpx pyyaml python-dotenv
+~/venv/bin/pip install fastapi uvicorn httpx pyyaml python-dotenv rouge-score
 ```
 
 ---
@@ -86,19 +86,19 @@ startup fails deep in warmup with `CUDA compiler and CUDA toolkit headers are
 incompatible`. The reliable fix is to skip that JIT path entirely:
 
 ```bash
-VLLM_USE_FLASHINFER_SAMPLER=0 VLLM_ALLOW_RUNTIME_LORA_UPDATING=True HUGGING_FACE_HUB_TOKEN=$(grep HF_TOKEN ~/.env | cut -d= -f2) nohup ~/venv/bin/vllm serve meta-llama/Llama-3.2-3B-Instruct --enable-lora --max-loras 4 --max-lora-rank 128 --max-model-len 65536 --port 8000 > ~/vllm.log 2>&1 &
+VLLM_USE_FLASHINFER_SAMPLER=0 VLLM_ALLOW_RUNTIME_LORA_UPDATING=True HUGGING_FACE_HUB_TOKEN=$(grep HF_TOKEN ~/.env | cut -d= -f2) nohup ~/venv/bin/vllm serve meta-llama/Llama-3.1-8B-Instruct --enable-lora --max-loras 4 --max-lora-rank 256 --max-model-len 65536 --port 8000 > ~/vllm.log 2>&1 &
 ```
 
-`--max-model-len 65536` needs ~7 GiB of KV cache; on a 12-16 GB card that doesn't
+`--max-model-len 65536` needs ~7 GiB of KV cache; on a 24 GB card that doesn't
 leave enough headroom after model weights + CUDA graphs and startup fails with
 `ValueError: ... KV cache memory ...`. Size it to the card instead — e.g.
-`--max-model-len 32768 --gpu-memory-utilization 0.90` fits comfortably on a 16 GB GPU.
+`--max-model-len 32768 --gpu-memory-utilization 0.90` fits comfortably on a 24 GB GPU.
 The startup log prints the exact affordable token count if you get this wrong.
 
 Run in the background with nohup:
 
 ```bash
-VLLM_USE_FLASHINFER_SAMPLER=0 VLLM_ALLOW_RUNTIME_LORA_UPDATING=True HUGGING_FACE_HUB_TOKEN=$(grep HF_TOKEN ~/.env | cut -d= -f2) nohup ~/venv/bin/vllm serve meta-llama/Llama-3.2-3B-Instruct --enable-lora --max-loras 4 --max-lora-rank 128 --max-model-len 32768 --gpu-memory-utilization 0.90 --port 8000 > ~/vllm.log 2>&1 &
+VLLM_USE_FLASHINFER_SAMPLER=0 VLLM_ALLOW_RUNTIME_LORA_UPDATING=True HUGGING_FACE_HUB_TOKEN=$(grep HF_TOKEN ~/.env | cut -d= -f2) nohup ~/venv/bin/vllm serve meta-llama/Llama-3.1-8B-Instruct --enable-lora --max-loras 4 --max-lora-rank 256 --max-model-len 32768 --gpu-memory-utilization 0.90 --port 8000 > ~/vllm.log 2>&1 &
 ```
 
 Wait for startup (takes ~60s to download + load the model, plus 1-2 min for
@@ -113,14 +113,14 @@ Verify with a base inference test:
 
 ```bash
 curl -s http://localhost:8000/v1/completions -H "Content-Type: application/json" \
-  -d '{"model": "meta-llama/Llama-3.2-3B-Instruct", "prompt": "The capital of France is", "max_tokens": 10}'
+  -d '{"model": "meta-llama/Llama-3.1-8B-Instruct", "prompt": "The capital of France is", "max_tokens": 10}'
 ```
 
 **Flags explained:**
 - `VLLM_ALLOW_RUNTIME_LORA_UPDATING=True` — enables the `/v1/load_lora_adapter` and `/v1/unload_lora_adapter` endpoints
 - `--enable-lora` — activates LoRA support
 - `--max-loras 4` — max adapters resident on GPU simultaneously
-- `--max-lora-rank 128` — must be ≥ the highest rank among your adapters
+- `--max-lora-rank 256` — must be ≥ the highest rank among your adapters (sql is rank 256)
 - `--max-model-len 65536` — caps context to 64K to fit KV cache in available VRAM (default 128K requires ~14 GiB KV cache, only ~10.5 GiB available after model weights)
 
 ---
@@ -159,7 +159,7 @@ scp -P <PORT> -r /path/to/paper/src/orchestrator root@<HOST>:~/
 ```
 
 ```bash
-PLANNER_MODEL=meta-llama/Llama-3.2-3B-Instruct nohup ~/venv/bin/uvicorn orchestrator.app:app --port 8002 --host 0.0.0.0 > ~/orchestrator.log 2>&1 &
+PLANNER_MODEL=meta-llama/Llama-3.1-8B-Instruct nohup ~/venv/bin/uvicorn orchestrator.app:app --port 8002 --host 0.0.0.0 > ~/orchestrator.log 2>&1 &
 ```
 
 Verify:

@@ -57,6 +57,8 @@ def test_run_benchmark_success():
     ]
 
     def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/adapters":
+            return httpx.Response(200, json=[{"name": "sql"}])
         return httpx.Response(200, json={"choices": [{"text": "SELECT 1"}]})
 
     client = httpx.Client(transport=httpx.MockTransport(handler))
@@ -73,6 +75,8 @@ def test_run_benchmark_records_http_errors():
     ]
 
     def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/adapters":
+            return httpx.Response(200, json=[{"name": "sql"}])
         return httpx.Response(500, json={"detail": "internal error"})
 
     client = httpx.Client(transport=httpx.MockTransport(handler))
@@ -82,3 +86,38 @@ def test_run_benchmark_records_http_errors():
     assert records[0]["success"] is False
     assert records[0]["id"] == "quality_sql_01"
     assert "error" in records[0]
+
+
+def test_run_benchmark_sends_raw_completion_for_sql_domain():
+    tasks = [
+        {"id": "quality_sql_01", "domain": "sql", "adapter": "sql", "prompt": "CREATE TABLE t; SELECT?", "reference": "SELECT 1", "meta": {}},
+    ]
+    seen_payload = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/adapters":
+            return httpx.Response(200, json=[{"name": "sql"}])
+        seen_payload.update(json.loads(request.content))
+        return httpx.Response(200, json={"choices": [{"text": "SELECT 1"}]})
+
+    client = httpx.Client(transport=httpx.MockTransport(handler))
+    run_benchmark(tasks, "http://fake-controller", client)
+
+    assert seen_payload["raw_completion"] is True
+
+
+def test_run_benchmark_skips_unregistered_adapter():
+    tasks = [
+        {"id": "quality_sql_01", "domain": "sql", "adapter": "sql", "prompt": "get all", "reference": "SELECT 1", "meta": {}},
+    ]
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        assert request.url.path == "/adapters", "should not call /infer for an unregistered adapter"
+        return httpx.Response(200, json=[])
+
+    client = httpx.Client(transport=httpx.MockTransport(handler))
+    records = run_benchmark(tasks, "http://fake-controller", client)
+
+    assert len(records) == 1
+    assert records[0]["success"] is False
+    assert records[0]["skipped"] is True

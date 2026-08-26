@@ -10,6 +10,7 @@ class AdapterMeta(BaseModel):
     rank: int
     base_model: str
     tags: list[str] = []
+    passthrough: bool = False
 
 
 class LoadedAdapter(BaseModel):
@@ -36,6 +37,20 @@ class InferRequest(BaseModel):
     max_tokens: int = Field(default=256, ge=1, le=4096)
     temperature: float = Field(default=0.7, ge=0.0, le=2.0)
     stop: list[str] = []
+    repetition_penalty: float = Field(default=1.15, ge=1.0, le=2.0)
+    raw_completion: bool = Field(
+        default=False,
+        description=(
+            "If True, send `prompt` verbatim to vLLM's /v1/completions with no "
+            "chat template — for raw text-continuation tasks (e.g. code fill-in) "
+            "where the adapter expects to continue the prompt, not reply to it. "
+            "If False (default), wrap `prompt` as a user message through "
+            "/v1/chat/completions — required for every adapter here, since the "
+            "base model is Instruct-tuned and free-runs into unrelated, often "
+            "repetitive text when a raw instruction is fed through the raw "
+            "completion endpoint."
+        ),
+    )
 
 
 class AdapterStatus(BaseModel):

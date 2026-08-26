@@ -68,7 +68,12 @@ def test_build_legal_task():
         "id": "quality_legal_01",
         "domain": "legal",
         "adapter": "legal",
-        "prompt": "This is a supply contract between the parties.\n\nQuestion: What is the document name?",
+        "prompt": (
+            "This is a supply contract between the parties.\n\n"
+            "Question: What is the document name?\n\n"
+            "Answer using a direct quote from the contract text above. "
+            "Output only the quoted answer, with no explanation or preamble."
+        ),
         "reference": "supply contract",
         "meta": {"answers": ["supply contract"]},
     }
@@ -88,7 +93,11 @@ def test_build_medical_task():
         "id": "quality_medical_01",
         "domain": "medical",
         "adapter": "medical",
-        "prompt": "what causes fever?",
+        "prompt": (
+            "Answer the following medical question directly and concisely. "
+            "Output only the answer, with no explanation or preamble.\n\n"
+            "what causes fever?"
+        ),
         "reference": "infection or inflammation",
         "meta": {},
     }
@@ -101,7 +110,11 @@ def test_build_grammar_task():
         "id": "quality_grammar_01",
         "domain": "grammar",
         "adapter": "grammar",
-        "prompt": "he go to school",
+        "prompt": (
+            "Correct the grammar and spelling in the following sentence. "
+            "Output only the corrected sentence, with no explanation or preamble.\n\n"
+            "he go to school"
+        ),
         "reference": "he goes to school",
         "meta": {"corrections": ["he goes to school", "he went to school"]},
     }
@@ -114,7 +127,11 @@ def test_build_summarizer_task():
         "id": "quality_summarizer_01",
         "domain": "summarizer",
         "adapter": "summarizer",
-        "prompt": "a long article body",
+        "prompt": (
+            "Summarize the following article in 2-3 sentences. "
+            "Output only the summary, with no explanation or preamble.\n\n"
+            "a long article body"
+        ),
         "reference": "short summary",
         "meta": {},
     }

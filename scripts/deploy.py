@@ -6,7 +6,7 @@ Usage:
 Flags:
     --keep          Skip teardown after test (default: destroy instance)
     --instance-id   Skip creation, use existing running instance
-    --gpu-ram N     Minimum VRAM in GB (default: 20)
+    --gpu-ram N     Minimum VRAM in GB (default: 24)
     --disk N        Disk size in GB (default: 60)
 """
 
@@ -192,7 +192,7 @@ def setup_server(instance_id: int, hf_token: str) -> None:
     cmds = [
         "python3 -m venv ~/venv",
         "~/venv/bin/pip install -q vllm",
-        "~/venv/bin/pip install -q fastapi uvicorn httpx pyyaml python-dotenv",
+        "~/venv/bin/pip install -q fastapi uvicorn httpx pyyaml python-dotenv rouge-score",
         f"echo 'HF_TOKEN={hf_token}' > ~/.env",
     ]
     for cmd in cmds:
@@ -208,8 +208,8 @@ def start_services(instance_id: int) -> None:
     vllm_cmd = (
         "VLLM_ALLOW_RUNTIME_LORA_UPDATING=True "
         "HUGGING_FACE_HUB_TOKEN=$(grep HF_TOKEN ~/.env | cut -d= -f2) "
-        "nohup ~/venv/bin/vllm serve meta-llama/Llama-3.2-3B-Instruct "
-        "--enable-lora --max-loras 4 --max-lora-rank 128 "
+        "nohup ~/venv/bin/vllm serve meta-llama/Llama-3.1-8B-Instruct "
+        "--enable-lora --max-loras 4 --max-lora-rank 256 "
         "--max-model-len 65536 --port 8000 > ~/vllm.log 2>&1 &"
     )
     controller_cmd = (
@@ -218,7 +218,7 @@ def start_services(instance_id: int) -> None:
         "--port 8001 --host 0.0.0.0 > ~/controller.log 2>&1 &"
     )
     orchestrator_cmd = (
-        "PLANNER_MODEL=meta-llama/Llama-3.2-3B-Instruct "
+        "PLANNER_MODEL=meta-llama/Llama-3.1-8B-Instruct "
         "nohup ~/venv/bin/uvicorn orchestrator.app:app "
         "--port 8002 --host 0.0.0.0 > ~/orchestrator.log 2>&1 &"
     )
@@ -280,7 +280,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Deploy LoRA stack to vast.ai")
     parser.add_argument("--keep", action="store_true", help="Skip teardown after test")
     parser.add_argument("--instance-id", type=int, help="Use existing running instance")
-    parser.add_argument("--gpu-ram", type=int, default=20, help="Minimum VRAM in GB")
+    parser.add_argument("--gpu-ram", type=int, default=24, help="Minimum VRAM in GB")
     parser.add_argument("--disk", type=int, default=60, help="Disk size in GB")
     args = parser.parse_args()
 

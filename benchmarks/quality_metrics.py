@@ -105,6 +105,38 @@ def token_f1(prediction: str, reference: str) -> float:
     return 2 * precision * recall / (precision + recall)
 
 
+_PREAMBLE_RE = re.compile(
+    r"^\s*("
+    r"here(?:'s| is)[^:]*:|"
+    r"(?:the )?(?:corrected(?: sentence| version)?|summary|answer|correction)[^:]*:|"
+    r"sure[,!]?\s*"
+    r")\s*",
+    re.IGNORECASE,
+)
+
+
+def strip_preamble(text: str) -> str:
+    """Strip a common chat-style preamble from a model prediction.
+
+    Instruct-tuned models often prepend filler like "Here's the corrected
+    sentence:" or "Summary:" even when told to output only the answer. This
+    removes one leading preamble match plus any surrounding quote marks so
+    lexical metrics (F1/GLEU/ROUGE-L) aren't penalized for formatting noise
+    the prompt asked the model not to add.
+
+    Args:
+        text: Raw model prediction.
+
+    Returns:
+        Prediction with a leading preamble phrase removed, stripped and
+        unquoted.
+    """
+    stripped = _PREAMBLE_RE.sub("", text, count=1).strip()
+    if len(stripped) >= 2 and stripped[0] in "\"'" and stripped[-1] == stripped[0]:
+        stripped = stripped[1:-1].strip()
+    return stripped
+
+
 def score_legal(prediction: str, task: dict) -> dict:
     """Score a legal answer by max token-F1 against any gold answer span.
 
@@ -116,6 +148,7 @@ def score_legal(prediction: str, task: dict) -> dict:
     Returns:
         Dict with "score" (float in [0.0, 1.0]) and "passed" (score >= 0.5).
     """
+    prediction = strip_preamble(prediction)
     answers = task["meta"]["answers"]
     score = max((token_f1(prediction, a) for a in answers), default=0.0)
     return {"score": score, "passed": score >= 0.5}
@@ -169,6 +202,7 @@ def score_grammar(prediction: str, task: dict) -> dict:
     Returns:
         Dict with "score" (float in [0.0, 1.0]) and "passed" (score >= 0.5).
     """
+    prediction = strip_preamble(prediction)
     corrections = task["meta"]["corrections"]
     score = max((gleu_score(prediction, c) for c in corrections), default=0.0)
     return {"score": score, "passed": score >= 0.5}
@@ -200,6 +234,7 @@ def score_medical(prediction: str, task: dict) -> dict:
     Returns:
         Dict with "score" (float in [0.0, 1.0]) and "passed" (score >= 0.5).
     """
+    prediction = strip_preamble(prediction)
     fscore = rouge_l(prediction, task["reference"])
     return {"score": fscore, "passed": fscore >= 0.5}
 
@@ -214,6 +249,7 @@ def score_summarizer(prediction: str, task: dict) -> dict:
     Returns:
         Dict with "score" (float in [0.0, 1.0]) and "passed" (score >= 0.5).
     """
+    prediction = strip_preamble(prediction)
     fscore = rouge_l(prediction, task["reference"])
     return {"score": fscore, "passed": fscore >= 0.5}
 
@@ -254,14 +290,17 @@ def summarize_quality(records: list[dict]) -> dict:
 
     Args:
         records: Per-task result records. Successful records must include
-            "domain", "score", and "passed".
+            "domain", "score", and "passed". Records may be marked
+            skipped=True (e.g. adapter not registered) — these are excluded
+            from n_success/by_domain and reported separately in n_skipped.
 
     Returns:
-        Dict with n_tasks, n_success, by_domain (domain -> {n, avg_score,
-        pass_rate}), and overall_avg_score. overall_avg_score and by_domain
-        are empty/0.0 when there are no successful records.
+        Dict with n_tasks, n_success, n_skipped, by_domain (domain -> {n,
+        avg_score, pass_rate}), and overall_avg_score. overall_avg_score and
+        by_domain are empty/0.0 when there are no successful records.
     """
     n_tasks = len(records)
+    n_skipped = sum(1 for r in records if r.get("skipped"))
     successful = [r for r in records if r["success"]]
     n_success = len(successful)
 
@@ -282,6 +321,7 @@ def summarize_quality(records: list[dict]) -> dict:
     return {
         "n_tasks": n_tasks,
         "n_success": n_success,
+        "n_skipped": n_skipped,
         "by_domain": by_domain,
         "overall_avg_score": overall_avg_score,
     }
