@@ -1,53 +1,108 @@
 # Adapter registry — add your LoRA adapters here.
 # The controller loads this file on startup and hot-reloads via POST /registry/reload.
 #
-# Each adapter must have:
-#   path        - absolute path (or HuggingFace repo ID) to the adapter weights
-#   description - plain-English description of what this adapter does (fed to the planner)
-#   rank        - LoRA rank used during training
-#   base_model  - HuggingFace model ID this adapter was trained on
-#   tags        - optional list of capability tags for filtering
+# Switched to Qwen/Qwen2.5-7B-Instruct + Adaptive Minds' own Qwen adapters
+# (pavan01729/adaptive-minds-loras) for a face-to-face comparison on the same
+# base model and adapter weights. Llama-3.1-8B was the first choice, but AM's
+# Llama adapters pre-date their vLLM integration; the Qwen2.5-7B adapters are
+# the ones AM ran through vLLM in v2 and are confirmed compatible.
+#
+# Adapter weights must be downloaded before starting the stack:
+#   huggingface-cli download pavan01729/adaptive-minds-loras \
+#     --include "qwen2.5-7b/qwen25_sql_v1/*" \
+#     --include "qwen2.5-7b/qwen25_medicine_v1/*" \
+#     --include "qwen2.5-7b/qwen25_legal_v1_grpo/*" \
+#     --include "qwen2.5-7b/qwen25_chem_v1_grpo/*" \
+#     --include "qwen2.5-7b/qwen25_finance_v1/*" \
+#     --include "qwen2.5-7b/qwen25_biology_v1/*" \
+#     --include "qwen2.5-7b/qwen25_cti_v1_grpo/*" \
+#     --local-dir /workspace/loras
+#
+# Note: Qwen3.5-9B is NOT used despite AM having 49 adapters for it —
+# Qwen3.5's hybrid DeltaNet+MoE architecture is not natively supported
+# by vLLM for LoRA (as of vLLM 0.6.6). Using Qwen2.5-7B which AM tested
+# explicitly with vLLM in paper v2. qwen25_cti_v1_grpo (Cyber Threat
+# Intelligence) is the closest equivalent to the qwen35-cybersecurity adapter.
+#
+# Paths below assume LORA_BASE=/workspace/loras (set via env in deploy.py).
+# All six adapters are rank-32 specialist LoRAs from AM's training pipeline.
 
 adapters:
 
   sql:
-    path: SujanKarki/Llama-3.2-3B-Instruct_text_to_sql_lora_newdataset
-    description: "Translates natural language questions into SQL queries for relational databases"
-    rank: 128
-    base_model: meta-llama/Llama-3.2-3B-Instruct
+    path: /workspace/loras/qwen2.5-7b/qwen25_sql_v1
+    description: "Translates natural language questions into SQL queries for relational databases. Trained on Spider dataset. Expects raw schema+question text as raw_completion."
+    rank: 32
+    base_model: Qwen/Qwen2.5-7B-Instruct
     tags: [sql, code, database]
 
-  summarizer:
-    path: Freddthink/llama3.2-3B-instruct-summarization-lora
-    description: "Summarizes long documents and passages into concise, accurate form"
-    rank: 6
-    base_model: meta-llama/Llama-3.2-3B-Instruct
-    tags: [summarization, nlp]
-
-  legal:
-    path: sartajbhuvaji/Legal-Llama-3.2-3B-Instruct
-    description: "Interprets legal documents, answers legal questions, and drafts legal text"
-    rank: 32
-    base_model: meta-llama/Llama-3.2-3B-Instruct
-    tags: [legal, professional]
-
   medical:
-    path: selmaXI/medical_llama-3.2-3b-instruct
-    description: "Answers clinical and medical questions based on healthcare knowledge"
-    rank: 64
-    base_model: meta-llama/Llama-3.2-3B-Instruct
+    path: /workspace/loras/qwen2.5-7b/qwen25_medicine_v1
+    description: "Answers clinical and medical questions based on healthcare knowledge. Covers diagnosis, pharmacology, and clinical reasoning."
+    rank: 16
+    base_model: Qwen/Qwen2.5-7B-Instruct
     tags: [medical, clinical, healthcare]
 
+  legal:
+    path: /workspace/loras/qwen2.5-7b/qwen25_legal_v1_grpo
+    description: "Interprets legal documents, answers legal questions, classifies contract clauses, and drafts legal text. Trained on LEDGAR and case law."
+    rank: 32
+    base_model: Qwen/Qwen2.5-7B-Instruct
+    tags: [legal, contracts, professional]
+
+  chemistry:
+    path: /workspace/loras/qwen2.5-7b/qwen25_chem_v1_grpo
+    description: "Answers chemistry questions, generates canonical SMILES for compounds, predicts reactions, and explains chemical mechanisms. Trained on ChEMBL."
+    rank: 32
+    base_model: Qwen/Qwen2.5-7B-Instruct
+    tags: [chemistry, molecules, smiles]
+
+  finance:
+    path: /workspace/loras/qwen2.5-7b/qwen25_finance_v1
+    description: "Analyzes financial data, interprets SEC filings, computes financial ratios, and answers economics questions."
+    rank: 16
+    base_model: Qwen/Qwen2.5-7B-Instruct
+    tags: [finance, economics, market]
+
+  biology:
+    path: /workspace/loras/qwen2.5-7b/qwen25_biology_v1
+    description: "Answers biology questions covering genetics, cell biology, ecology, and biochemistry. Trained on biology QA datasets."
+    rank: 16
+    base_model: Qwen/Qwen2.5-7B-Instruct
+    tags: [biology, genetics, life-science]
+
+  # Passthrough adapters — these route directly to the base model.
+  # Qwen2.5-7B-Instruct is already strong at code and summarization,
+  # so no LoRA improves meaningfully over the base model on these tasks.
+  # They participate in multi-step plans requiring those capabilities.
+
   code:
-    path: caizefeng18/llama-3.2-3b-instruct-python-alpaca-finetune-QLoRA-adapter
-    description: "Generates, explains, and debugs Python code from natural language instructions"
-    rank: 64
-    base_model: meta-llama/Llama-3.2-3B-Instruct
+    path: "__passthrough__"
+    description: "Generates, explains, and debugs Python code from natural language instructions. Routes to the base model — Qwen2.5-7B is competitive on HumanEval without a code LoRA."
+    rank: 0
+    base_model: Qwen/Qwen2.5-7B-Instruct
+    passthrough: true
     tags: [code, python, programming]
 
+  summarizer:
+    path: "__passthrough__"
+    description: "Summarizes long documents and passages into concise, accurate form. Routes to the base model — Qwen2.5-7B handles summarization well without a dedicated LoRA."
+    rank: 0
+    base_model: Qwen/Qwen2.5-7B-Instruct
+    passthrough: true
+    tags: [summarization, nlp]
+
   grammar:
-    path: Natthakit/Llama-3.2-3B-Instruct-DeepCorrector-Adapter-E5
-    description: "Corrects grammar, spelling, and style errors in English text"
-    rank: 32
-    base_model: meta-llama/Llama-3.2-3B-Instruct
+    path: "__passthrough__"
+    description: "Corrects grammar, spelling, and style errors in English text. Routes to the base model — no AM grammar-specific LoRA exists for Qwen2.5-7B; the instruction-tuned base handles correction well."
+    rank: 0
+    base_model: Qwen/Qwen2.5-7B-Instruct
+    passthrough: true
     tags: [grammar, correction, writing]
+
+  cybersecurity:
+    path: /workspace/loras/qwen2.5-7b/qwen25_cti_v1_grpo
+    description: "Answers cybersecurity questions, analyzes threat intelligence, classifies security incidents, and explains attack/defense concepts. CTI = Cyber Threat Intelligence adapter from AM's training pipeline."
+    rank: 32
+    base_model: Qwen/Qwen2.5-7B-Instruct
+    tags: [cybersecurity, threat-intelligence, security]

@@ -1,0 +1,272 @@
+[
+  {
+    "id": "ms_001",
+    "query": "Extract the key numerical finding from this trial result, then summarize it in one plain-English sentence: 'Treatment group (n=120) achieved mean systolic reduction of 18.3 mmHg versus 6.2 mmHg in control (n=120) over 12 weeks, p<0.001.'",
+    "oracle_adapter_sequence": ["medical", "summarizer"],
+    "steps": [
+      {"id": 1, "domain": "medical", "oracle_adapter": "medical", "reference": "Treatment group achieved an 18.3 mmHg systolic reduction versus 6.2 mmHg in the control group over 12 weeks (p<0.001).", "meta": {}},
+      {"id": 2, "domain": "summarizer", "oracle_adapter": "summarizer", "reference": "The treatment produced a substantially larger drop in blood pressure than the control over 12 weeks.", "meta": {}}
+    ],
+    "metadata": {"n_steps": 2, "solvable_by_single_adapter": false}
+  },
+  {
+    "id": "ms_002",
+    "query": "Given the schema employees(id, name, department, salary), write a SQL query to find the average salary per department, then summarize the result in one sentence.",
+    "oracle_adapter_sequence": ["sql", "summarizer"],
+    "steps": [
+      {"id": 1, "domain": "sql", "oracle_adapter": "sql", "reference": "select department, avg(salary) from employees group by department", "meta": {}},
+      {"id": 2, "domain": "summarizer", "oracle_adapter": "summarizer", "reference": "Average salary varies by department, computed by grouping employee records and averaging their salaries.", "meta": {}}
+    ],
+    "metadata": {"n_steps": 2, "solvable_by_single_adapter": false}
+  },
+  {
+    "id": "ms_003",
+    "query": "In this clause, identify the governing law provision, then fix the grammar of your answer: 'This Agreement shall be governed by and construed in accordance with the laws of the State of Delaware, without regard to its conflict of laws principles.'",
+    "oracle_adapter_sequence": ["legal", "grammar"],
+    "steps": [
+      {"id": 1, "domain": "legal", "oracle_adapter": "legal", "reference": "the laws of the State of Delaware", "meta": {"answers": ["the laws of the State of Delaware"]}},
+      {"id": 2, "domain": "grammar", "oracle_adapter": "grammar", "reference": "This Agreement is governed by the laws of the State of Delaware.", "meta": {"corrections": ["This Agreement is governed by the laws of the State of Delaware.", "The governing law is the law of the State of Delaware."]}}
+    ],
+    "metadata": {"n_steps": 2, "solvable_by_single_adapter": false}
+  },
+  {
+    "id": "ms_004",
+    "query": "Write a Python function that returns True if a number is even, then correct the grammar of this description of it: 'This function check if number are even or not.'",
+    "oracle_adapter_sequence": ["code", "grammar"],
+    "steps": [
+      {
+        "id": 1, "domain": "code", "oracle_adapter": "code",
+        "prompt": "def is_even(n: int) -> bool:\n    \"\"\" Return True if n is even. \"\"\"\n",
+        "reference": "    return n % 2 == 0\n",
+        "meta": {"test": "\n\ndef check(candidate):\n    assert candidate(4) == True\n    assert candidate(3) == False\n    assert candidate(0) == True\n", "entry_point": "is_even"}
+      },
+      {"id": 2, "domain": "grammar", "oracle_adapter": "grammar", "reference": "This function checks whether a number is even.", "meta": {"corrections": ["This function checks whether a number is even.", "This function checks if a number is even or not."]}}
+    ],
+    "metadata": {"n_steps": 2, "solvable_by_single_adapter": false}
+  },
+  {
+    "id": "ms_005",
+    "query": "Answer this clinical question, then correct the grammar of your answer: 'What is the first-line treatment for uncomplicated hypertension?'",
+    "oracle_adapter_sequence": ["medical", "grammar"],
+    "steps": [
+      {"id": 1, "domain": "medical", "oracle_adapter": "medical", "reference": "The first-line treatment for uncomplicated hypertension is typically a thiazide diuretic or an ACE inhibitor.", "meta": {}},
+      {"id": 2, "domain": "grammar", "oracle_adapter": "grammar", "reference": "The first-line treatment for uncomplicated hypertension is typically a thiazide diuretic or an ACE inhibitor.", "meta": {"corrections": ["The first-line treatment for uncomplicated hypertension is typically a thiazide diuretic or an ACE inhibitor.", "First-line treatment for uncomplicated hypertension is usually a thiazide diuretic or ACE inhibitor."]}}
+    ],
+    "metadata": {"n_steps": 2, "solvable_by_single_adapter": false}
+  },
+  {
+    "id": "ms_006",
+    "query": "Extract findings from this abstract, summarize them, then fix the grammar of the summary: 'A study of 80 patients found that Drug Y reduced LDL cholesterol by 22% over 8 weeks compared to placebo.'",
+    "oracle_adapter_sequence": ["medical", "summarizer", "grammar"],
+    "steps": [
+      {"id": 1, "domain": "medical", "oracle_adapter": "medical", "reference": "Drug Y reduced LDL cholesterol by 22% over 8 weeks compared to placebo in a study of 80 patients.", "meta": {}},
+      {"id": 2, "domain": "summarizer", "oracle_adapter": "summarizer", "reference": "Drug Y significantly lowered LDL cholesterol compared to placebo over an 8-week study.", "meta": {}},
+      {"id": 3, "domain": "grammar", "oracle_adapter": "grammar", "reference": "Drug Y significantly lowered LDL cholesterol compared to placebo over an eight-week study.", "meta": {"corrections": ["Drug Y significantly lowered LDL cholesterol compared to placebo over an eight-week study.", "Drug Y significantly lowered LDL cholesterol compared with placebo over eight weeks."]}}
+    ],
+    "metadata": {"n_steps": 3, "solvable_by_single_adapter": false}
+  },
+  {
+    "id": "ms_007",
+    "query": "Write SQL to find employees earning more than 100000, then write Python to count the rows returned, then correct the grammar of this description: 'This query find employee whose salary are greater than 100000.'",
+    "oracle_adapter_sequence": ["sql", "code", "grammar"],
+    "steps": [
+      {"id": 1, "domain": "sql", "oracle_adapter": "sql", "reference": "select * from employees where salary > 100000", "meta": {}},
+      {
+        "id": 2, "domain": "code", "oracle_adapter": "code",
+        "prompt": "def count_high_earners(rows: list) -> int:\n    \"\"\" Return the number of rows. \"\"\"\n",
+        "reference": "    return len(rows)\n",
+        "meta": {"test": "\n\ndef check(candidate):\n    assert candidate([1, 2, 3]) == 3\n    assert candidate([]) == 0\n    assert candidate([1]) == 1\n", "entry_point": "count_high_earners"}
+      },
+      {"id": 3, "domain": "grammar", "oracle_adapter": "grammar", "reference": "This query finds employees whose salary is greater than 100000.", "meta": {"corrections": ["This query finds employees whose salary is greater than 100000.", "This query finds the employees whose salaries are greater than 100000."]}}
+    ],
+    "metadata": {"n_steps": 3, "solvable_by_single_adapter": false}
+  },
+  {
+    "id": "ms_008",
+    "query": "Identify the termination clause, summarize it, then fix grammar: 'Either party may terminate this Agreement upon thirty (30) days written notice to the other party.'",
+    "oracle_adapter_sequence": ["legal", "summarizer", "grammar"],
+    "steps": [
+      {"id": 1, "domain": "legal", "oracle_adapter": "legal", "reference": "Either party may terminate this Agreement upon thirty (30) days written notice to the other party.", "meta": {"answers": ["Either party may terminate this Agreement upon thirty (30) days written notice to the other party."]}},
+      {"id": 2, "domain": "summarizer", "oracle_adapter": "summarizer", "reference": "Either party can end the agreement by giving 30 days written notice.", "meta": {}},
+      {"id": 3, "domain": "grammar", "oracle_adapter": "grammar", "reference": "Either party can end the agreement by giving thirty days' written notice.", "meta": {"corrections": ["Either party can end the agreement by giving thirty days' written notice.", "Either party may end the agreement by giving 30 days' written notice."]}}
+    ],
+    "metadata": {"n_steps": 3, "solvable_by_single_adapter": false}
+  },
+  {
+    "id": "ms_009",
+    "query": "Write a Python function that reverses a string, summarize what it does, then fix the grammar of the summary: 'This function take a string and return it reverse.'",
+    "oracle_adapter_sequence": ["code", "summarizer", "grammar"],
+    "steps": [
+      {
+        "id": 1, "domain": "code", "oracle_adapter": "code",
+        "prompt": "def reverse_string(s: str) -> str:\n    \"\"\" Return s reversed. \"\"\"\n",
+        "reference": "    return s[::-1]\n",
+        "meta": {"test": "\n\ndef check(candidate):\n    assert candidate('abc') == 'cba'\n    assert candidate('') == ''\n    assert candidate('a') == 'a'\n", "entry_point": "reverse_string"}
+      },
+      {"id": 2, "domain": "summarizer", "oracle_adapter": "summarizer", "reference": "The function takes a string and returns its characters in reverse order.", "meta": {}},
+      {"id": 3, "domain": "grammar", "oracle_adapter": "grammar", "reference": "The function takes a string and returns its characters in reverse order.", "meta": {"corrections": ["The function takes a string and returns its characters in reverse order.", "The function takes a string and returns it with the characters reversed."]}}
+    ],
+    "metadata": {"n_steps": 3, "solvable_by_single_adapter": false}
+  },
+  {
+    "id": "ms_010",
+    "query": "Extract the dosage finding from this text, write Python to convert it from mg to g, then summarize the result: 'The recommended dose is 500 mg twice daily.'",
+    "oracle_adapter_sequence": ["medical", "code", "summarizer"],
+    "steps": [
+      {"id": 1, "domain": "medical", "oracle_adapter": "medical", "reference": "The recommended dose is 500 mg twice daily.", "meta": {}},
+      {
+        "id": 2, "domain": "code", "oracle_adapter": "code",
+        "prompt": "def mg_to_g(mg: float) -> float:\n    \"\"\" Convert milligrams to grams. \"\"\"\n",
+        "reference": "    return mg / 1000\n",
+        "meta": {"test": "\n\ndef check(candidate):\n    assert candidate(500) == 0.5\n    assert candidate(1000) == 1.0\n    assert candidate(0) == 0.0\n", "entry_point": "mg_to_g"}
+      },
+      {"id": 3, "domain": "summarizer", "oracle_adapter": "summarizer", "reference": "The recommended dose converts to 0.5 grams, taken twice daily.", "meta": {}}
+    ],
+    "metadata": {"n_steps": 3, "solvable_by_single_adapter": false}
+  },
+  {
+    "id": "ms_011",
+    "query": "Identify the penalty clause, write Python to compute a late fee at 5% of the amount, then summarize: 'Late payments shall incur a penalty of 5% of the outstanding amount.'",
+    "oracle_adapter_sequence": ["legal", "code", "summarizer"],
+    "steps": [
+      {"id": 1, "domain": "legal", "oracle_adapter": "legal", "reference": "a penalty of 5% of the outstanding amount", "meta": {"answers": ["a penalty of 5% of the outstanding amount"]}},
+      {
+        "id": 2, "domain": "code", "oracle_adapter": "code",
+        "prompt": "def late_fee(amount: float) -> float:\n    \"\"\" Return a 5% penalty on amount. \"\"\"\n",
+        "reference": "    return amount * 0.05\n",
+        "meta": {"test": "\n\ndef check(candidate):\n    assert candidate(100) == 5.0\n    assert candidate(0) == 0.0\n    assert candidate(200) == 10.0\n", "entry_point": "late_fee"}
+      },
+      {"id": 3, "domain": "summarizer", "oracle_adapter": "summarizer", "reference": "Late payments are penalized at 5% of the outstanding amount.", "meta": {}}
+    ],
+    "metadata": {"n_steps": 3, "solvable_by_single_adapter": false}
+  },
+  {
+    "id": "ms_012",
+    "query": "Write SQL to count orders per customer, summarize what the query does, then fix grammar: 'This query count how many order each customer have made.'",
+    "oracle_adapter_sequence": ["sql", "summarizer", "grammar"],
+    "steps": [
+      {"id": 1, "domain": "sql", "oracle_adapter": "sql", "reference": "select customer_id, count(*) from orders group by customer_id", "meta": {}},
+      {"id": 2, "domain": "summarizer", "oracle_adapter": "summarizer", "reference": "The query counts how many orders each customer has placed.", "meta": {}},
+      {"id": 3, "domain": "grammar", "oracle_adapter": "grammar", "reference": "This query counts how many orders each customer has made.", "meta": {"corrections": ["This query counts how many orders each customer has made.", "This query counts how many orders each customer made."]}}
+    ],
+    "metadata": {"n_steps": 3, "solvable_by_single_adapter": false}
+  },
+  {
+    "id": "ms_013",
+    "query": "Answer this clinical question, identify any liability clause relevant to off-label use, then summarize both. Clinical question: 'Can Drug Z be used off-label for chronic pain?' Contract text: 'The manufacturer disclaims liability for any off-label use of the product.'",
+    "oracle_adapter_sequence": ["medical", "legal", "summarizer"],
+    "steps": [
+      {"id": 1, "domain": "medical", "oracle_adapter": "medical", "reference": "Drug Z is sometimes used off-label for chronic pain, though this is not an FDA-approved indication.", "meta": {}},
+      {"id": 2, "domain": "legal", "oracle_adapter": "legal", "reference": "The manufacturer disclaims liability for any off-label use of the product.", "meta": {"answers": ["The manufacturer disclaims liability for any off-label use of the product."]}},
+      {"id": 3, "domain": "summarizer", "oracle_adapter": "summarizer", "reference": "Off-label use of Drug Z for chronic pain is possible but not FDA-approved, and the manufacturer accepts no liability for it.", "meta": {}}
+    ],
+    "metadata": {"n_steps": 3, "solvable_by_single_adapter": false}
+  },
+  {
+    "id": "ms_014",
+    "query": "Write Python to validate that an email contains an '@' sign, identify the confidentiality clause, then fix the grammar of this clause: 'Recipient agree to keep all information confidential.'",
+    "oracle_adapter_sequence": ["code", "legal", "grammar"],
+    "steps": [
+      {
+        "id": 1, "domain": "code", "oracle_adapter": "code",
+        "prompt": "def has_at_sign(email: str) -> bool:\n    \"\"\" Return True if '@' is in email. \"\"\"\n",
+        "reference": "    return '@' in email\n",
+        "meta": {"test": "\n\ndef check(candidate):\n    assert candidate('a@b.com') == True\n    assert candidate('abcom') == False\n    assert candidate('') == False\n", "entry_point": "has_at_sign"}
+      },
+      {"id": 2, "domain": "legal", "oracle_adapter": "legal", "reference": "Recipient agree to keep all information confidential.", "meta": {"answers": ["Recipient agree to keep all information confidential."]}},
+      {"id": 3, "domain": "grammar", "oracle_adapter": "grammar", "reference": "Recipient agrees to keep all information confidential.", "meta": {"corrections": ["Recipient agrees to keep all information confidential.", "The recipient agrees to keep all information confidential."]}}
+    ],
+    "metadata": {"n_steps": 3, "solvable_by_single_adapter": false}
+  },
+  {
+    "id": "ms_015",
+    "query": "Summarize this paragraph, write Python to count its words, then fix the grammar of this description: 'This function count how many word are in text.' Paragraph: 'The quarterly report shows revenue increased by 12% while operating costs decreased by 4%, resulting in improved margins.'",
+    "oracle_adapter_sequence": ["summarizer", "code", "grammar"],
+    "steps": [
+      {"id": 1, "domain": "summarizer", "oracle_adapter": "summarizer", "reference": "Revenue grew 12% and costs fell 4% this quarter, improving margins.", "meta": {}},
+      {
+        "id": 2, "domain": "code", "oracle_adapter": "code",
+        "prompt": "def count_words(text: str) -> int:\n    \"\"\" Return the number of whitespace-separated words in text. \"\"\"\n",
+        "reference": "    return len(text.split())\n",
+        "meta": {"test": "\n\ndef check(candidate):\n    assert candidate('a b c') == 3\n    assert candidate('') == 0\n    assert candidate('one') == 1\n", "entry_point": "count_words"}
+      },
+      {"id": 3, "domain": "grammar", "oracle_adapter": "grammar", "reference": "This function counts how many words are in the text.", "meta": {"corrections": ["This function counts how many words are in the text.", "This function counts the number of words in the text."]}}
+    ],
+    "metadata": {"n_steps": 3, "solvable_by_single_adapter": false}
+  },
+  {
+    "id": "ms_016",
+    "query": "Extract the finding, write SQL to store it in a trial_results(metric, value) table, summarize the row, then fix grammar: 'Mean tumor size decreased by 3.2 cm after treatment.'",
+    "oracle_adapter_sequence": ["medical", "sql", "summarizer", "grammar"],
+    "steps": [
+      {"id": 1, "domain": "medical", "oracle_adapter": "medical", "reference": "Mean tumor size decreased by 3.2 cm after treatment.", "meta": {}},
+      {"id": 2, "domain": "sql", "oracle_adapter": "sql", "reference": "insert into trial_results (metric, value) values ('tumor_size_decrease_cm', 3.2)", "meta": {}},
+      {"id": 3, "domain": "summarizer", "oracle_adapter": "summarizer", "reference": "Tumor size decreased by 3.2 cm on average after treatment.", "meta": {}},
+      {"id": 4, "domain": "grammar", "oracle_adapter": "grammar", "reference": "Tumor size decreased by an average of 3.2 cm after treatment.", "meta": {"corrections": ["Tumor size decreased by an average of 3.2 cm after treatment.", "Tumor size decreased by 3.2 cm on average after treatment."]}}
+    ],
+    "metadata": {"n_steps": 4, "solvable_by_single_adapter": false}
+  },
+  {
+    "id": "ms_017",
+    "query": "Identify the indemnification clause, write Python to flag contracts containing the word 'indemnify', summarize the clause, then fix grammar: 'This clause protect the company from claims.'",
+    "oracle_adapter_sequence": ["legal", "code", "summarizer", "grammar"],
+    "steps": [
+      {"id": 1, "domain": "legal", "oracle_adapter": "legal", "reference": "The Supplier shall indemnify and hold harmless the Company from any third-party claims.", "meta": {"answers": ["The Supplier shall indemnify and hold harmless the Company from any third-party claims."]}},
+      {
+        "id": 2, "domain": "code", "oracle_adapter": "code",
+        "prompt": "def flags_indemnify(text: str) -> bool:\n    \"\"\" Return True if 'indemnify' appears in text (case-insensitive). \"\"\"\n",
+        "reference": "    return 'indemnify' in text.lower()\n",
+        "meta": {"test": "\n\ndef check(candidate):\n    assert candidate('shall indemnify the company') == True\n    assert candidate('no such word here') == False\n    assert candidate('INDEMNIFY') == True\n", "entry_point": "flags_indemnify"}
+      },
+      {"id": 3, "domain": "summarizer", "oracle_adapter": "summarizer", "reference": "The supplier must indemnify the company against third-party claims.", "meta": {}},
+      {"id": 4, "domain": "grammar", "oracle_adapter": "grammar", "reference": "This clause protects the company from claims.", "meta": {"corrections": ["This clause protects the company from claims.", "This clause protects the company against claims."]}}
+    ],
+    "metadata": {"n_steps": 4, "solvable_by_single_adapter": false}
+  },
+  {
+    "id": "ms_018",
+    "query": "Write SQL to select patients with blood pressure over 140, answer whether that counts as hypertension, summarize both, then fix grammar: 'Blood pressure over 140 mean patient have hypertension.'",
+    "oracle_adapter_sequence": ["sql", "medical", "summarizer", "grammar"],
+    "steps": [
+      {"id": 1, "domain": "sql", "oracle_adapter": "sql", "reference": "select * from patients where systolic_bp > 140", "meta": {}},
+      {"id": 2, "domain": "medical", "oracle_adapter": "medical", "reference": "A systolic blood pressure over 140 mmHg is generally classified as hypertension.", "meta": {}},
+      {"id": 3, "domain": "summarizer", "oracle_adapter": "summarizer", "reference": "Patients with systolic blood pressure above 140 are selected and classified as hypertensive.", "meta": {}},
+      {"id": 4, "domain": "grammar", "oracle_adapter": "grammar", "reference": "Blood pressure over 140 means the patient has hypertension.", "meta": {"corrections": ["Blood pressure over 140 means the patient has hypertension.", "Blood pressure over 140 means that the patient has hypertension."]}}
+    ],
+    "metadata": {"n_steps": 4, "solvable_by_single_adapter": false}
+  },
+  {
+    "id": "ms_019",
+    "query": "Write Python to check if a dosage exceeds a maximum limit, identify the liability clause about dosage errors, answer whether exceeding the limit is dangerous, then fix grammar of this note: 'Exceeding dose can causes serious harm.'",
+    "oracle_adapter_sequence": ["code", "legal", "medical", "grammar"],
+    "steps": [
+      {
+        "id": 1, "domain": "code", "oracle_adapter": "code",
+        "prompt": "def exceeds_limit(dose: float, max_dose: float) -> bool:\n    \"\"\" Return True if dose exceeds max_dose. \"\"\"\n",
+        "reference": "    return dose > max_dose\n",
+        "meta": {"test": "\n\ndef check(candidate):\n    assert candidate(10, 5) == True\n    assert candidate(3, 5) == False\n    assert candidate(5, 5) == False\n", "entry_point": "exceeds_limit"}
+      },
+      {"id": 2, "domain": "legal", "oracle_adapter": "legal", "reference": "The prescriber is solely liable for any dosage errors.", "meta": {"answers": ["The prescriber is solely liable for any dosage errors."]}},
+      {"id": 3, "domain": "medical", "oracle_adapter": "medical", "reference": "Exceeding the maximum recommended dose can cause serious adverse effects.", "meta": {}},
+      {"id": 4, "domain": "grammar", "oracle_adapter": "grammar", "reference": "Exceeding the dose can cause serious harm.", "meta": {"corrections": ["Exceeding the dose can cause serious harm.", "Exceeding the dose can cause serious harm to the patient."]}}
+    ],
+    "metadata": {"n_steps": 4, "solvable_by_single_adapter": false}
+  },
+  {
+    "id": "ms_020",
+    "query": "Answer this clinical question about drug interactions, write Python to check if two drug names match a known interacting pair, identify the liability disclaimer, then summarize all three. Clinical question: 'Does Drug A interact with Drug B?' Disclaimer text: 'The manufacturer is not liable for undocumented drug interactions.'",
+    "oracle_adapter_sequence": ["medical", "code", "legal", "summarizer"],
+    "steps": [
+      {"id": 1, "domain": "medical", "oracle_adapter": "medical", "reference": "Drug A and Drug B are known to interact, increasing the risk of adverse effects.", "meta": {}},
+      {
+        "id": 2, "domain": "code", "oracle_adapter": "code",
+        "prompt": "def is_interacting_pair(a: str, b: str) -> bool:\n    \"\"\" Return True if (a, b) is the known interacting pair ('DrugA', 'DrugB'). \"\"\"\n",
+        "reference": "    return {a, b} == {'DrugA', 'DrugB'}\n",
+        "meta": {"test": "\n\ndef check(candidate):\n    assert candidate('DrugA', 'DrugB') == True\n    assert candidate('DrugB', 'DrugA') == True\n    assert candidate('DrugA', 'DrugC') == False\n", "entry_point": "is_interacting_pair"}
+      },
+      {"id": 3, "domain": "legal", "oracle_adapter": "legal", "reference": "The manufacturer is not liable for undocumented drug interactions.", "meta": {"answers": ["The manufacturer is not liable for undocumented drug interactions."]}},
+      {"id": 4, "domain": "summarizer", "oracle_adapter": "summarizer", "reference": "Drug A and Drug B interact and raise adverse-effect risk, though the manufacturer disclaims liability for undocumented interactions.", "meta": {}}
+    ],
+    "metadata": {"n_steps": 4, "solvable_by_single_adapter": false}
+  }
+]

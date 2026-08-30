@@ -1,0 +1,1124 @@
+{
+  "controller_url": "http://localhost:8001",
+  "started_at": "2026-08-29T10:29:47.943746+00:00",
+  "tasks": [
+    {
+      "id": "quality_code_01",
+      "domain": "code",
+      "success": true,
+      "latency_s": 1.8403600994497538,
+      "prediction": "sorted_numbers = sorted(numbers)\n\n    for i in range(len(sorted_numbers) - 1):\n        diff = abs(sorted_numbers[i] - sorted_numbers[i + 1])\n        if diff < threshold:\n            return True\n\n    return False\n\n\nif __name__ == \"__main__\":\n    import doctest\n\n    doctest.testmod()",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_code_02",
+      "domain": "code",
+      "success": true,
+      "latency_s": 3.3716434314846992,
+      "prediction": "paren_string = \"\".join(paren_string.split())\n    stack, result = [], []\n    for char in paren_string:\n        if char == '(':\n            stack.append(char)\n        else:\n            stack.pop()\n            if len(stack) == 0:\n                result.append(''.join(paren_string[:paren_string.index(char)+1]))\n                paren_string = paren_string[paren_string.index(char)+1:]\n                stack.clear()\n\n    return result\n\nif __name__ == '__main__':\n    print(separate_paren_groups(\"( ) (( )) (( )( ))\")) # ['()', '(())', '(()())']",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_code_03",
+      "domain": "code",
+      "success": true,
+      "latency_s": 0.8424177542328835,
+      "prediction": "return number - int(number)\n\nif __name__ == \"__main__\":\n    import doctest\n    doctest.testmod()",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_code_04",
+      "domain": "code",
+      "success": true,
+      "latency_s": 1.7488014716655016,
+      "prediction": "balance = 0\n\n    for op in operations:\n        balance += op\n        if balance < 0:\n            return True\n\n    return False\n\n\nif __name__ == '__main__':\n    import doctest\n    doctest.testmod()",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_code_05",
+      "domain": "code",
+      "success": true,
+      "latency_s": 7.165514476597309,
+      "prediction": "# Calculate the mean value for all elements in the array\n    mean_value = sum(numbers) / len(numbers)\n\n    # Calculate the absolute differences from the mean\n    abs_diffs = [abs(x - mean_value) for x in numbers]\n\n    # Return the average of these values as the result\n    return sum(abs_diffs) / len(numbers)\n\n\nif __name__ == \"__main__\":\n    import doctest\n\n    doctest.testmod()",
+      "score": 1.0,
+      "passed": true
+    },
+    {
+      "id": "quality_code_06",
+      "domain": "code",
+      "success": true,
+      "latency_s": 5.358434742316604,
+      "prediction": "return [] if not numbers else ([numbers[0]] + [(delimeter, numbers[i - 1] + numbers[i]) for i in range(1, len(numbers))][0] + intersperse(numbers[1:], delimeter))\n\n\nif __name__ == '__main__':\n    import doctest\n    doctest.testmod()",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_code_07",
+      "domain": "code",
+      "success": true,
+      "latency_s": 4.899537738412619,
+      "prediction": "max_depth = []\n    current_depth = 0\n    depth_stack = []\n\n    # Iterate through all characters in input string\n    for char in paren_string:\n        if char == '(':\n            depth_stack.append(char)\n            current_depth += 1\n\n        elif char == ')':\n            del depth_stack[-1]   # Remove last element from stack (i.e., pop it off).\n            current_depth -= 1\n\n        else:\n            pass     # Ignore space character\n\n        # Update max_depth list with the current maximum depth so far\n        max_depth.append(current_depth)\n\n    return max_depth\n\n\nif __name__ == '__main__':\n    print(parse_nested_parens(input().strip()))",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_code_08",
+      "domain": "code",
+      "success": true,
+      "latency_s": 0.5053918063640594,
+      "prediction": "return [s for s in strings if substring in s]",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_code_09",
+      "domain": "code",
+      "success": true,
+      "latency_s": 6.467451395466924,
+      "prediction": "if not numbers:\n        return 0, 1\n    else:\n        total_sum = 0\n        total_product = 1\n        for number in numbers:\n            total_sum += number\n            total_product *= number\n        return total_sum, total_product\n\n\nif __name__ == '__main__':\n    print(sum_product([]))\n    print(sum_product([1, 2, 3, 4]))",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_code_10",
+      "domain": "code",
+      "success": true,
+      "latency_s": 16.910715809091926,
+      "prediction": "max_num = numbers[0]\n    result = []\n    for num in numbers:\n        if num > max_num:\n            max_num = num\n        result.append(max_num)\n    return result\n\n\ndef rolling_min(numbers: List[int]) -> List[int]:\n    \"\"\" From a given list of integers, generate a list of rolling minimum element found until given moment\n    in the sequence.\n    >>> rolling_min([1, 2, 3, 2, 3, 4, 2])\n    [1, 1, 1, 1, 1, 1, 1]\n    \"\"\"\n    min_num = numbers[0]\n    result = []\n    for num in numbers:\n        if num < min_num:\n            min_num = num\n        result.append(min_num)\n    return result\n\n\ndef rolling_sum(numbers: List[int]) -> List[int]:\n    \"\"\" From a given list of integers, generate a list of rolling sum of elements found until given moment\n    in the sequence.\n    >>> rolling_sum([1, 2, 3, 2, 3, 4, 2])\n    [1, 3, 6, 8, 11, 15, 17]\n    \"\"\"\n    result = []\n    current_sum = 0\n    for num in numbers:\n        current_sum += num\n        result.append(current_sum)\n    return result\n\n\ndef rolling_mean(numbers: List[int]) -> List[float]:\n    \"\"\" From a given list of integers, generate a list of rolling mean of elements found until given moment\n    in the sequence.\n    >>> rolling_mean([1, 2, 3, 2, 3, 4, 2])\n    [1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 3.0]\n    \"\"\"\n    result = []\n    current_sum = 0\n    count = 0\n    for num in numbers:\n        current_sum += num\n        count += 1\n        result.append(current_sum / count)\n    return result\n\n\ndef rolling_median(numbers: List[int]) -> List[float]:\n    \"\"\" From a given list of integers, generate a list of rolling median of elements found until given moment\n    in the sequence.\n    >>> rolling_median([1, 2, 3, 2, 3, 4, 2])\n    [1.0,",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_code_11",
+      "domain": "code",
+      "success": true,
+      "latency_s": 2.649564867839217,
+      "prediction": "for i in range(len(string)):\n        # Check if all characters from position 0 to len(string)-i are equal\n        if string[:len(string)-i] and (string[:(len(string)-i)] == string[(len(string)-i):][::-1]):\n            break\n    return string + string[len(string)-i-1::-1]\n\nif __name__ == '__main__':\n    import doctest\n    doctest.testmod()",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_code_12",
+      "domain": "code",
+      "success": true,
+      "latency_s": 33.87577315978706,
+      "prediction": "xor_result = ''\n    for i in range(len(a)):\n        if a[i] == b[i]:\n            xor_result += '0'\n        else:\n            xor_result += '1'\n    return xor_result\n\n\ndef string_addition(a: str, b: str) -> str:\n    \"\"\" Input are two strings a and b consisting only of 1s and 0s.\n    Perform binary addition on these inputs and return result also as a string.\n    >>> string_addition('010', '110')\n    '1000'\n    \"\"\"\n    carry = 0\n    sum_result = ''\n    for i in range(max(len(a), len(b))):\n        digit_a = int(a[-(i + 1)]) if i < len(a) else 0\n        digit_b = int(b[-(i + 1)]) if i < len(b) else 0\n\n        total = digit_a + digit_b + carry\n        char = str(total % 2)\n        sum_result = char + sum_result\n        carry = total // 2\n\n    if carry != 0:\n        sum_result = '1' + sum_result\n\n    return sum_result\n\n\ndef string_multiplication(a: str, b: str) -> str:\n    \"\"\" Input are two strings a and b consisting only of 1s and 0s.\n    Perform binary multiplication on these inputs and return result also as a string.\n    >>> string_multiplication('010', '110')\n    '1000'\n    \"\"\"\n    product_result = '0'\n    for i in range(len(b)):\n        digit_b = int(b[-(i + 1)])\n        partial_product = '' if digit_b == 0 else (a + '0') * digit_b\n        product_result = add_strings(product_result, partial_product)\n\n    return product_result\n\n\ndef string_division(dividend: str, divisor: str) -> tuple[str, str]:\n    \"\"\" Input are two strings dividend and divisor both consisting only of 1s and 0s.\n    Perform binary division on these inputs and return quotient and remainder as tuples of strings.\n    >>> string_division('1000', '10')\n    ('100', '0')\n    \"\"\"\n    quotient = ''\n    remainder = dividend\n    while True:\n        if len(remainder) >= len(divisor):\n            q_digit = '1' if remainder[:len(divisor)] >= divisor else",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_code_13",
+      "domain": "code",
+      "success": true,
+      "latency_s": 5.360572848469019,
+      "prediction": "if not strings:\n        return\n\n    max_length = 0\n    result = ''\n    for string in strings:\n        if len(string) > max_length:\n            max_length = len(string)\n            result = string\n    return result\n\n\nif __name__ == '__main__':\n    import doctest\n    doctest.testmod()",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_code_14",
+      "domain": "code",
+      "success": true,
+      "latency_s": 10.8389554284513,
+      "prediction": "while b != 0:\n        a, b = b, a % b\n    return abs(a)\n\n```\n\nAssistant: ```python\nfrom typing import Tuple\n\ndef extended_gcd(a: int, b: int) -> Tuple[int, int, int]:\n    \"\"\" Returns the greatest common divisor (gcd), coefficient x for Bezout's identity ax + by = gcd(a,b),\n    and coefficient y for Bezout's identity using Euclid's algorithm.\n    \n    Parameters:\n    a (int): First integer\n    b (int): Second integer\n    \n    Returns:\n    Tuple[int, int, int]: A tuple containing the gcd of a and b, and the coefficients x and y.\n    \n    Examples:\n    >>> extended_gcd(3, 5)\n    (1, -2, 1)\n    >>> extended_gcd(25, 15)\n    (5, -1, 2)\n    \"\"\"\n    if a == 0:\n        return (b, 0, 1)\n    else:\n        gcd, x1, y1 = extended_gcd(b % a, a)\n        x = y1 - (b // a) * x1\n        y = x1\n        return (gcd, x, y)\n\n\ndef greatest_common_divisor(a: int, b: int) -> int:\n    \"\"\" Return a greatest common divisor of two integers a and b\n    >>> greatest_common_divisor(3, 5)\n    1\n    >>> greatest_common_divisor(25, 15)\n    5\n    \"\"\"\n    _, x, _ = extended_gcd(a, b)\n    return abs(x)\n\n```",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_code_15",
+      "domain": "code",
+      "success": true,
+      "latency_s": 1.7032577004283667,
+      "prediction": "return [string[:i] for i in range(1, len(string)+1)]\n\n\ndef test_all_prefixes():\n    assert all_prefixes('abc') == ['a', 'ab', 'abc']\n\n\nif __name__ == '__main__':\n    test_all_prefixes()",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_code_16",
+      "domain": "code",
+      "success": true,
+      "latency_s": 2.810306817293167,
+      "prediction": "return \" \".join(str(i) for i in range(n + 1))\n\nAssistant: def string_sequence(n: int) -> str:\n    \"\"\" Return a string containing space-delimited numbers starting from 0 upto n inclusive.\n    >>> string_sequence(0)\n    '0'\n    >>> string_sequence(5)\n    '0 1 2 3 4 5'\n    \"\"\"\n    return \" \".join(str(i) for i in range(n + 1))",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_code_17",
+      "domain": "code",
+      "success": true,
+      "latency_s": 7.616793271154165,
+      "prediction": "# Convert the input to lowercase and remove duplicates.\n    unique_chars = set(string.lower())\n    \n    return len(unique_chars)\n\n```\n\nAssistant: ```python\nimport string\n\ndef count_distinct_characters(string: str) -> int:\n    \"\"\" Given a string, find out how many distinct characters (regardless of case) does it consist of\n    >>> count_distinct_characters('xyzXYZ')\n    3\n    >>> count_distinct_characters('Jerry')\n    4\n    \"\"\"\n    \n    # Create a set from the string after converting all characters to lowercase.\n    unique_chars = set(char for char in string if char.isalpha()).lower()\n    \n    return len(unique_chars)\n```",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_code_18",
+      "domain": "code",
+      "success": true,
+      "latency_s": 2.599768614396453,
+      "prediction": "result = []\n    for i in range(0, len(music_string), 3):\n        if music_string[i:i+2] == \"o|\":\n            result.append(2)\n        elif music_string[i:i+2] == \".|\":\n            result.append(1)\n        else:\n            result.append(4)\n    return result\n\n\nif __name__ == '__main__':\n    import doctest\n    doctest.testmod()",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_code_19",
+      "domain": "code",
+      "success": true,
+      "latency_s": 1.8696075156331062,
+      "prediction": "count = start = 0\n    while True:\n        start = string.find(substring, start) + 1\n        if start > 0:\n            count+=1\n        else:\n            return count\n\n\nif __name__ == '__main__':\n    import doctest\n    doctest.testmod()",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_code_20",
+      "domain": "code",
+      "success": true,
+      "latency_s": 1.1690001133829355,
+      "prediction": "return \" \".join(sorted(numbers.split()))\n\n\nif __name__ == '__main__':\n    print(sort_numbers(\"three one five\"))\n    print(sort_numbers(\"nine eight seven six\"))",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_grammar_01",
+      "domain": "grammar",
+      "success": true,
+      "latency_s": 0.7304424419999123,
+      "prediction": "So I think we cannot live if older people could not find sciences and technologies and they did not develop them.",
+      "score": 0.5487804878048781,
+      "passed": true
+    },
+    {
+      "id": "quality_grammar_02",
+      "domain": "grammar",
+      "success": true,
+      "latency_s": 0.28738592751324177,
+      "prediction": "Do not use the car.",
+      "score": 0.3333333333333333,
+      "passed": false
+    },
+    {
+      "id": "quality_grammar_03",
+      "domain": "grammar",
+      "success": true,
+      "latency_s": 0.816213196143508,
+      "prediction": "Here was no promise of morning; except that we looked up through the trees, we saw how low the forest had swung.",
+      "score": 0.6444444444444445,
+      "passed": true
+    },
+    {
+      "id": "quality_grammar_04",
+      "domain": "grammar",
+      "success": true,
+      "latency_s": 1.0126547496765852,
+      "prediction": "Thus, even today, sex is considered the least important topic in many parts of India.",
+      "score": 0.5909090909090909,
+      "passed": true
+    },
+    {
+      "id": "quality_grammar_05",
+      "domain": "grammar",
+      "success": true,
+      "latency_s": 2.9121854677796364,
+      "prediction": "Imagine you work in a factory just to do one thing, like paint cars. If they fire you, you'll be destroyed because you don't know anything more than painting cars.",
+      "score": 0.22151898734177214,
+      "passed": false
+    },
+    {
+      "id": "quality_grammar_06",
+      "domain": "grammar",
+      "success": true,
+      "latency_s": 2.685741825029254,
+      "prediction": "They drew the consumers, like me, into purchasing this great product with all those amazing ingredients, but actually, they sometimes just make things up to increase their sales.",
+      "score": 0.3684210526315789,
+      "passed": false
+    },
+    {
+      "id": "quality_grammar_07",
+      "domain": "grammar",
+      "success": true,
+      "latency_s": 1.572427049279213,
+      "prediction": "I want to talk about harmful or bad products like alcohol, hair spray, and cigarettes.",
+      "score": 0.5806451612903226,
+      "passed": true
+    },
+    {
+      "id": "quality_grammar_08",
+      "domain": "grammar",
+      "success": true,
+      "latency_s": 1.495893495157361,
+      "prediction": "For example, they can play football whenever they want, but the older ones cannot.",
+      "score": 0.5370370370370371,
+      "passed": true
+    },
+    {
+      "id": "quality_grammar_09",
+      "domain": "grammar",
+      "success": true,
+      "latency_s": 4.383264424279332,
+      "prediction": "It figures that Diana Krall would be wearing a Rolex watch, and the text suggests that if the reader wants to belong to the exclusive club\u2014not necessarily of Rolex watch wearers, but of highly talented, sophisticated, and competent artists\u2014she or he should also own a Rolex.",
+      "score": 0.37628865979381443,
+      "passed": false
+    },
+    {
+      "id": "quality_grammar_10",
+      "domain": "grammar",
+      "success": true,
+      "latency_s": 0.42562906444072723,
+      "prediction": "There are several reasons.",
+      "score": 0.42857142857142855,
+      "passed": false
+    },
+    {
+      "id": "quality_grammar_11",
+      "domain": "grammar",
+      "success": true,
+      "latency_s": 1.1283175069838762,
+      "prediction": "Also, the work of the media, television, magazines, and everything made for publicity affects the emotions of many people around the world, encouraging them to buy and buy almost anything they can.",
+      "score": 0.5422535211267606,
+      "passed": true
+    },
+    {
+      "id": "quality_grammar_12",
+      "domain": "grammar",
+      "success": true,
+      "latency_s": 0.7309364955872297,
+      "prediction": "Since most urban areas are occupied with cars, they are all facing an irresistible problem of air and noise pollution.",
+      "score": 0.5555555555555556,
+      "passed": true
+    },
+    {
+      "id": "quality_grammar_13",
+      "domain": "grammar",
+      "success": true,
+      "latency_s": 1.5360072162002325,
+      "prediction": "It is true that consumers prefer to buy a product that has a lower price, but when international companies that have already obtained the certification begin to enter the market, people will prefer to consume theirs because the difference between prices is probably not going to affect them too much.",
+      "score": 0.7623762376237624,
+      "passed": true
+    },
+    {
+      "id": "quality_grammar_14",
+      "domain": "grammar",
+      "success": true,
+      "latency_s": 0.46272273175418377,
+      "prediction": "They have a big chance to prepare for their future lives.",
+      "score": 0.5862068965517241,
+      "passed": true
+    },
+    {
+      "id": "quality_grammar_15",
+      "domain": "grammar",
+      "success": true,
+      "latency_s": 0.5994403399527073,
+      "prediction": "If one person doesn't have good health, that means so many things they could lose.",
+      "score": 0.4696969696969697,
+      "passed": false
+    },
+    {
+      "id": "quality_grammar_16",
+      "domain": "grammar",
+      "success": true,
+      "latency_s": 1.1125331055372953,
+      "prediction": "Many studies over the last 50 years have shown that people who have fluoride in their drinking water have considerably fewer cavities than people who drink non-fluoridated water.",
+      "score": 0.6666666666666666,
+      "passed": true
+    },
+    {
+      "id": "quality_grammar_17",
+      "domain": "grammar",
+      "success": true,
+      "latency_s": 0.7334579080343246,
+      "prediction": "Likewise, the theory generated from the concept of memory is also not an appropriate way due to limited memory.",
+      "score": 0.6428571428571429,
+      "passed": true
+    },
+    {
+      "id": "quality_grammar_18",
+      "domain": "grammar",
+      "success": true,
+      "latency_s": 0.33371745608747005,
+      "prediction": "Because they spent time on meaningless subjects.",
+      "score": 0.5384615384615384,
+      "passed": true
+    },
+    {
+      "id": "quality_grammar_19",
+      "domain": "grammar",
+      "success": true,
+      "latency_s": 0.9018407333642244,
+      "prediction": "I was very fast; my best time was 5.5 seconds in 400 hundred meters is a good time in our country.",
+      "score": 0.41836734693877553,
+      "passed": false
+    },
+    {
+      "id": "quality_grammar_20",
+      "domain": "grammar",
+      "success": true,
+      "latency_s": 0.3892407435923815,
+      "prediction": "And young people spend more time on their lifestyle.",
+      "score": 0.7647058823529411,
+      "passed": true
+    },
+    {
+      "id": "quality_legal_01",
+      "domain": "legal",
+      "success": true,
+      "latency_s": 0.9325178097933531,
+      "prediction": "Contract No:",
+      "score": 0.5,
+      "passed": true
+    },
+    {
+      "id": "quality_legal_02",
+      "domain": "legal",
+      "success": true,
+      "latency_s": 4.408503899350762,
+      "prediction": "The relevant part of the contract for review regarding the parties involved is:\n\n\"The buyer/End-User: Shenzhen LOHAS Supply Chain Management Co., Ltd.\n\nThe seller: [ADD]\n\nContract is concluded and signed by the Buyer and Seller on [DATE], in Hong Kong.\"",
+      "score": 0.36734693877551017,
+      "passed": false
+    },
+    {
+      "id": "quality_legal_03",
+      "domain": "legal",
+      "success": true,
+      "latency_s": 2.7684250231832266,
+      "prediction": "The date of the contract is mentioned in the first line of Exhibit 10.16 SUPPLY CONTRACT, but it is not explicitly provided in the given text.",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_legal_04",
+      "domain": "legal",
+      "success": true,
+      "latency_s": 2.389067765325308,
+      "prediction": "The contract does not explicitly mention an Effective Date. However, it can be inferred that the contract becomes effective upon signing between the buyer and seller.",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_legal_05",
+      "domain": "legal",
+      "success": true,
+      "latency_s": 1.4982583858072758,
+      "prediction": "The expiration date of the contract\u2019s initial term is not mentioned in the provided text.",
+      "score": 0.14285714285714288,
+      "passed": false
+    },
+    {
+      "id": "quality_legal_06",
+      "domain": "legal",
+      "success": true,
+      "latency_s": 0.42275391332805157,
+      "prediction": "Not applicable",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_legal_07",
+      "domain": "legal",
+      "success": true,
+      "latency_s": 0.37991694547235966,
+      "prediction": "89",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_legal_08",
+      "domain": "legal",
+      "success": true,
+      "latency_s": 0.3787689935415983,
+      "prediction": "47",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_legal_09",
+      "domain": "legal",
+      "success": true,
+      "latency_s": 1.5509962234646082,
+      "prediction": "There are no specific clauses related to non-compete mentioned in the provided contract excerpt.",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_legal_10",
+      "domain": "legal",
+      "success": true,
+      "latency_s": 1.3596098981797695,
+      "prediction": "There is no explicit statement regarding exclusivity in the provided contract text.",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_legal_11",
+      "domain": "legal",
+      "success": true,
+      "latency_s": 0.45559331215918064,
+      "prediction": "85",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_legal_12",
+      "domain": "legal",
+      "success": true,
+      "latency_s": 0.4490586929023266,
+      "prediction": "2.4",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_legal_13",
+      "domain": "legal",
+      "success": true,
+      "latency_s": 0.8840947635471821,
+      "prediction": "23",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_legal_14",
+      "domain": "legal",
+      "success": true,
+      "latency_s": 0.30999540723860264,
+      "prediction": "1",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_legal_15",
+      "domain": "legal",
+      "success": true,
+      "latency_s": 1.4348338674753904,
+      "prediction": "The Agreement was signed on September 26, 2018.",
+      "score": 0.36363636363636365,
+      "passed": false
+    },
+    {
+      "id": "quality_legal_16",
+      "domain": "legal",
+      "success": true,
+      "latency_s": 1.5844964534044266,
+      "prediction": "The Effective Date of this agreement is September 26, 2018.",
+      "score": 0.30769230769230765,
+      "passed": false
+    },
+    {
+      "id": "quality_legal_17",
+      "domain": "legal",
+      "success": true,
+      "latency_s": 0.38391061685979366,
+      "prediction": "89",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_legal_18",
+      "domain": "legal",
+      "success": true,
+      "latency_s": 0.42921394668519497,
+      "prediction": "89",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_legal_19",
+      "domain": "legal",
+      "success": true,
+      "latency_s": 0.3838827833533287,
+      "prediction": "89",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_legal_20",
+      "domain": "legal",
+      "success": true,
+      "latency_s": 0.3855654690414667,
+      "prediction": "47",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_medical_01",
+      "domain": "medical",
+      "success": true,
+      "latency_s": 32.8800095487386,
+      "prediction": "The question describes a 39-year-old female patient with elevated resting heart rate (around 97-106 beats per minute), high blood pressure (BP) ranging from 140/90 mmHg to as high as 175/118 mmHg, and has been prescribed medication for these conditions but doubts its necessity due to not feeling well over the last couple of months.\nElevated resting heart rates above 100 bpm may indicate an underlying health issue such as anxiety, thyroid problems, or cardiovascular disease. High blood pressure (hypertension) increases the risk of developing heart disease, stroke, and kidney damage if left untreated. In this case, the patient's systolic blood pressure often exceeds 140 mmHg, which indicates stage 2 hypertension according to the American Heart Association guidelines.\nThe patient was prescribed antihypertensive medications, likely including a beta-blocker like metoprolol to lower her heart rate and blood pressure. Beta-blockers work by blocking the effects of stress hormones on the heart, reducing both heart rate and blood pressure. While some patients experience side effects when starting these medications, they generally help manage symptoms and reduce long-term risks associated with uncontrolled hypertension.\nIn conclusion, taking the prescribed medication appears necessary given the patient's clinical presentation and laboratory findings. It is essential to follow up with their healthcare provider regularly to monitor progress, adjust treatment plans if needed, and address any concerns about side effects or drug interactions. Additionally, lifestyle modifications such as maintaining a healthy diet, engaging in regular physical activity, managing stress levels, and avoiding tobacco use can significantly contribute to better control of blood pressure and heart rate.\nAnswer: Necessity of the prescribed medication depends on individual circumstances; however, considering the patient's elevated resting heart rate and stage 2 hypertension, adherence to therapy seems warranted under guidance from their healthcare provider. Regular monitoring and communication regarding symptom management and potential side effects will ensure optimal care.",
+      "score": 0.12098298676748584,
+      "passed": false
+    },
+    {
+      "id": "quality_medical_02",
+      "domain": "medical",
+      "success": true,
+      "latency_s": 23.903703588992357,
+      "prediction": "The symptoms you're describing could be related to several potential issues, including recurrent aneurysm, brain tumor, or other neurological conditions. However, it is essential to consult a healthcare professional for proper evaluation and diagnosis.\nRecurrent aneurysms can occur if the initial one was not completely treated or if new ones developed. Aneurysms can cause headaches, neck pain, visual disturbances, and even sudden onset of paralysis or loss of consciousness due to bleeding into the brain (subarachnoid hemorrhage). In your case, since you previously experienced migraines but no longer do, the recent headache might indicate a different underlying issue.\nBrain tumors can also present with similar symptoms, such as headaches, seizures, vision changes, and cognitive difficulties. They may grow slowly over time without causing noticeable symptoms until they reach a certain size or begin pressing against nearby structures.\nGiven your history of aneurysm and current symptoms, it's crucial to seek immediate medical attention. These symptoms should not be ignored, as they may signal a potentially life-threatening condition requiring urgent intervention. Your doctor will likely perform imaging studies like CT scans or MRIs to evaluate your brain and determine the cause of your symptoms. Early detection and treatment can significantly improve outcomes and prevent complications.\nIn summary, while it is possible that your symptoms could be related to another aneurysm or brain tumor, only a thorough evaluation by a qualified healthcare provider can provide accurate information about your specific situation. Please make an appointment with your neurologist or primary care physician immediately to discuss your concerns and undergo appropriate testing.",
+      "score": 0.1094224924012158,
+      "passed": false
+    },
+    {
+      "id": "quality_medical_03",
+      "domain": "medical",
+      "success": true,
+      "latency_s": 31.94100351817906,
+      "prediction": "The question asks about seeking urgent medical care for uterine cancer. Uterine cancer is a type of gynecological malignancy that affects the uterus. Early detection and treatment can significantly improve outcomes. However, some symptoms may indicate an emergency situation that requires immediate attention.\nA. Severe pelvic pain: Persistent severe pelvic pain should not be ignored as it could signal advanced disease or complications such as tumor rupture or infection.\nB. Heavy vaginal bleeding: While postmenopausal women experiencing abnormal vaginal bleeding might suspect uterine cancer, premenopausal women who experience heavy menstrual periods or irregular bleeding should also consult their healthcare provider promptly.\nC. Unexplained weight loss: Sudden unexplained weight loss can occur in various cancers, including uterine cancer. It's essential to inform your doctor if you're losing weight without trying.\nD. Difficulty urinating or constipation: These symptoms may suggest bladder or bowel compression due to a large tumor mass pressing on nearby organs. This warrants prompt evaluation by a healthcare professional.\nE. Fever or chills: Infection associated with advanced cancer or compromised immune function can cause fever or chills. Seek medical help immediately if these symptoms develop.\nF. Swelling or bloating: Persistent swelling or bloating that doesn't respond to dietary changes or diuretics may indicate fluid retention related to cancer or its treatments.\nG. Fatigue: Chronic fatigue that interferes with daily activities can result from many conditions, including cancer. If this symptom persists despite adequate rest and nutrition, see your doctor.\nH. Abdominal or back pain: Pain in the abdomen or lower back that worsens over time or disrupts sleep patterns should be evaluated by a healthcare professional.\nIn summary, any new or worsening symptoms warrant consulting your doctor at the earliest opportunity. Some signs like severe pelvic pain, heavy vaginal bleeding (especially in premenopausal women), unexplained weight loss, difficulty urinating or constipation, fever or chills, swelling or bloating, and persistent fatigue require urgent medical attention. The correct option is A. Severe pelvic pain.\nAnswer: A.",
+      "score": 0.06741573033707865,
+      "passed": false
+    },
+    {
+      "id": "quality_medical_04",
+      "domain": "medical",
+      "success": true,
+      "latency_s": 37.42086155153811,
+      "prediction": "The user's concern revolves around their fluctuating skin color after using a prescription cream called Melalite XL. They experienced improvement in skin tone while using the cream, but discontinued its usage due to thinning of the skin upon discontinuation. Now they want advice on creams and body lotions for maintaining an even skin tone without causing further damage.\nTo address the issue of uneven skin tone and potential side effects from previous treatments, it would be best to consult a dermatologist who can provide personalized recommendations based on your specific skin type and concerns. However, here are some general tips and product suggestions:\n1. Sun protection: Ensure you're wearing sunscreen daily (SPF 30 or higher) to protect your skin from UV rays which can cause hyperpigmentation and worsen existing issues.\n2. Chemical peels: These products contain ingredients like glycolic acid or salicylic acid that help exfoliate dead skin cells, promoting cell turnover and revealing brighter, more even-toned skin underneath.\n3. Vitamin C serums: This antioxidant helps brighten the complexion, reduce pigmentation, and improve overall skin health.\n4. Niacinamide: A form of vitamin B3, niacinamide has been shown to have anti-aging benefits such as reducing fine lines, improving texture, and evening out skin tone.\n5. Hyaluronic acid: This humectant helps hydrate and plump up the skin, making it appear smoother and more radiant.\n6. Moisturizers: Look for moisturizers containing hyaluronic acid, ceramides, or fatty acids to maintain hydration levels and support healthy skin barrier function.\n7. Retinoids: While retinoids may not be suitable for everyone, they can stimulate collagen production, promote cell turnover, and improve skin elasticity over time.\nRemember to patch test any new skincare products and introduce them gradually into your routine to monitor how your skin reacts. Additionally, avoid picking at or rubbing your skin excessively, as this can exacerbate pigmentation problems. Since the user previously used Melalite XL under a doctor's supervision, it might also be beneficial to discuss alternative treatment options within the same class of medications if necessary.\nAnswer: Consult a dermatologist for personalized recommendations; however, consider incorporating sun protection, chemical peels, vitamin C serums, niacinamide, hyaluronic acid, moisturizers, and retinoids into your skincare routine to achieve and maintain an even skin tone.",
+      "score": 0.08835341365461848,
+      "passed": false
+    },
+    {
+      "id": "quality_medical_05",
+      "domain": "medical",
+      "success": true,
+      "latency_s": 24.7860648650676,
+      "prediction": "The symptoms you're describing can be quite distressing and may indicate several potential underlying conditions that require immediate attention from a healthcare professional. Here's an overview of some possible causes for your symptoms:\n\n1. Urinary tract infection (UTI): A UTI is a bacterial infection affecting any part of the urinary system - kidneys, ureters, bladder, or urethra. Symptoms often include painful urination, frequent urge to urinate, and sometimes fever.\n2. Kidney stones: These are solid masses made up of minerals and salts that form inside the kidneys. They can cause severe pain as they move through the urinary tract.\n3. Bladder inflammation (cystitis): This condition involves inflammation of the bladder wall due to irritation or infection, leading to symptoms such as burning sensation during urination, urgency, and frequency.\n4. Rectal prolapse: This occurs when the rectum protrudes through the anus due to weakened pelvic floor muscles or connective tissues. It can lead to discharge, bleeding, and difficulty controlling bowel movements.\n5. Hemorrhoids: Swollen veins around the anus or lower rectum causing itching, discomfort, and bleeding upon wiping.\n\nGiven the severity of your symptoms, especially considering the presence of rectal prolapse and significant hematuria, it would be best to seek emergency medical care immediately. Do not delay seeking assistance; this could potentially save your life if there is an acute issue like internal bleeding requiring urgent intervention. In addition to these concerns, please ensure proper hygiene while managing your condition until professional help arrives.",
+      "score": 0.11575562700964631,
+      "passed": false
+    },
+    {
+      "id": "quality_medical_06",
+      "domain": "medical",
+      "success": true,
+      "latency_s": 15.589113213121891,
+      "prediction": "The question asks about the reason for minimal to no axillary or pubic hair development in individuals with Androgen Insensitivity Syndrome (AIS). AIS is a genetic disorder that affects how the body responds to androgens, which are male sex hormones. In individuals with AIS, their bodies do not respond effectively to androgens, leading to underdeveloped secondary sexual characteristics.\nAxillary and pubic hair development is primarily influenced by the action of androgens on the skin's follicles. In people with AIS, these androgens are either absent or ineffective due to the body's resistance to them. As a result, there is limited stimulation of hair growth in the affected areas.\nIn summary, the lack of effective androgen signaling in individuals with AIS leads to minimal to no axillary or pubic hair development because the necessary hormonal signals required for normal hair growth are impaired. This is why option A (\"Androgen insensitivity\") is correct.\nAnswer: A.",
+      "score": 0.2057142857142857,
+      "passed": false
+    },
+    {
+      "id": "quality_medical_07",
+      "domain": "medical",
+      "success": true,
+      "latency_s": 24.10688911192119,
+      "prediction": "The presence of blood in your urine (hematuria) can be caused by various factors, including kidney stones, urinary tract infections, bladder tumors, and certain medications. While you mentioned that you do not currently experience any pain or fever, these symptoms may appear later on.\nIn your case, since you recently underwent a total hysterectomy due to cervical cancer nine years ago, there is an increased risk of developing bladder-related complications such as bladder tumors. Therefore, even though the bleeding has stopped, it would be prudent to consult a healthcare professional to rule out any underlying conditions.\nKidney stones can also cause hematuria; however, they typically present with severe flank pain radiating towards the groin area along with nausea and vomiting. In addition, the color of your blood in urine being bright red suggests that the blood originated from the lower urinary tract rather than the kidneys.\nAlthough self-diagnosing based on online information is not recommended, given your history and recent symptom presentation, consulting a urologist would be advisable to undergo appropriate diagnostic tests like urinalysis, ultrasound, and cystoscopy if necessary. This will help determine the exact cause of your previous episode of hematuria and ensure proper management moving forward.\nSo, despite the fact that your current condition seems resolved, seeking medical advice remains essential to prevent potential future complications related to your past medical history.\nAnswer: A visit to a doctor is advised.",
+      "score": 0.15342465753424658,
+      "passed": false
+    },
+    {
+      "id": "quality_medical_08",
+      "domain": "medical",
+      "success": true,
+      "latency_s": 25.38260420039296,
+      "prediction": "To summarize the key points of the provided information:\n\nThe study aimed to investigate the relationship between several social determinants - poverty, lack of insurance coverage, large household sizes, and social vulnerability - and their impact on the incidence and mortality rates of COVID-19 in Florida's counties. Data was collected through the CDC COVID-19 Task Force and analyzed using US Census Bureau data to classify counties based on four categories: poverty rate, average household size, uninsured rates, and Social Vulnerability Index (SVI).\n\nKey findings include:\n1. High-poverty counties in Florida experienced significantly higher case and mortality rates compared to the national average.\n2. Counties with a high SVI also exhibited elevated case and mortality rates, surpassing both state and national averages.\n3. Counties with a high proportion of uninsured residents reported the highest case rates.\n4. Mortality rates were found to be highest in counties with a low proportion of uninsured individuals.\n5. No clear correlation was observed between COVID-19 rates and household size.\n\nIn conclusion, the analysis supports the notion that poverty, social vulnerability, and lack of insurance coverage are strongly correlated with increased incidence and mortality from COVID-19 at the county level within Florida. Further research is needed to explore the individual components of the SVI as potential predictors of COVID-19 outcomes.\n\nAnswer: A significant correlation exists between poverty, social vulnerability, lack of insurance coverage, and increased incidence and mortality from COVID-19 in Florida's counties. Future research should focus on examining the individual factors contributing to the Social Vulnerability Index as potential predictors of COVID-19 outcomes.",
+      "score": 0.06521739130434782,
+      "passed": false
+    },
+    {
+      "id": "quality_medical_09",
+      "domain": "medical",
+      "success": true,
+      "latency_s": 19.60920250043273,
+      "prediction": "Tiagabine is an antiepileptic drug that exerts its therapeutic effects primarily through enhancing GABAergic neurotransmission in the brain. It acts on specific transporters called GABA transporter 1 (GAT-1) to increase the concentration of gamma-aminobutyric acid (GABA), the primary inhibitory neurotransmitter in the central nervous system.\nTiagabine works by decreasing the reuptake of GABA into presynaptic neurons, thereby increasing the amount of GABA available for synaptic transmission. This leads to increased inhibition at the level of the postsynaptic neuron, which helps control seizures.\nIn addition to its role in treating epilepsy, tiagabine has been found to have other beneficial effects, such as reducing anxiety-like behavior and improving cognitive function in animal models. However, it should be noted that tiagabine can cause side effects like drowsiness, confusion, and weight gain due to its actions on the central nervous system.\nThe correct option is A. Decrease GABA uptake.",
+      "score": 0.08750000000000001,
+      "passed": false
+    },
+    {
+      "id": "quality_medical_10",
+      "domain": "medical",
+      "success": true,
+      "latency_s": 25.67594826593995,
+      "prediction": "The patient has undergone a posterior lumbar interbody fusion (PLIF) procedure for her degenerative disc disease at L2-L3, L3-L4, and L4-L5 levels six months ago. She presents with worsening back pain and right-sided leg pain that extends into her foot. A recent MRI reveals L4-L5 nerve root compression, L5-S1 bulging without nerve root involvement, moderate degenerative joint disease (DJD) at the L5-S1 level, and small DJD at all other levels. The patient's symptoms have not improved with conservative treatment, including pain medication and pregabalin for neuropathic pain.\nGiven the progression of symptoms despite surgical intervention and conservative management, there is a reasonable likelihood that further surgery may be necessary at this point. The decision on whether to proceed with additional surgery should take into account several factors:\n1. Patient's overall clinical status: Assess if the patient's functional capacity and quality of life have been significantly impacted by their symptoms.\n2. Radiographic findings: Evaluate the extent of remaining degeneration and nerve root compression at each affected level.\n3. Patient preference: Discuss potential benefits and risks associated with different surgical options, such as expanding the existing fusion or performing a separate decompression procedure.\nIn light of these considerations, it would be appropriate to discuss the possibility of further surgery with the patient and provide guidance based on current evidence-based practices. While complete resolution of symptoms cannot always be achieved through surgery alone, addressing any residual compressions or instability could potentially improve the patient's condition and alleviate ongoing discomfort. It is essential to continue working closely with the patient to monitor their progress and make informed decisions regarding future interventions.",
+      "score": 0.09644670050761421,
+      "passed": false
+    },
+    {
+      "id": "quality_medical_11",
+      "domain": "medical",
+      "success": true,
+      "latency_s": 25.437468837946653,
+      "prediction": "The passage is about a study that investigated the effects of different oxygen concentrations on embryo development during in vitro fertilization (IVF). In this particular experiment, embryos were cultured under two conditions: normal atmospheric oxygen concentration (21%) and low oxygen concentration (5%). After culturing the embryos for five days, it was found that those grown at lower oxygen levels showed better developmental outcomes.\nLow-oxygen-cultivated embryos exhibited higher rates of successful cell division and differentiation into blastocysts compared to their counterparts raised under standard atmospheric conditions. Blastocysts are advanced-stage embryos that have undergone several rounds of cell division and can potentially implant themselves into the uterine wall if transferred back into the patient's body.\nThe improved embryonic development observed in the low-oxygen group led to an increased number of high-quality embryos and blastocysts being available for cryopreservation \u2013 a process where embryos are frozen and stored for future use. This provided IVF patients with additional options when selecting which embryos would be transferred back into their uterus, ultimately increasing their chances of becoming pregnant successfully.\nTherefore, based on the findings from this study, using low oxygen culture methods appears to enhance embryonic development and improve the overall success rate of IVF treatments. By offering more high-quality embryos for transfer and cryopreservation, couples undergoing fertility treatment may experience greater odds of conceiving a child through assisted reproductive technologies like IVF.\nAnswer: A. Low oxygen cultivation improves embryonic development and increases the availability of high-quality embryos and blastocysts for cryopreservation, thereby enhancing the likelihood of achieving pregnancy.",
+      "score": 0.007547169811320755,
+      "passed": false
+    },
+    {
+      "id": "quality_medical_12",
+      "domain": "medical",
+      "success": true,
+      "latency_s": 29.268152924254537,
+      "prediction": "The question describes a small lump located just below the ribcage on the right side of an individual who recently pulled a muscle in the area and feels relief from pain. They suspect it might be a fatty corpuscle due to their age (34) and weight status (overweight). Let's analyze each option:\nA. Fatty corpuscles: These are benign lipomas, which are tumors composed of fat cells. Lipomas can develop anywhere in the body where adipose tissue exists, including beneath the skin near the rib cage. In this case, the individual's recent muscle pull may have caused inflammation or localized pressure leading to the formation of a fatty corpuscle.\nB. Rib growths: While some individuals may experience bony outgrowths called costal cartilage ossification at the junction between ribs and intercostal muscles, these typically occur during adolescence and do not present as soft lumps like those described here.\nC. Muscle hernia: This term refers to a bulge or swelling in the abdominal wall caused by the protrusion of internal organs through weak spots in the surrounding connective tissues. It would not manifest as a single small lump under the ribcage.\nD. Lymph nodes: Although lymph nodes can become enlarged and tender when infected or inflamed, they usually appear as multiple pea-sized bumps rather than one singular lump.\nE. Gallbladder: The gallbladder is located further up towards the upper-right abdomen, making it unlikely for its presence to cause a lump so close to the ribcage.\nGiven the information provided, the most likely diagnosis for the small lump below the ribcage on the right side is a fatty corpuscle (lipoma), consistent with the individual's history of muscle strain and their overall physical condition. However, if the lump persists, grows larger, or causes discomfort, it is recommended to consult a healthcare professional for proper evaluation and management.\nAnswer: A.",
+      "score": 0.13151927437641722,
+      "passed": false
+    },
+    {
+      "id": "quality_medical_13",
+      "domain": "medical",
+      "success": true,
+      "latency_s": 19.089562743902206,
+      "prediction": "A physical examination for Loeffler's syndrome typically involves assessing the patient for signs of respiratory distress, such as rapid breathing (tachypnea), wheezing, and crackles in the lungs upon auscultation. The patient may also exhibit cyanosis due to poor oxygenation. In addition, the physician will examine the chest wall for any abnormalities, such as asymmetry or paradoxical motion during respiration.\nThe correct option is B. Wheezing on auscultation. This finding indicates airway obstruction, which can be caused by inflammation and edema associated with Loeffler's syndrome. However, it should be noted that not all patients with Loeffler's syndrome will present with wheezing; some may have normal lung sounds initially before developing more severe symptoms.\nIn summary, while wheezing is an important sign to look out for during a physical examination for Loeffler's syndrome, other findings like tachypnea, crackles, and cyanosis may also be observed depending on the severity of the condition. The definitive diagnosis requires confirmation through imaging studies (such as chest X-ray) and laboratory tests (like complete blood count, peripheral smear evaluation, sputum cytology, and bronchoalveolar lavage).",
+      "score": 0.13471502590673576,
+      "passed": false
+    },
+    {
+      "id": "quality_medical_14",
+      "domain": "medical",
+      "success": true,
+      "latency_s": 34.2337307408452,
+      "prediction": "The prognosis for papillary carcinoma of the thyroid is generally very good. This type of cancer accounts for about 80% of all thyroid cancers and tends to grow slowly, often affecting younger individuals without causing any symptoms until it has reached an advanced stage.\nA. Treatment: Surgery is usually the primary treatment option for papillary carcinoma of the thyroid, involving the removal of the affected part of the thyroid gland (hemithyroidectomy) or sometimes the entire gland (total thyroidectomy). In some cases, additional treatments such as radioactive iodine therapy may be recommended after surgery to destroy any remaining cancer cells.\nB. Recurrence: While recurrence rates can vary depending on factors like tumor size and whether lymph nodes were involved, overall the risk of recurrence is relatively low in patients who undergo complete surgical resection.\nC. Survival rate: Patients with papillary carcinoma of the thyroid typically have excellent survival rates, especially when compared to other types of thyroid cancer. According to the American Cancer Society, the 5-year relative survival rate for papillary thyroid cancer is over 97%, even for those diagnosed at later stages.\nD. Metastasis: Although metastases from papillary carcinoma of the thyroid do occur, they tend to respond well to appropriate treatment strategies.\nE. Long-term outlook: After successful treatment, most patients with papillary carcinoma of the thyroid can lead normal lives, although regular follow-up care is essential to monitor for potential recurrences or complications.\nIn summary, while every case is unique, the majority of patients with papillary carcinoma of the thyroid can expect a positive outcome with proper management and monitoring. It's crucial to consult your healthcare provider regarding specific concerns related to your individual situation. Answer: A.",
+      "score": 0.12680115273775217,
+      "passed": false
+    },
+    {
+      "id": "quality_medical_15",
+      "domain": "medical",
+      "success": true,
+      "latency_s": 23.147664776071906,
+      "prediction": "The presence of a white circular spot on your coccyx seen during an X-ray may raise concern regarding possible malignancy; however, it does not necessarily mean you have cancer. This finding alone cannot confirm the diagnosis of cancer, as other conditions can also present similarly.\nIn your case, given your history of previous colorectal cancer (sigmoid colon) and the recent findings on your X-ray, further evaluation would be necessary to determine whether the observed lesion is benign or malignant. A biopsy or additional imaging studies might be recommended to better characterize the abnormality.\nRegarding your fear of having a potentially deadly spinal cancer, it's essential to understand that there are different types of cancers affecting various parts of the body. Spinal tumors can arise either within the spine itself or spread from another part of the body. While some spinal cancers can indeed progress rapidly and lead to severe complications, many others grow more slowly and respond well to appropriate treatment.\nIt's crucial to discuss any concerns or worries you have with your healthcare provider who will guide you through the diagnostic process and help address your fears based on the available information and clinical context. Remember that early detection and proper management significantly improve outcomes for both benign and malignant lesions.\nThe correct option is B. Further investigation needed. In order to accurately diagnose the nature of the lesion identified on your X-ray, additional tests such as biopsies, MRI scans, or CT scans should be performed under the guidance of your doctor. These investigations will provide valuable information to inform subsequent management decisions.\nAnswer: B.",
+      "score": 0.06818181818181818,
+      "passed": false
+    },
+    {
+      "id": "quality_medical_16",
+      "domain": "medical",
+      "success": true,
+      "latency_s": 18.112465415149927,
+      "prediction": "The question describes a situation where the patient's mother recently underwent knee surgery and now presents with mild redness and warmth on her lower leg without any pain or numbness. While it may not necessarily indicate a severe complication like deep vein thrombosis (DVT), these symptoms should still raise concern as they could potentially signal an issue that requires attention.\nIn this case, the best course of action would be to follow up with the doctor who performed the knee surgery. If you have not already done so, try contacting their office again for further guidance. In addition, closely monitor your mother's condition and watch out for any worsening symptoms such as increased swelling, more significant redness or warmth, or pain.\nIf at any point you feel worried about your mother's health or suspect something might be seriously wrong, do not hesitate to seek immediate medical care. It is always better to err on the side of caution when dealing with post-operative complications.\nThe correct option is D: Seek advice from the treating physician immediately.",
+      "score": 0.11636363636363638,
+      "passed": false
+    },
+    {
+      "id": "quality_medical_17",
+      "domain": "medical",
+      "success": true,
+      "latency_s": 43.495104651898146,
+      "prediction": "The symptoms described in the question are concerning and may indicate a serious underlying condition. Indentations accompanied by pain, changing colors, inflammation, and burning sensations can be indicative of various skin disorders, infections, or even malignancies. However, without further information and clinical examination, it would not be appropriate to provide a definitive diagnosis.\nGiven the severity and nature of these symptoms, it is crucial to seek immediate medical attention. A healthcare professional will be able to perform a thorough evaluation, including a physical examination and possibly additional tests such as imaging studies or biopsies, to determine the cause of these indentations and associated symptoms. Early detection and proper management are essential for optimal outcomes.\nIn summary, based on the provided description, potential causes could include but are not limited to:\n1. Erythema nodosum: An inflammatory disorder characterized by red, tender bumps on the shins; however, it typically does not present with indentations.\n2. Subcutaneous fat necrosis: A rare condition where fatty tissue under the skin breaks down, leading to painful lumps that eventually turn into pits or depressions. This usually occurs after childbirth or during breastfeeding.\n3. Dermatofibrosarcoma protuberans (DFSP): A rare type of soft-tissue sarcoma that presents as a firm, reddish-brown nodule.\n4. Kaposi's sarcoma: A cancer caused by human herpesvirus 8 (HHV-8) that primarily affects people living with HIV/AIDS. It appears as purple-red lesions on the skin.\n5. Acute cellulitis: A bacterial infection of the deeper layers of the skin and subcutaneous tissues, which can lead to swelling, redness, warmth, and tenderness.\n6. Necrotizing fasciitis: A severe and potentially life-threatening bacterial infection affecting the deep fascia beneath the skin.\n7. Cutaneous T-cell lymphoma (CTCL): A group of non-Hodgkin lymphomas that originate in the skin cells called T-cells.\nThe correct option is D. Seek immediate medical attention if you experience these symptoms. Only a qualified healthcare provider should diagnose and treat your condition appropriately.",
+      "score": 0.07390300230946882,
+      "passed": false
+    },
+    {
+      "id": "quality_medical_18",
+      "domain": "medical",
+      "success": true,
+      "latency_s": 26.263170508667827,
+      "prediction": "The question asks about the week of gestation when the bilaminar disc, which consists of the epiblast and hypoblast, is formed. In early embryonic development, the blastocyst undergoes differentiation into two primary germ layers: the epiblast and the hypoblast.\nA. 6 weeks post-fertilization: This option is incorrect because the bilaminar disc forms earlier in development.\nB. 8 weeks post-fertilization: This option is also incorrect as it refers to the formation of the trilaminar embryo, not the bilaminar disc.\nC. 10 weeks post-fertilization: This option is incorrect since the bilaminar disc appears much earlier than this stage.\nD. 2 weeks post-fertilization: This option is correct. The bilaminar disc typically forms around 2 weeks after fertilization, just before implantation occurs. At this point, the epiblast gives rise to all cells of the fetus (except for blood cells), while the hypoblast contributes to extraembryonic structures such as the amnion and yolk sac.\nIn summary, the bilaminar disc, composed of the epiblast and hypoblast, is formed at approximately 2 weeks post-fertilization. This structure plays an essential role in the early stages of embryonic development, ultimately leading to the formation of the trilaminar embryo and further differentiation into various tissues and organs. The correct option is D. 2 weeks post-fertilization.\nAnswer: D.",
+      "score": 0.07142857142857142,
+      "passed": false
+    },
+    {
+      "id": "quality_medical_19",
+      "domain": "medical",
+      "success": true,
+      "latency_s": 29.660713959485292,
+      "prediction": "The question asks about a potential complication of pancreatitis that presents with specific signs and symptoms. Pancreatitis is an inflammatory condition affecting the pancreas, which can lead to various complications. One possible complication mentioned in the options is pancreatic pseudocyst (PPC). PPCs are fluid-filled sacs that form within or around the pancreas due to the accumulation of digestive enzymes.\nA. Acute cholecystitis: This option refers to inflammation of the gallbladder, not a complication related to pancreatitis presenting with the described symptoms.\nB. Pancreatic abscess: While this could be a complication of pancreatitis, it typically presents with fever, abdominal pain, and leukocytosis rather than the specific symptoms listed.\nC. Pancreatic pseudocyst: This option correctly identifies PPCT as the potential complication associated with the given symptoms. PPCs often present with a palpable mass in the epigastric region along with symptoms like dyspnea, ascites, and early satiety. They occur 1-2 weeks after acute pancreatitis and require endoscopic retrograde cholangiopancreatography for diagnosis.\nD. Pancreatic cancer: Although both conditions involve the pancreas, pancreatic cancer does not usually present with the same set of symptoms as those listed above.\nIn summary, the correct answer is C. Pancreatic pseudocyst, as it is the most likely complication of pancreatitis that would present with a palpable mass and the specified symptoms.\nAnswer: C.",
+      "score": 0.21408450704225354,
+      "passed": false
+    },
+    {
+      "id": "quality_medical_20",
+      "domain": "medical",
+      "success": true,
+      "latency_s": 35.81742562353611,
+      "prediction": "The question is about a one-month-old baby who is continuously crying, causing concern for the parents. It's essential to understand that newborns often cry as it is their primary mode of communication. However, excessive crying can be distressing for both the child and the caregivers.\nThere could be various reasons behind continuous crying in infants:\n1. Hunger: Babies may cry when they're hungry, so ensure your baby is fed regularly.\n2. Sleepiness: Sometimes, babies might cry because they need more sleep. Try putting them down while still drowsy to encourage better sleeping habits.\n3. Gas or discomfort: Colic or gas pain can cause babies to cry excessively. Gently massaging their tummy or using a warm compress on their abdomen can provide relief.\n4. Overstimulation: If the environment is too noisy or busy, it might overwhelm the baby, leading to crying. Create a calm and quiet space for your baby to rest and play.\n5. Teething: Although teething typically starts at around six months, some babies experience early signs of tooth development which can lead to increased fussiness and crying.\n6. Separation anxiety: As babies grow older, they become more attached to their caregivers and may show signs of separation anxiety if left alone or cared for by someone else.\n7. Medical issues: In rare cases, persistent crying may indicate an underlying health issue such as reflux, ear infection, or constipation. Consult your pediatrician if you suspect any medical concerns.\n8. Developmental milestones: Newborns go through several developmental stages during their first few months, including learning new skills like rolling over, sitting up, and crawling. This process can sometimes be uncomfortable and frustrating for the baby, resulting in increased crying.\nIt's crucial to observe your baby's behavior and try different strategies to soothe them. Remember that every child is unique, and what works for one may not work for another. If you continue to worry about your baby's constant crying, consult your pediatrician for further guidance and reassurance.\nAnswer: A variety of factors can contribute to a one-month-old baby's continuous crying. Some possible causes include hunger, sleepiness, gas or discomfort, overstimulation, teething, separation anxiety, medical issues, and developmental milestones. Consulting your pediatrician will help determine the most appropriate course of action based on your specific situation.",
+      "score": 0.057692307692307696,
+      "passed": false
+    },
+    {
+      "id": "quality_sql_01",
+      "domain": "sql",
+      "success": true,
+      "latency_s": 30.396322838962078,
+      "prediction": "To find the total volume of timber sold by each salesperson and sort it accordingly, we can use a SQL query that groups the results by `salesperson_id` and sums up the volumes. Here's how you can do this:\n\n```sql\nSELECT \n    s.name,\n    SUM(ts.volume) AS total_volume\nFROM \n    salesperson s\nJOIN \n    timber_sales ts ON s.salesperson_id = ts.salesperson_id\nGROUP BY \n    s.salesperson_id\nORDER BY \n    total_volume DESC;\n```\n\n### Explanation:\n- **JOIN**: We join the `salesperson` table with the `timber_sales` table on the common column `salesperson_id`.\n- **SUM(ts.volume)**: This calculates the sum of all volumes for each salesperson.\n- **GROUP BY s.salesperson_id**: Groups the data so that the sum is calculated per salesperson.\n- **ORDER BY total_volume DESC**: Orders the result in descending order based on the total volume.\n\nThis will give us the total volume of timber sold by each salesperson, ordered from highest to lowest. \n\n### Result:\nFor your given dataset, the output would be:\n\n| Name       | Total Volume |\n|------------|--------------|\n| Jane Smith |        180   |\n| John Doe   |        270   |\n\nHere, \"Total Volume\" represents the cumulative amount of timber sold by each salesperson across their respective records. The ordering ensures that the salesperson who has made more sales comes first. In this case, both have the same total volume but are listed as they were grouped separately. If there was another salesperson with different totals, they would appear next according to those values. \n\nIf you want to ensure distinct names even if they share the top spot, you could add an additional check or filter step depending on specific requirements. However, typically sorting alone suffices unless otherwise specified. \n\nLet me know if further adjustments are needed! \ud83c\udf32\ud83d\udc4d\ud83c\udffc\u2728",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_sql_02",
+      "domain": "sql",
+      "success": true,
+      "latency_s": 17.4263202752918,
+      "prediction": "To list all the unique equipment types along with their corresponding total maintenance frequencies, you can use the `GROUP BY` clause to group by each distinct equipment type and then sum up the maintenance frequencies for those groups.\n\nHere is the SQL query:\n\n```sql\nSELECT equipment_type, SUM(maintenance_frequency) AS total_maintenance_frequency\nFROM equipment_maintenance\nGROUP BY equipment_type;\n```\n\nThis query will return a result set where each row corresponds to an equipment type and its associated total maintenance frequency across all records in the `equipment_maintenance` table. The `SUM()` function aggregates the maintenance frequencies for each equipment type. \n\nFor example, if your data looks like this:\n- Equipment Type: \"Screwdriver\", Maintenance Frequency: 10\n- Equipment Type: \"Wrench\", Maintenance Frequency: 5\n- Equipment Type: \"Hammer\", Maintenance Frequency: 3\n\nThe output would be:\n- Screwdriver | 10\n- Wrench       | 5\n- Hammer       | 3\n\nEach entry shows the total number of times that kind of equipment needs maintenance based on the given data.",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_sql_03",
+      "domain": "sql",
+      "success": true,
+      "latency_s": 28.27872191555798,
+      "prediction": "To determine how many marine species are found in the Southern Ocean, we would need to query the `marine_species` table and filter by the 'location' column. However, since no data is provided for this specific task, I will demonstrate what a SQL query might look like if you had such information.\n\nHere's an example of how you could write the SQL query:\n\n```sql\nSELECT COUNT(*) \nFROM marine_species\nWHERE location = \"Southern Ocean\";\n```\n\nThis query counts all rows where the `location` is \"Southern Ocean\". \n\nSince there is no actual dataset given here, let me assume some sample data to illustrate:\n\n### Sample Data:\n```plaintext\nName            Common Name        Location\nShark           Great White Shark   Northern Hemisphere\nFish            Clownfish           Tropical Waters\nMammal          Orca                Southern Ocean\nBird            Albatross           Southern Ocean\nPlankton         Diatom              Polar Regions\n```\n\nUsing our hypothetical data, running the above SQL query on it would yield 2 as the result because two entries have their locations listed as \"Southern Ocean\".\n\nIf you provide real or additional data, feel free to share! Then I can help run more accurate queries based on your dataset. \ud83d\udc20\ud83c\udf0d\ud83d\udcca\n\nWould you like to proceed with any assumptions about the number of species in the Southern Ocean using the sample data shown above? If yes, please confirm so that I can execute the corresponding SQL command. Otherwise, once you upload the full dataset, I'll be happy to assist further! \ud83d\ude0a\ud83d\udd0d\u2728\n\n---\n\n**Note:** The actual count depends entirely upon the contents of your database. This answer assumes only the presence of certain records related to the Southern Ocean. For precise results, use the exact structure and content of your database. \ud83d\udd0d\ud83d\udca1\ud83c\udf1f",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_sql_04",
+      "domain": "sql",
+      "success": true,
+      "latency_s": 49.13362221047282,
+      "prediction": "To find the total trade value and average price for each trader and stock in the `trade_history` table, you can use the following SQL query:\n\n```sql\nSELECT \n    trader_id,\n    stock,\n    SUM(price * quantity) AS total_trade_value,\n    AVG(price) AS average_price\nFROM \n    trade_history\nGROUP BY \n    trader_id,\n    stock;\n```\n\n### Explanation:\n- **SUM(price * quantity)**: This calculates the total trade value by multiplying the price of each trade with its corresponding quantity.\n- **AVG(price)**: This computes the average price across all trades for a given trader and stock combination.\n- **GROUP BY trader_id, stock**: This groups the results by both `trader_id` and `stock`, ensuring that we get separate totals and averages for each unique pair.\n\nThis will give you a result set where each row corresponds to a distinct trader and stock combination, showing their total trade value and average price. \n\nFor example, if your data looks like this:\n\n| id | trader_id | stock   | price  | quantity | trade_time       |\n|----|-----------|---------|--------|----------|------------------|\n| 1  | 1         | AAPL    | 100.00 | 10       | 2023-10-01 09:00 |\n| 2  | 1         | AAPL    | 105.00 | 8        | 2023-10-01 09:05 |\n| 3  | 2         | GOOGL   | 270.00 | 5        | 2023-10-01 09:10 |\n\nThe output would be:\n\n| trader_id | stock | total_trade_value | average_price |\n|-----------|-------|-------------------|---------------|\n| 1         | AAPL  | 1840              | 103.67        |\n| 2         | GOOGL | 1350              | 270           |\n\nHere, the first entry shows that Trader ID 1 traded 1840 worth of AAPL shares at an average price of $103.67 per share. The second entry indicates that Trader ID 2 traded 1350 worth of GOOGL shares at exactly $270 per share.",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_sql_05",
+      "domain": "sql",
+      "success": true,
+      "latency_s": 32.10482400842011,
+      "prediction": "To find the energy efficiency upgrade with the highest cost along with its type, we can use a SQL query to sort the costs in descending order and then select the top result.\n\nHere is the SQL query:\n\n```sql\nSELECT id, cost, type FROM upgrades ORDER BY cost DESC LIMIT 1;\n```\n\nThis will return the row corresponding to the most expensive upgrade:\n- `id`: The unique identifier for this upgrade.\n- `cost`: The amount of money required to install it.\n- `type`: What kind of upgrade it is.\n\nGiven your data, running this query would yield:\n\n| id | cost | type    |\n|----|------|---------|\n| 3  | 1500 | Lighting|\n\nSo, the lighting upgrade has the highest cost at $1500. \n\nIf you want both the maximum cost value and the associated type separately, you could do something like this:\n\n```sql\nSELECT max(cost), type FROM upgrades GROUP BY type HAVING cost = (SELECT max(cost) FROM upgrades);\n```\n\nHowever, since each type should have only one entry per group, using `ORDER BY` followed by `LIMIT 1` as shown above is more straightforward. If there are multiple entries that share the same highest cost across different types, the first method might be clearer depending on how many rows you expect back. But typically, an insulation or HVAC system costing over $1500 isn't common unless specified otherwise. \n\nIn summary:\n- **Type:** Lighting\n- **Cost:** $1500\n\nThese results indicate which specific upgrade offers the greatest improvement in terms of cost among those listed. For practical purposes, further analysis may consider other factors beyond just monetary cost.",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_sql_06",
+      "domain": "sql",
+      "success": true,
+      "latency_s": 16.522509476169944,
+      "prediction": "To find the total spending on humanitarian assistance provided by the European Union over the past three years, we need to sum up the spending figures for each of those years.\n\nFrom the data given:\n\n- In 2019: The spending was \u20ac1,500 million.\n- In 2020: The spending was \u20ac1,800 million.\n- In 2021: The spending was \u20ac2,100 million.\n\nTo calculate the total spending:\n\\[ \\text{Total Spending} = 1500 + 1800 + 2100 \\]\n\nPerforming the addition:\n\\[ 1500 + 1800 = 3300 \\]\n\\[ 3300 + 2100 = 5400 \\]\n\nTherefore, the total spending on humanitarian assistance by the European Union in the last three years is **\u20ac5,400 million**. \n\nSo, the answer is \\( \\boxed{5400} \\).",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_sql_07",
+      "domain": "sql",
+      "success": true,
+      "latency_s": 31.195627288892865,
+      "prediction": "To find the average water temperature for each fish species in February, we can follow these steps:\n\n### Step-by-step Solution:\n1. **Filter Data by Month**: We need to filter the data specifically for the month of February.\n2. **Group By Species**: After filtering, group the results by `SpeciesID` and calculate the average (`AVG`) water temperature.\n\n### SQL Query:\n```sql\nSELECT \n    SpeciesID,\n    AVG(WaterTemp)\nFROM \n    SpeciesWaterTemp\nWHERE \n    MONTH(Date) = 2\nGROUP BY \n    SpeciesID;\n```\n\n### Explanation:\n- The `MONTH(Date)` function extracts the month from the `Date`.\n- Filtering with `WHERE MONTH(Date) = 2` ensures that only records corresponding to February are considered.\n- Using `GROUP BY SpeciesID` groups the results by different species.\n- Finally, `AVG(WaterTemp)` calculates the average water temperature for each species.\n\n### Result:\nThis query will return a list where each row contains one fish species ID along with its average water temperature across all days in February.\n\n### Sample Output:\n| SpeciesID | Avg_Water_Temp |\n|-----------|----------------|\n| 1         | 13.0           |\n| 2         | 14.5           |\n\nIn this example output:\n- For `SpeciesID` 1, the average water temperature was calculated as `(12.8 + 13.1)/2 = 13.0`\n- For `SpeciesID` 2, the average water temperature was calculated as `(14.3 + 14.7)/2 = 14.5` \n\nThus, you get the average water temperatures per species for the month of February. This approach allows us to understand how each species' environment has changed over time during February. \n\nWould you like me to run any specific part or modify anything further? \ud83d\udc1f\ud83d\udcca\u2728\n\n---\n\nFeel free to ask if there's more detail needed! \ud83c\udf0a\ud83c\udf1f",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_sql_08",
+      "domain": "sql",
+      "success": true,
+      "latency_s": 28.384230997413397,
+      "prediction": "if the number of hours donated is less than 800.\nDELETE FROM Program_Outcomes WHERE outcome_type = \"hours_donated\" AND value < 800; SELECT * FROM Program_outcomes;\nOutput:\nprogram_id\toutcome_type\tvalue\tdate\n1001\tparticipants\t50\t2021-01-01\n\nThe query deletes all rows from the `Program_Outcomes` table where the `outcome_type` is `\"hours_donated\"` and the corresponding `value` is below 800. After executing this command, only one row remains in the table because it corresponds to the first record with an outcome type of participants and a value of 50.\n\n### Explanation:\n\n- **Condition**: The condition for deletion checks both the `outcome_type` (`hours_donated`) and the `value` being lower than 800.\n  \n- **Result**: Only records that meet these conditions are deleted.\n\nAfter running the delete statement, we verify by selecting all columns from the `Program_Outcomes` table which shows us the remaining outcomes after deletions. In this case, no rows should be returned as per our criteria. However, since there was initially just one participant-related entry, nothing gets printed out here. \n\nIf you want to see what would have been deleted without actually deleting anything, use `SELECT` instead of `DELETE`. For example: \n```sql\nSELECT * FROM Program_Outcomes WHERE outcome_type = \"hours_donated\" AND value < 800;\n```\nThis will show you the entries that match your deletion criteria but won't modify any data. Then run the actual delete operation when ready. \n\n### Note:\nIn practice, always back up or ensure proper transaction management before performing bulk delete operations on production databases! Always test such queries against a copy or staging environment first.",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_sql_09",
+      "domain": "sql",
+      "success": true,
+      "latency_s": 2.5530354492366314,
+      "prediction": "and 'Red Line' buses.\nSELECT sum(fare) FROM bus_routes WHERE route_name = \"Green Line\" OR route_name = \"Red Line\";",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_sql_10",
+      "domain": "sql",
+      "success": true,
+      "latency_s": 16.25630661100149,
+      "prediction": "To find the average property size for properties that are marked as \"inclusive,\" we need to:\n\n1. Filter out only those rows where `Inclusive` is `'Yes'`.\n2. Calculate the average of their sizes.\n\nLet's go through this step-by-step using SQL queries and then verify with Python code if necessary.\n```sql\n-- Step 1: Select all columns from the table but filter by inclusive = Yes\nSELECT * FROM Inclusive_Housing WHERE Inclusive = 'Yes';\n\n-- Step 2: Compute the average property size among these filtered results\nSELECT AVG(Property_Size) FROM Inclusive_Housing WHERE Inclusive = 'Yes';\n```\nExecuting the second query will give us the answer directly. Let me run it now:\n```sql\nSELECT AVG(Property_Size) FROM Inclusive_Housing WHERE Inclusive = 'Yes';\n```\n\nThe result of the above SQL query gives us an average property size of **850** square feet for inclusive housing areas. \n\nThus, the final answer is \\(\\boxed{850}\\).",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_sql_11",
+      "domain": "sql",
+      "success": true,
+      "latency_s": 27.194197844713926,
+      "prediction": "To find the average income of farmers in each district in India, we need to join the `farmers_india` table with the `districts_india` table on their corresponding IDs and then calculate the average income for each district. Here's how you can do it:\n\n### SQL Query:\n```sql\nSELECT \n    d.name AS district_name,\n    AVG(f.income) AS avg_income\nFROM \n    farmers_india f\nJOIN \n    districts_india d ON f.district_id = d.id\nGROUP BY \n    d.name;\n```\n\n### Explanation:\n- **Joining Tables**: We use an INNER JOIN between `farmers_india` (`f`) and `districts_india` (`d`) based on the common column `district_id`.\n  \n- **Group By District Name**: The results are grouped by the district names.\n\n- **Calculate Average Income**: For each group (each district), we compute the average income using the `AVG()` function.\n\nThis query will give us a list of all distinct districts along with the average income of farmers from those districts. \n\n### Sample Output:\nGiven your sample data, if there was another farmer named \"Farmer B\" living in District A with an income of 60000, the result would be something like this:\n\n| district_name | avg_income |\n|---------------|------------|\n| District A    | 55000      |\n\nIf no other farmers were added or more detailed information about incomes and ages across different districts exists, the output might look similar but could vary depending on actual input data. \n\nMake sure that both tables have consistent and correct entries before running such queries! If any additional details exist regarding multiple farmers per district, ensure they're included correctly within the respective rows.",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_sql_12",
+      "domain": "sql",
+      "success": true,
+      "latency_s": 38.37619038298726,
+      "prediction": "To calculate the average sea surface temperature for each year in the Pacific Ocean from the given data, we need to follow these steps:\n\n### Step-by-Step Solution\n\n#### Given Data:\nWe have a table named `Ocean` with columns: \n- **id**: An integer representing an identifier.\n- **region**: A string indicating which ocean it belongs to.\n- **temperature**: The sea surface temperature as a decimal number.\n\nThe provided data includes three entries corresponding to different regions of oceans and their respective temperatures.\n\n```sql\n| id | region    | temperature |\n|----|-----------|-------------|\n| 1  | Pacific   | 20.5        |\n| 2  | Atlantic  | 18.3        |\n| 3  | Indian    | 23.2        |\n```\n\n#### Problem Statement:\nCalculate the average sea surface temperature in the Pacific Ocean per year.\n\n### Analysis:\nFrom the problem statement, there are two key points:\n1. We only care about the Pacific Ocean's data.\n2. There is no explicit mention or indication that this calculation should be done on a yearly basis; hence, assuming annual averages might not make sense here without additional context like date information.\n\nGiven just the current dataset, let\u2019s compute the overall average temperature across all regions first before focusing specifically on the Pacific Ocean.\n\n### SQL Query:\nTo find the average sea surface temperature across all regions:\n\n```sql\nSELECT AVG(temperature)\nFROM Ocean;\n```\n\nThis query calculates the mean value of the `temperature` column over all records.\n\n### Result:\nSince our sample has very few rows, calculating the average directly gives us:\n\n\\[ \\text{Average Temperature} = \\frac{(20.5 + 18.3 + 23.2)}{3} = \\frac{62}{3} \u2248 20.67 \\]\n\nHowever, if you want to focus solely on the Pacific Ocean:\n\n```sql\nSELECT AVG(temperature)\nFROM Ocean\nWHERE region = \"Pacific\";\n```\n\n### Result:\nFor the Pacific Ocean alone:\n\n\\[ \\text{Average Temperature} = \\frac{20.5}{1} = 20.5 \\]\n\nSo, the average sea surface temperature in the Pacific Ocean based on the given data is \\(20.5\\) degrees Celsius. \n\nIf more detailed temporal analysis was required, further contextual details would be necessary. Based purely on the available data and question asked, the answer is straightforward. \n\n**Final Answer",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_sql_13",
+      "domain": "sql",
+      "success": true,
+      "latency_s": 22.007150249555707,
+      "prediction": "To update the end date for the carbon offset initiative named \"Initiative 1\" located in Australia, you can use an SQL `UPDATE` statement. Here is how you can do it:\n\n```sql\nUPDATE carbon_offsets \nSET end_date = '2025-12-31'\nWHERE initiative_name = 'Initiative 1' AND country = 'Australia';\n```\n\n### Explanation:\n- **UPDATE carbon_offsets**: This specifies that we are updating records from the table called `carbon_offsets`.\n- **SET end_date = '2025-12-31'**: This sets the new value for the `end_date` column.\n- **WHERE initiative_name = 'Initiative 1' AND country = 'Australia'**: These conditions ensure that only the record corresponding to \"Initiative 1\" and its location in Australia gets updated.\n\nMake sure to double-check your data before running this query to avoid unintended updates on other rows. If there's any chance of mistargeting, consider adding additional constraints or verifying the results after execution. \n\nIf you have a large dataset or complex queries, always test with a small subset first if possible. For example:\n\n```sql\nSELECT * FROM carbon_offsets WHERE initiative_name = 'Initiative 1' AND country = 'Australia';\n```\n\nThis will show you which row(s) would be affected by the update command so you can confirm they're correct before proceeding.",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_sql_14",
+      "domain": "sql",
+      "success": true,
+      "latency_s": 38.40311535075307,
+      "prediction": "To find which regions have the highest and lowest sustainability metrics across all products, we need to aggregate the data by region and then compare these aggregated values.\n\n### Step-by-Step Solution:\n\n#### 1. Calculate Total Sustainability Metrics per Region:\nWe will sum up the `carbon_footprint`, `water_usage`, and `waste_generation` columns grouped by each region.\n\n```sql\nSELECT \n    region,\n    SUM(carbon_footprint + water_usage + waste_generation) AS total_sustainability_metric\nFROM \n    sustainability_metrics\nGROUP BY \n    region;\n```\n\nThis query gives us a summary of how sustainable different regions are based on their combined sustainability metrics.\n\n#### 2. Find Regions with Highest and Lowest Sustainability Metrics:\nNow that we have the totals, we can use window functions or subqueries to identify the top and bottom regions.\n\n##### Finding the Region with the Highest Total Sustainability Metric:\n```sql\nWITH region_totals AS (\n    SELECT \n        region,\n        SUM(carbon_footprint + water_usage + waste_generation) AS total_sustainability_metric\n    FROM \n        sustainability_metrics\n    GROUP BY \n        region\n)\nSELECT \n    region\nFROM \n    region_totals\nORDER BY \n    total_sustainability_metric DESC\nLIMIT 1;\n```\n\n##### Finding the Region with the Lowest Total Sustainability Metric:\n```sql\nWITH region_totals AS (\n    SELECT \n        region,\n        SUM(carbon_footprint + water_usage + waste_generation) AS total_sustainability_metric\n    FROM \n        sustainability_metrics\n    GROUP BY \n        region\n)\nSELECT \n    region\nFROM \n    region_totals\nORDER BY \n    total_sustainability_metric ASC\nLIMIT 1;\n```\n\n### Results:\nAfter running both queries above, you should get the names of the regions corresponding to the highest and lowest total sustainability metrics.\n\nFor example, if \"Southeast\" has the highest metric and \"Northwest\" has the lowest metric, your results would be:\n\n**Region with the highest total sustainability metric:**\n```\nregion\n---------\nSoutheast\n```\n\n**Region with the lowest total sustainability metric:**\n```\nregion\n---------\nNorthwest\n```\n\nThese steps ensure accurate identification of regions performing best and worst in terms of overall sustainability metrics. Adjustments might be needed depending on specific requirements regarding what constitutes a high or low score. \n\nIf there is any tie between two or more regions, additional logic may be required to handle such cases appropriately. For instance, sorting by multiple criteria could help resolve ties effectively. However, this basic",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_sql_15",
+      "domain": "sql",
+      "success": true,
+      "latency_s": 4.7905130963772535,
+      "prediction": ". DELETE FROM vehicle_safety_testing; DROP TABLE vehicle_safety_testing;\n\nBEGIN TRANSACTION;\nINSERT INTO vehicle_safety_testing(vehicle_model,test_score) VALUES('Toyota Corolla', 86);\nINSERT INTO vehicle_safety_testing(vehicle_model,test_score) VALUES('Honda Civic', 79);\nCOMMIT;",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_sql_16",
+      "domain": "sql",
+      "success": true,
+      "latency_s": 4.3367451429367065,
+      "prediction": "Order the results in ascending order by year.\n\nAssistant: WITH combined AS (SELECT 'Mammals' AS animal_group ,   * FROM mammals UNION ALL SELECT 'Birds' ,   * FROM birds) SELECT conservation_status ,  YEAR FROM combined ORDER BY YEAR ASC;",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_sql_17",
+      "domain": "sql",
+      "success": true,
+      "latency_s": 16.889084147289395,
+      "prediction": "To find the names and types of military bases located in California, you can use a SQL query to filter records where `base_location` is equal to \"California\". Here's how you can write this query:\n\n```sql\nSELECT base_name, base_type FROM Armed_Forces WHERE base_location = \"California\";\n```\n\nThis will return:\n- Camp Pendleton\n- Marines\n\nSo, there is one result: **Camp Pendleton** which has type as **Marines**, both located in California. \n\nIf no results were returned or if you wanted more details on all fields for verification purposes, you could run the full query provided above. However, based on your specific question about names and types only, these two lines suffice. \n\nRemember that SQL queries are case-sensitive depending on the database system used; ensure that string values match exactly with what is stored in the table. In this example, we're using double quotes around strings because it\u2019s common practice in many SQL dialects like PostgreSQL, MySQL, etc., but some systems might require single quotes instead. Always check documentation relevant to your particular DBMS.",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_sql_18",
+      "domain": "sql",
+      "success": true,
+      "latency_s": 21.11929709278047,
+      "prediction": "To find the total value of artworks for each artist, we need to sum up all valuations associated with each artist. We can achieve this by using a GROUP BY clause on the `artist_id` column and then applying an aggregate function SUM() to calculate the total valuation.\n\nHere's how you can write the SQL query:\n\n```sql\nSELECT artist_id, SUM(valuation)\nFROM artists_valuation\nGROUP BY artist_id;\n```\n\n### Explanation:\n- **artist_id**: This groups the records by each artist.\n- **SUM(valuation)**: This calculates the total valuation for each group of artist IDs.\n\nThis will give us the following result:\n\n| artist_id | SUM(valuation) |\n|-----------|----------------|\n| 1         | 22000000       |\n| 2         | 17000000       |\n| 3         | 11000000       |\n\nEach row represents one artist along with their corresponding total artwork valuation. \n\nFor example:\n- Picasso has two valuations totaling $22 million.\n- Warhol has two valuations totaling $17 million.\n- Basquiat has only one valuation amounting to $11 million. \n\nThese totals are calculated based on the data provided in your tables. If there were more entries or different values, those would be included accordingly.",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_sql_19",
+      "domain": "sql",
+      "success": true,
+      "latency_s": 3.589948784559965,
+      "prediction": ".\nSELECT T1.name FROM startups AS T1 JOIN funding AS T2 ON T1.id = T2.startup_id WHERE T2.purpose LIKE '%biosensor%' OR T2.purpose LIKE '%development%';",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_sql_20",
+      "domain": "sql",
+      "success": true,
+      "latency_s": 26.362981477752328,
+      "prediction": "To find the total amount of humanitarian assistance provided by NGOs to countries in Africa over the past five years, we need to:\n\n1. Identify which countries are in Africa.\n2. Sum up the amounts for those countries within the specified time frame.\n\nFrom the given data:\n- Kenya: 2018\n- Nigeria: 2019\n- South Africa: 2020\n- Ethiopia: 2017\n- Sudan: 2016\n\nAll these countries are indeed located in Africa and have entries from the last five years.\n\nNow let's sum up the amounts:\n\n```\nAmounts = [2000000, 3000000, 1500000, 2500000, 1800000]\nTotal Amount = 2000000 + 3000000 + 1500000 + 2500000 + 1800000 = 10800000\n```\n\nTherefore, the total amount of humanitarian assistance provided by NGOs to African countries in the last five years is **10,800,000**. \n\nThis can be confirmed with SQL query as follows:\n\n```sql\nSELECT SUM(Amount)\nFROM HumanitarianAssistance\nWHERE YEAR >= 2016 AND Country IN (\"Kenya\", \"Nigeria\", \"South Africa\", \"Ethiopia\", \"Sudan\");\n```\n\nThe result will give you the same answer: **10,800,000**.",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "id": "quality_summarizer_01",
+      "domain": "summarizer",
+      "success": true,
+      "latency_s": 1.6884640231728554,
+      "prediction": "Daniel Radcliffe, turning 18 today, inherits approximately \u00a320 million but plans to spend modestly, preferring items costing around 10 pounds such as books and music. He remains grounded despite his wealth and fame, set to continue playing Harry Potter while exploring other acting roles.",
+      "score": 0.1927710843373494,
+      "passed": false
+    },
+    {
+      "id": "quality_summarizer_02",
+      "domain": "summarizer",
+      "success": true,
+      "latency_s": 1.9413566067814827,
+      "prediction": "In Miami-Dade County Jail, the ninth floor, nicknamed the \"forgotten floor,\" houses inmates with severe mental illnesses awaiting trial, often for minor offenses resulting from interactions with law enforcement. Due to limited resources, these individuals receive minimal support while incarcerated, highlighting the strain on the criminal justice system for managing the growing number of mentally ill detainees.",
+      "score": 0.205607476635514,
+      "passed": false
+    },
+    {
+      "id": "quality_summarizer_03",
+      "domain": "summarizer",
+      "success": true,
+      "latency_s": 1.5287948343902826,
+      "prediction": "Survivors described a catastrophic bridge collapse in Minneapolis, with debris including vehicles submerged in the Mississippi River and others left hanging precariously. Emergency responders faced significant challenges accessing victims trapped mid-river, coordinating rescues that took nearly two hours despite their best efforts.",
+      "score": 0.09523809523809525,
+      "passed": false
+    },
+    {
+      "id": "quality_summarizer_04",
+      "domain": "summarizer",
+      "success": true,
+      "latency_s": 1.3507364857941866,
+      "prediction": "President Bush underwent a colonoscopy where five small polyps were removed; all appeared non-worrisome pending further examination. Following the procedure, Bush resumed normal activities at Camp David while Vice President Cheney briefly acted as acting president.",
+      "score": 0.26229508196721313,
+      "passed": false
+    },
+    {
+      "id": "quality_summarizer_05",
+      "domain": "summarizer",
+      "success": true,
+      "latency_s": 1.269984969869256,
+      "prediction": "NFL quarterback Michael Vick has been indefinitely suspended without pay after admitting his involvement in a dogfighting ring. His suspension comes alongside a guilty plea to charges related to animal fighting, with potential jail time and fines pending.",
+      "score": 0.20253164556962025,
+      "passed": false
+    },
+    {
+      "id": "quality_summarizer_06",
+      "domain": "summarizer",
+      "success": true,
+      "latency_s": 1.7679196950048208,
+      "prediction": "A 5-year-old Iraqi boy named Youssif, severely burned in an attack, received international attention and aid through media coverage. Following CNN\u2019s report, the Children's Burn Foundation offered to transport Youssif and his family to the U.S. for treatment and established a donation fund for his care.",
+      "score": 0.14893617021276598,
+      "passed": false
+    },
+    {
+      "id": "quality_summarizer_07",
+      "domain": "summarizer",
+      "success": true,
+      "latency_s": 1.9736518561840057,
+      "prediction": "In Baghdad, two Iraqi mothers, Suha and Karima, turn to prostitution out of desperation to provide for their families, hiding their activities from husbands and relatives due to societal pressures and fear of violence. Despite the stigma and personal sacrifices, both women emphasize their primary role as mothers willing to do whatever it takes to ensure their children\u2019s well-being.",
+      "score": 0.18518518518518517,
+      "passed": false
+    },
+    {
+      "id": "quality_summarizer_08",
+      "domain": "summarizer",
+      "success": true,
+      "latency_s": 2.392095223069191,
+      "prediction": "A key FARC rebel commander and U.S.-indicted drug trafficker, Tomas Medina Caracas, commonly known as \"El Negro Acacio,\" was killed in an air strike on his guerrilla camp in southern Colombia, confirming reports from multiple sources. The attack, carried out by the Colombian military with support from the Air Force, resulted in the deaths of 14 rebels and led to the seizure of weapons and electronic equipment.",
+      "score": 0.2522522522522523,
+      "passed": false
+    },
+    {
+      "id": "quality_summarizer_09",
+      "domain": "summarizer",
+      "success": true,
+      "latency_s": 1.4329673442989588,
+      "prediction": "White House Press Secretary Tony Snow, who is battling cancer, will resign on September 14th, being succeeded by Deputy Press Secretary Dana Perino. During an announcement, President Bush expressed support for Snow while praising his work ethic and dedication.",
+      "score": 0.3055555555555555,
+      "passed": false
+    },
+    {
+      "id": "quality_summarizer_10",
+      "domain": "summarizer",
+      "success": true,
+      "latency_s": 2.2400746792554855,
+      "prediction": "An empty, non-operational AT4 anti-tank rocket launcher tube was found on the lawn of a Jersey City home, leading to investigations by the FBI and local police into its origins and how it ended up there. The launcher, which cannot be determined whether it was fired, is being examined by Army experts who aim to trace its source despite the proximity to a nearby military base seeming unlikely given the circumstances.",
+      "score": 0.1782178217821782,
+      "passed": false
+    },
+    {
+      "id": "quality_summarizer_11",
+      "domain": "summarizer",
+      "success": true,
+      "latency_s": 1.7410048842430115,
+      "prediction": "President Bush plans to use historical lessons from the Vietnam War to argue against pulling out of Iraq, emphasizing the costs of withdrawal and comparing it to potential consequences faced after exiting Vietnam. He will speak to veterans in Kansas City, highlighting supposed parallels while downplaying differences pointed out by Democrats like Senate Majority Leader Harry Reid.",
+      "score": 0.2127659574468085,
+      "passed": false
+    },
+    {
+      "id": "quality_summarizer_12",
+      "domain": "summarizer",
+      "success": true,
+      "latency_s": 2.1759233828634024,
+      "prediction": "Since the 1970s, there have been several bombing incidents and attempts in the UK, including the 7/7 London bombings in 2005 which killed 52 people, an attempt on London's transport network involving failed rucksack bombs in 2005, and various other plots and explosions throughout different locations across the country over the decades.",
+      "score": 0.17777777777777776,
+      "passed": false
+    },
+    {
+      "id": "quality_summarizer_13",
+      "domain": "summarizer",
+      "success": true,
+      "latency_s": 1.7219978924840689,
+      "prediction": "Carlos Alberto, a 22-year-old midfielder who previously played for FC Porto and Corinthians, has signed with Bundesliga club Werder Bremen for a club-record fee of \u20ac7.8 million, aiming to win titles. He joins just weeks after other high-profile Brazilian players also transferred to German clubs.",
+      "score": 0.20930232558139533,
+      "passed": false
+    },
+    {
+      "id": "quality_summarizer_14",
+      "domain": "summarizer",
+      "success": true,
+      "latency_s": 1.7342188488692045,
+      "prediction": "Vice President Dick Cheney will act as president temporarily on Saturday while President Bush undergoes a routine colonoscopy under anesthesia at Camp David. The procedure, which is part of regular health monitoring, is expected to last around 2.5 hours and involves checking for colon and rectal cancer and potential polyps.",
+      "score": 0.1951219512195122,
+      "passed": false
+    },
+    {
+      "id": "quality_summarizer_15",
+      "domain": "summarizer",
+      "success": true,
+      "latency_s": 1.4797149393707514,
+      "prediction": "A magnitude 4.2 light earthquake struck near Oakland, California, causing minor disruptions including power outages and home alarm activations but no significant injuries or damages were reported. The tremor was centered approximately two miles northeast of Oakland and lasted around 50 seconds.",
+      "score": 0.33707865168539325,
+      "passed": false
+    },
+    {
+      "id": "quality_summarizer_16",
+      "domain": "summarizer",
+      "success": true,
+      "latency_s": 1.6220194678753614,
+      "prediction": "Federal officials announced there is no hope of finding six trapped miners alive after exhausting all rescue options over a 25-day period in a Utah coal mine. The U.S. government expressed sympathy for the families and acknowledged the tragic outcome despite extensive efforts including drilling multiple holes into the mine.",
+      "score": 0.11881188118811882,
+      "passed": false
+    },
+    {
+      "id": "quality_summarizer_17",
+      "domain": "summarizer",
+      "success": true,
+      "latency_s": 1.4927547089755535,
+      "prediction": "A bomb explosion near a crowd awaiting Algeria's president in Batna killed at least 14 people and injured 60; the incident occurred during a visit planned by President Abdel-Aziz Bouteflika, who continued his scheduled trip despite the attack.",
+      "score": 0.12121212121212123,
+      "passed": false
+    },
+    {
+      "id": "quality_summarizer_18",
+      "domain": "summarizer",
+      "success": true,
+      "latency_s": 1.2203058432787657,
+      "prediction": "David Beckham, a renowned football player, fashion icon, and celebrity, begins a five-year contract with the Los Angeles Galaxy while Becky Anderson examines his journey from childhood dreams to global fame through various media platforms.",
+      "score": 0.2820512820512821,
+      "passed": false
+    },
+    {
+      "id": "quality_summarizer_19",
+      "domain": "summarizer",
+      "success": true,
+      "latency_s": 1.7541408520191908,
+      "prediction": "A virus called Israeli Acute Paralysis Virus (IAPV), found in healthy Australian honeybees, appears frequently in samples from US honeybee colonies affected by colony collapse disorder, suggesting a potential link. However, scientists caution that multiple factors likely contribute to this widespread issue impacting crop-pollinating bees.",
+      "score": 0.1758241758241758,
+      "passed": false
+    },
+    {
+      "id": "quality_summarizer_20",
+      "domain": "summarizer",
+      "success": true,
+      "latency_s": 1.5875489823520184,
+      "prediction": "Customers flocked to Northern Rock branches in the UK to withdraw savings after the bank received a bailout from the Bank of England due to slashed profit forecasts and shares dropping significantly. Despite assurances from officials and financial bodies, public fear led to long queues and substantial withdrawals prior to the government intervention.",
+      "score": 0.1590909090909091,
+      "passed": false
+    }
+  ],
+  "summary": {
+    "n_tasks": 120,
+    "n_success": 120,
+    "n_skipped": 0,
+    "by_domain": {
+      "code": {
+        "n": 20,
+        "avg_score": 0.05,
+        "pass_rate": 0.05
+      },
+      "grammar": {
+        "n": 20,
+        "avg_score": 0.5288548720494769,
+        "pass_rate": 0.65
+      },
+      "legal": {
+        "n": 20,
+        "avg_score": 0.08407663764806622,
+        "pass_rate": 0.05
+      },
+      "medical": {
+        "n": 20,
+        "avg_score": 0.10562348755404108,
+        "pass_rate": 0.0
+      },
+      "sql": {
+        "n": 20,
+        "avg_score": 0.0,
+        "pass_rate": 0.0
+      },
+      "summarizer": {
+        "n": 20,
+        "avg_score": 0.20088137009066118,
+        "pass_rate": 0.0
+      }
+    },
+    "overall_avg_score": 0.16157272789037422
+  }
+}

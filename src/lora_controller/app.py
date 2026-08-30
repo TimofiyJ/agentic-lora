@@ -112,6 +112,11 @@ def get_adapter(name: str):
 async def load_adapter(name: str, body: LoadAdapterRequest | None = None):
     """Load an adapter into vLLM GPU memory, evicting LRU if at capacity.
 
+    A passthrough adapter (``meta.passthrough``) has no real LoRA weights —
+    it routes straight to the base model — so no vLLM load call is made,
+    but it still occupies a scheduler slot and shows up as "loaded" like
+    any other adapter.
+
     Args:
         name: Adapter name to load.
         body: Optional request body to pass load_inplace flag.
@@ -131,7 +136,8 @@ async def load_adapter(name: str, body: LoadAdapterRequest | None = None):
         if victim:
             await _evict(victim)
 
-    await vllm.load_adapter(name, meta, load_inplace=body.load_inplace if body else False)
+    if not meta.passthrough:
+        await vllm.load_adapter(name, meta, load_inplace=body.load_inplace if body else False)
     scheduler.record_load(name, meta)
     return {"status": "loaded", "adapter": name}
 
@@ -145,7 +151,9 @@ async def unload_adapter(name: str):
     """
     if not scheduler.is_loaded(name):
         return {"status": "not_loaded", "adapter": name}
-    await vllm.unload_adapter(name)
+    state = scheduler.get(name)
+    if state is None or not state.meta.passthrough:
+        await vllm.unload_adapter(name)
     scheduler.record_unload(name)
     return {"status": "unloaded", "adapter": name}
 
@@ -154,6 +162,10 @@ async def unload_adapter(name: str):
 async def infer(adapter_name: str, body: InferRequest):
     """Run inference with a specific adapter, auto-loading it if needed.
 
+    Passthrough adapters (``meta.passthrough``) route to their own
+    ``base_model`` instead of the adapter name, since vLLM never has a LoRA
+    registered under that name.
+
     Args:
         adapter_name: Adapter to use. Auto-loaded (with LRU eviction) if not on GPU.
         body: Inference request parameters.
@@ -161,19 +173,41 @@ async def infer(adapter_name: str, body: InferRequest):
     Raises:
         HTTPException: 404 if the adapter is not in the registry.
     """
-    if adapter_name not in registry:
+    meta = registry.get(adapter_name)
+    if meta is None:
         raise HTTPException(status_code=404, detail=f"Adapter '{adapter_name}' not in registry")
 
     if not scheduler.is_loaded(adapter_name):
         await load_adapter(adapter_name)
 
-    result = await vllm.completions(
-        model=adapter_name,
-        prompt=body.prompt,
-        max_tokens=body.max_tokens,
-        temperature=body.temperature,
-        stop=body.stop,
-    )
+    model_name = meta.base_model if meta.passthrough else adapter_name
+
+    if body.raw_completion:
+        result = await vllm.completions(
+            model=model_name,
+            prompt=body.prompt,
+            max_tokens=body.max_tokens,
+            temperature=body.temperature,
+            stop=body.stop,
+            repetition_penalty=body.repetition_penalty,
+        )
+    else:
+        chat_result = await vllm.chat_completions(
+            model=model_name,
+            prompt=body.prompt,
+            max_tokens=body.max_tokens,
+            temperature=body.temperature,
+            stop=body.stop,
+            repetition_penalty=body.repetition_penalty,
+        )
+        # Normalize to the /v1/completions shape so callers can always read
+        # choices[0]["text"] regardless of which vLLM endpoint served the request.
+        result = {
+            **chat_result,
+            "choices": [
+                {**c, "text": c["message"]["content"]} for c in chat_result["choices"]
+            ],
+        }
     scheduler.touch(adapter_name)
     return result
 
@@ -202,5 +236,7 @@ async def _evict(name: str) -> None:
     Args:
         name: Adapter name to evict.
     """
-    await vllm.unload_adapter(name)
+    state = scheduler.get(name)
+    if state is None or not state.meta.passthrough:
+        await vllm.unload_adapter(name)
     scheduler.record_unload(name)

@@ -61,11 +61,82 @@ Build a benchmark to measure how well a system adapts its own weights or archite
 | Paper | Year | Key Difference from Our Work |
 |-------|------|------------------------------|
 | Adaptive Minds (LoRA-as-Tools) | 2025 | Uses base LLM as router, no separate planner, no system-aware scheduling |
+| Parametric RAG (PRAG) | 2024-25 | Encodes knowledge into base weights statically; no dynamic per-step routing over a skill pool |
 | AgentFlux | 2025 | Decouples tool selection/arg gen, but no multi-adapter planning |
 | S-LoRA / dLoRA | 2023-24 | Infrastructure only, no intelligent planning layer |
 | LoRA-Switch | 2024 | Token-level routing within single task, not multi-step planning |
 | MeteoRA | 2024 | MoE-style routing, not agentic multi-step decomposition |
 | LoRA-Augmented Generation | 2025 | Retrieval-based selection, no lifecycle/scheduling awareness |
+
+
+## Evaluation Framework
+
+### The Fairness Principle
+
+The primary claim is **accuracy and task quality**, not efficiency. Resource gains are a side-effect, not the headline.
+
+The core fairness constraint: **knowledge must be controlled.** This system's adapters contain domain knowledge baked into weights — any baseline must access equivalent knowledge via a different mechanism, not less of it.
+
+This system = `Base LLM + adapter pool (domain-specialized LoRA weights) + dedicated planner`
+
+### Baselines (same knowledge budget, different mechanism)
+
+| Baseline | Knowledge source | What varies | What it proves |
+|---|---|---|---|
+| **Self-routing (Adaptive Minds)** | Same adapter pool | Base LLM selects adapters itself; no dedicated planner | Value of a dedicated small planner over self-routing |
+| **Parametric RAG (PRAG)** | Same domain corpora, encoded into base weights (full fine-tune or all-adapter merge) | No dynamic per-step routing; all knowledge statically present | Whether dynamic routing beats statically-merged parametric knowledge |
+| **Standard RAG** | Same domain corpora, retrieved at query time into context | Knowledge in context vs. knowledge in weights | Whether adapter weights beat retrieval for specialized multi-step tasks |
+| **Best-single-adapter** | One adapter selected once per task | Static selection, no per-step routing | Value of multi-step dynamic routing vs. static expert selection |
+| **All-adapters merged** | Task arithmetic of all LoRA weights merged into base | No switching at all | Whether dynamic routing beats blending all domain knowledge together |
+| **Oracle routing** | Same adapter pool; correct adapter always selected | Perfect planner, no routing errors | Upper bound — ceiling on what the planner can achieve |
+
+The most critical comparison is **self-routing (Adaptive Minds)**: same base model, same adapters, same task — only the planning mechanism differs. This directly isolates the value of a dedicated planner.
+
+The second most critical is **PRAG**: same domain knowledge, but stored monolithically. This tests whether dynamic per-step specialization beats always-on parametric knowledge.
+
+### Primary Metrics (task quality, these lead all reporting)
+
+| Metric | What it measures | Notes |
+|---|---|---|
+| **Task completion rate** | Did the full multi-step task succeed end-to-end? | Headline metric |
+| **Step accuracy** | Correct output at each individual step | Requires step-level ground truth labels |
+| **Adapter selection accuracy** | Did the planner pick the right adapter per step? | Requires oracle ground-truth adapter sequences |
+| **Error propagation rate** | How often does a wrong step corrupt all downstream steps? | Reveals compounding failures specific to multi-step tasks |
+
+### Domain-Specific Quality (per adapter type)
+
+| Adapter domain | Benchmark |
+|---|---|
+| Medical | MedQA, PubMedQA |
+| Legal | LegalBench, CUAD |
+| Code | HumanEval, MBPP |
+| Finance | FinQA |
+| Science | MMLU science subsets, SciQ |
+| Translation | BLEU on WMT pairs |
+
+### Secondary Metrics (resource efficiency, reported as bonus)
+
+GPU-Time Efficiency, peak GPU memory, end-to-end latency — reported alongside quality numbers to show the resource side-effect, but not used as the primary argument.
+
+### What Each Comparison Argues
+
+```
+vs. self-routing (Adaptive Minds)  → dedicated planner outperforms self-routing on task quality
+vs. Parametric RAG                 → dynamic per-step routing beats statically merged domain knowledge
+vs. standard RAG                   → adapter weights beat retrieval for specialized multi-step tasks
+vs. best-single-adapter            → multi-step routing beats static expert selection
+vs. all-adapters-merged            → dynamic switching beats blending all knowledge together
+vs. oracle                         → gap shows how close the planner gets to the theoretical ceiling
+```
+
+### Benchmark Task Design Requirement
+
+Tasks must be genuinely multi-step and cross-domain for the comparisons to be meaningful. A task solvable by one adapter alone lets best-single-adapter tie or win. Tasks should require at least 2–3 distinct domain steps, for example:
+
+- *"Read this medical paper → extract the statistical findings → write Python to plot them → translate the summary to Spanish"*
+- *"Classify this legal clause → summarize it in plain English → estimate financial exposure → generate a code stub to flag it in a contract parser"*
+
+These are the tasks where the planner has a real planning problem and routing quality is measurable.
 
 
 ## Candidate research directions

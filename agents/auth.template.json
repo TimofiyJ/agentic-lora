@@ -1,0 +1,6 @@
+{
+  "lpnu-agent": {
+    "type": "api",
+    "key": "PASTE_API_KEY_HERE"
+  }
+}

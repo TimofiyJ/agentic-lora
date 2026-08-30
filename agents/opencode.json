@@ -1,0 +1,49 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {},
+  "disabled_providers": [],
+  "provider": {
+    "lpnu-agent": {
+      "name": "lpnu-agent",
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://18.119.201.42:8000/v1"
+      },
+      "models": {
+        "InternScience/Agents-A1-FP8-dynamic": {
+          "name": "Agents-A1",
+          "temperature": true,
+          "tool_call": true,
+          "limit": {
+            "context": 262144,
+            "output": 262144
+          },
+          "attachment": true,
+          "modalities": {
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "agent": {
+    "build": {
+      "temperature": 0.2,
+      "prompt": "When using tools, follow the provided tool JSON schema exactly. Do not invent, rename, or alias argument keys. If a tool schema uses agent_type, use agent_type exactly; never use subagent_type."
+    },
+    "plan": {
+      "temperature": 0.2,
+      "prompt": "When using tools, follow the provided tool JSON schema exactly. Do not invent, rename, or alias argument keys. If a tool schema uses agent_type, use agent_type exactly; never use subagent_type."
+    },
+    "general": {
+      "temperature": 0.2,
+      "prompt": "When using tools, follow the provided tool JSON schema exactly. Do not invent, rename, or alias argument keys. If a tool schema uses agent_type, use agent_type exactly; never use subagent_type."
+    }
+  }
+}

@@ -1,0 +1,79 @@
+# Catalog for Adaptive Minds agent — matches our adapters.yaml names.
+# Uses the same Qwen2.5-7B-Instruct base + AM's own adapter weights.
+
+base_model:
+  hf_id: Qwen/Qwen2.5-7B-Instruct
+  max_lora_rank: 64
+
+hub:
+  repo: pavan01729/adaptive-minds-loras
+
+router:
+  prompt_template: |
+    Analyze the user query below and select the single best domain expert
+    from the list. Respond with ONLY the expert's id (lowercase, no
+    punctuation).
+
+    Query: "{query}"
+
+    Experts:
+    {domain_list}
+
+    Selected expert:
+  temperature: 0.0
+  max_tokens: 16
+
+agent:
+  brain: base
+  max_steps: 6
+  max_tokens: 1024
+
+lora_adapters:
+  - name: SQL
+    hf_subdir: qwen2.5-7b/qwen25_sql_v1
+    description: Translate natural-language questions into SQL queries.
+    system_prompt: You write correct, executable SQL. Use the schema provided.
+    keywords: [sql, query, select, join, where, group by, schema]
+    enabled: true
+
+  - name: Medical
+    hf_subdir: qwen2.5-7b/qwen25_medicine_v1
+    description: Answer clinical and medical questions based on healthcare knowledge.
+    system_prompt: You are a medical expert. Give evidence-based clinical answers.
+    keywords: [medical, clinical, healthcare, diagnosis, pharmacology]
+    enabled: true
+
+  - name: Legal
+    hf_subdir: qwen2.5-7b/qwen25_legal_v1_grpo
+    description: Interpret legal documents, classify contract clauses, draft legal text.
+    system_prompt: You are a legal expert. Analyze clauses precisely using legal reasoning.
+    keywords: [legal, contracts, clauses, law, liability]
+    enabled: true
+
+  - name: Chemistry
+    hf_subdir: qwen2.5-7b/qwen25_chem_v1_grpo
+    description: Answer chemistry questions, generate SMILES, predict reactions.
+    system_prompt: You are a chemistry expert. Give precise, mechanism-grounded answers.
+    keywords: [chemistry, molecule, reaction, compound, smiles, formula]
+    enabled: true
+
+  - name: Finance
+    hf_subdir: qwen2.5-7b/qwen25_finance_v1
+    description: Analyze financial data, interpret SEC filings, compute ratios.
+    system_prompt: You are a finance expert. Provide accurate financial analysis.
+    keywords: [finance, economics, market, revenue, investment]
+    enabled: true
+
+  - name: Biology
+    hf_subdir: qwen2.5-7b/qwen25_biology_v1
+    description: Answer biology questions covering genetics, cell biology, ecology.
+    system_prompt: You are a biology expert. Give scientifically accurate answers.
+    keywords: [biology, genetics, cell, ecology, biochemistry]
+    enabled: true
+
+  - name: Cybersecurity
+    hf_subdir: qwen2.5-7b/qwen25_cti_v1_grpo
+    description: Analyze threat intelligence, classify security incidents.
+    system_prompt: You are a cybersecurity expert. Analyze threats and defenses accurately.
+    keywords: [cybersecurity, threat, security, vulnerability, attack]
+    enabled: true
