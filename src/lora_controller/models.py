@@ -11,6 +11,7 @@ class AdapterMeta(BaseModel):
     base_model: str
     tags: list[str] = []
     passthrough: bool = False
+    system_prompt: str = ""
 
 
 class LoadedAdapter(BaseModel):

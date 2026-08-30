@@ -44,7 +44,10 @@ def test_is_subsequence_empty_expected_always_true():
 
 def test_score_plan_exact_match():
     result = score_plan(["sql", "summarizer"], ["sql", "summarizer"])
-    assert result == {"precision": 1.0, "recall": 1.0, "f1": 1.0, "order_correct": True}
+    assert result == {
+        "precision": 1.0, "recall": 1.0, "f1": 1.0,
+        "order_correct": True, "order_score": 1.0,
+    }
 
 
 def test_score_plan_extra_adapter_hurts_precision():
@@ -52,6 +55,7 @@ def test_score_plan_extra_adapter_hurts_precision():
     assert result["precision"] == pytest.approx(2 / 3)
     assert result["recall"] == 1.0
     assert result["order_correct"] is True
+    assert result["order_score"] == 1.0
 
 
 def test_score_plan_missing_adapter_hurts_recall():
@@ -59,6 +63,7 @@ def test_score_plan_missing_adapter_hurts_recall():
     assert result["precision"] == 1.0
     assert result["recall"] == 0.5
     assert result["order_correct"] is False
+    assert result["order_score"] == pytest.approx(0.5)
 
 
 def test_score_plan_wrong_order():
@@ -66,11 +71,31 @@ def test_score_plan_wrong_order():
     assert result["precision"] == 1.0
     assert result["recall"] == 1.0
     assert result["order_correct"] is False
+    # Fully reversed 2-step plan: LCS(expected, actual) = 1 (either tag alone).
+    assert result["order_score"] == pytest.approx(0.5)
+
+
+def test_score_plan_order_score_graded_on_partial_reorder():
+    # 4-step plan with one adjacent swap: order_correct is all-or-nothing False,
+    # but order_score should reward the 3 tags that stayed in relative order.
+    expected = ["sql", "legal", "medical", "summarizer"]
+    actual = ["sql", "medical", "legal", "summarizer"]
+    result = score_plan(actual, expected)
+    assert result["order_correct"] is False
+    assert result["order_score"] == pytest.approx(3 / 4)
 
 
 def test_score_plan_empty_actual():
     result = score_plan([], ["sql"])
-    assert result == {"precision": 0.0, "recall": 0.0, "f1": 0.0, "order_correct": False}
+    assert result == {
+        "precision": 0.0, "recall": 0.0, "f1": 0.0,
+        "order_correct": False, "order_score": 0.0,
+    }
+
+
+def test_score_plan_empty_expected_order_score_is_one():
+    result = score_plan(["sql"], [])
+    assert result["order_score"] == 1.0
 
 
 def test_summarize_all_success():
@@ -84,6 +109,7 @@ def test_summarize_all_success():
             "plan_recall": 1.0,
             "plan_f1": 1.0,
             "plan_order_correct": True,
+            "plan_order_score": 1.0,
         },
         {
             "success": True,
@@ -94,6 +120,7 @@ def test_summarize_all_success():
             "plan_recall": 0.5,
             "plan_f1": 0.5,
             "plan_order_correct": False,
+            "plan_order_score": 0.5,
         },
     ]
     result = summarize(records)
@@ -107,6 +134,7 @@ def test_summarize_all_success():
         "avg_plan_recall": 0.75,
         "avg_plan_f1": 0.75,
         "plan_order_correct_rate": 0.5,
+        "avg_plan_order_score": 0.75,
     }
 
 
@@ -121,6 +149,7 @@ def test_summarize_excludes_failures():
             "plan_recall": 1.0,
             "plan_f1": 1.0,
             "plan_order_correct": True,
+            "plan_order_score": 1.0,
         },
         {"success": False, "error": "timeout"},
     ]
@@ -134,6 +163,7 @@ def test_summarize_excludes_failures():
     assert result["avg_plan_recall"] == 1.0
     assert result["avg_plan_f1"] == 1.0
     assert result["plan_order_correct_rate"] == 1.0
+    assert result["avg_plan_order_score"] == 1.0
 
 
 def test_summarize_no_success_returns_zeros():
@@ -149,4 +179,5 @@ def test_summarize_no_success_returns_zeros():
         "avg_plan_recall": 0.0,
         "avg_plan_f1": 0.0,
         "plan_order_correct_rate": 0.0,
+        "avg_plan_order_score": 0.0,
     }

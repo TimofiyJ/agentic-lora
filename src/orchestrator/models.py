@@ -63,6 +63,15 @@ class TaskRequest(BaseModel):
         always_replan: Regenerate the plan after every completed step.
         prefetch: Lookahead-load next-wave adapters while current wave runs.
         unload_after: Unload all task adapters from GPU when the task finishes.
+        plan: Optional precomputed plan to execute instead of calling the
+            planner. Lets a caller run the exact same plan under different
+            scheduling settings (e.g. prefetch on vs off) with zero
+            plan-to-plan variance — otherwise a prefetch ablation confounds
+            "did scheduling help" with "did the planner happen to produce a
+            different plan this time" (the planner is not fully deterministic:
+            temperature=0.2, and its prompt includes which adapters are
+            currently GPU-resident, which itself depends on prior scheduling
+            state). Get a plan to reuse via GET /plan.
     """
 
     query: str
@@ -70,6 +79,7 @@ class TaskRequest(BaseModel):
     always_replan: bool = False
     prefetch: bool = True
     unload_after: bool = True
+    plan: Plan | None = None
 
 
 class TaskResult(BaseModel):

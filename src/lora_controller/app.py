@@ -199,6 +199,7 @@ async def infer(adapter_name: str, body: InferRequest):
             temperature=body.temperature,
             stop=body.stop,
             repetition_penalty=body.repetition_penalty,
+            system_prompt=meta.system_prompt,
         )
         # Normalize to the /v1/completions shape so callers can always read
         # choices[0]["text"] regardless of which vLLM endpoint served the request.

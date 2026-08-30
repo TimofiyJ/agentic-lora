@@ -32,8 +32,9 @@ class VLLMClient:
                 f"{self._base}/v1/load_lora_adapter",
                 json={"lora_name": name, "lora_path": meta.path, "load_inplace": load_inplace},
             )
-            # vLLM returns 400 "already loaded" if the adapter survived a controller restart; treat as success
-            if resp.status_code == 400 and "already been loaded" in resp.text:
+            # vLLM returns 400 "already loaded" if the adapter survived a controller restart; treat as success.
+            # Match loosely — vLLM 0.6.6.post1 renders this as "already beenloaded" (missing space).
+            if resp.status_code == 400 and "already" in resp.text and "loaded" in resp.text:
                 return
             resp.raise_for_status()
 
@@ -100,6 +101,7 @@ class VLLMClient:
         temperature: float = 0.7,
         stop: list[str] | None = None,
         repetition_penalty: float = 1.0,
+        system_prompt: str = "",
     ) -> dict:
         """Call vLLM's /v1/chat/completions endpoint.
 
@@ -122,9 +124,13 @@ class VLLMClient:
         Raises:
             httpx.HTTPStatusError: If vLLM returns a non-2xx response.
         """
+        messages = []
+        if system_prompt:
+            messages.append({"role": "system", "content": system_prompt})
+        messages.append({"role": "user", "content": prompt})
         payload: dict = {
             "model": model,
-            "messages": [{"role": "user", "content": prompt}],
+            "messages": messages,
             "max_tokens": max_tokens,
             "temperature": temperature,
             "repetition_penalty": repetition_penalty,

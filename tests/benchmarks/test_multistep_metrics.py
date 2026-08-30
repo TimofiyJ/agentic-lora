@@ -124,12 +124,14 @@ def test_summarize_multistep_all_success():
         {
             "success": True, "latency_s": 2.0, "adapter_switches": 1, "replanned": False,
             "plan_precision": 1.0, "plan_recall": 1.0, "plan_f1": 1.0, "plan_order_correct": True,
+            "plan_order_score": 1.0,
             "task_completion": True, "step_accuracy": 1.0, "coverage": 1.0,
             "error_propagation_rate": None,
         },
         {
             "success": True, "latency_s": 4.0, "adapter_switches": 2, "replanned": True,
             "plan_precision": 0.5, "plan_recall": 0.5, "plan_f1": 0.5, "plan_order_correct": False,
+            "plan_order_score": 0.5,
             "task_completion": False, "step_accuracy": 0.5, "coverage": 0.5,
             "error_propagation_rate": 1.0,
         },
@@ -142,6 +144,7 @@ def test_summarize_multistep_all_success():
     assert result["avg_coverage"] == pytest.approx(0.75)
     assert result["avg_error_propagation_rate"] == 1.0
     assert result["avg_plan_precision"] == pytest.approx(0.75)
+    assert result["avg_plan_order_score"] == pytest.approx(0.75)
     assert result["avg_latency_s"] == 3.0
     assert result["replan_rate"] == 0.5
 
@@ -151,6 +154,7 @@ def test_summarize_multistep_no_failures_excluded_from_propagation_avg():
         {
             "success": True, "latency_s": 1.0, "adapter_switches": 0, "replanned": False,
             "plan_precision": 1.0, "plan_recall": 1.0, "plan_f1": 1.0, "plan_order_correct": True,
+            "plan_order_score": 1.0,
             "task_completion": True, "step_accuracy": 1.0, "coverage": 1.0,
             "error_propagation_rate": None,
         },

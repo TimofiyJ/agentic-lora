@@ -38,6 +38,7 @@ def test_build_success_record_all_steps_pass():
     assert record["plan_precision"] == 1.0
     assert record["plan_recall"] == 1.0
     assert record["plan_order_correct"] is True
+    assert record["plan_order_score"] == 1.0
     assert record["coverage"] == 1.0
     assert record["step_accuracy"] == 1.0
     assert record["task_completion"] is True

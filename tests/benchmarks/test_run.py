@@ -28,6 +28,7 @@ def test_build_success_record():
         "plan_recall": 1.0,
         "plan_f1": 1.0,
         "plan_order_correct": True,
+        "plan_order_score": 1.0,
     }
 
 

@@ -44,6 +44,7 @@ def build_success_record(task: dict, result: dict, latency_s: float) -> dict:
         "plan_recall": plan_score["recall"],
         "plan_f1": plan_score["f1"],
         "plan_order_correct": plan_score["order_correct"],
+        "plan_order_score": plan_score["order_score"],
     }
 
 

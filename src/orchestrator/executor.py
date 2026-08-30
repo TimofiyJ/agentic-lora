@@ -38,20 +38,42 @@ class Executor:
         self._scheduler = scheduler
         self._timeout = timeout
 
-    def _resolve_prompt(self, template: str, query: str, outputs: dict[int, str]) -> str:
+    def _resolve_prompt(
+        self, template: str, query: str, outputs: dict[int, str], depends_on: list[int] | None = None
+    ) -> str:
         """Substitute placeholders in a prompt template.
+
+        The planner LLM is instructed to reference prior-step output via
+        ``{step_N}`` placeholders, but small/self-routing planners don't always
+        comply — a step with a real `depends_on` can come back as a bare
+        instruction with no placeholder at all, silently dropping the upstream
+        output and leaving the adapter to generate blind (observed on
+        Qwen2.5-7B-as-planner: e.g. a "summarize the result" step with no
+        `{step_1}` anywhere in it). If any depended-on step's placeholder is
+        missing from the resolved template, prepend that output as explicit
+        context instead of trusting the plan's prompt text — a step that
+        declares a dependency must never run without seeing that step's output.
 
         Args:
             template: Prompt with {user_query} and {step_N} placeholders.
             query: Original user query.
             outputs: Map of step_id → output for completed steps.
+            depends_on: Step IDs this step declared as dependencies.
 
         Returns:
             Fully resolved prompt string.
         """
         prompt = template.replace("{user_query}", query)
+        missing_context = []
         for step_id, output in outputs.items():
-            prompt = prompt.replace(f"{{step_{step_id}}}", output)
+            placeholder = f"{{step_{step_id}}}"
+            if placeholder in prompt:
+                prompt = prompt.replace(placeholder, output)
+            elif depends_on and step_id in depends_on:
+                missing_context.append((step_id, output))
+        if missing_context:
+            context = "\n".join(f"Result of step {sid}: {out}" for sid, out in missing_context)
+            prompt = f"{context}\n\n{prompt}"
         return prompt
 
     def _next_wave_adapters(
@@ -109,7 +131,7 @@ class Executor:
             async with httpx.AsyncClient(timeout=self._timeout) as client:
                 resp = await client.post(
                     f"{self._controller_url}/infer/{step.adapter}",
-                    json={"prompt": prompt, "max_tokens": 512, "temperature": 0.3},
+                    json={"prompt": prompt, "max_tokens": 2048, "temperature": 0.3},
                 )
                 resp.raise_for_status()
                 output = resp.json()["choices"][0]["text"].strip()
@@ -179,7 +201,9 @@ class Executor:
             )
 
             wave_results = await asyncio.gather(*[
-                self._run_step(step, self._resolve_prompt(step.prompt, query, outputs), currently_loaded)
+                self._run_step(
+                    step, self._resolve_prompt(step.prompt, query, outputs, step.depends_on), currently_loaded
+                )
                 for step in ready
             ])
 
