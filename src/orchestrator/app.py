@@ -53,12 +53,18 @@ async def run_task(body: TaskRequest):
 
     Args:
         body: Task request with query, replanning flags, and scheduling options.
+            If `body.plan` is set, it's executed as-is and the planner is not
+            called — see TaskRequest.plan for why (deterministic scheduling
+            ablations).
 
     Returns:
         TaskResult with per-step outputs, scheduling events, and plan metadata.
     """
-    loaded_adapters = await scheduler.get_loaded()
-    plan = await planner.plan(body.query, loaded_adapters)
+    if body.plan is not None:
+        plan = body.plan
+    else:
+        loaded_adapters = await scheduler.get_loaded()
+        plan = await planner.plan(body.query, loaded_adapters)
     return await executor.execute(
         query=body.query,
         plan=plan,

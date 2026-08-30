@@ -56,7 +56,7 @@ def test_infer_normal_adapter_still_loads_lora_and_routes_to_adapter_name(client
     async def fake_load_adapter(name, meta, load_inplace=False):
         loaded["name"] = name
 
-    async def fake_chat_completions(model, prompt, max_tokens, temperature, stop, repetition_penalty):
+    async def fake_chat_completions(model, prompt, max_tokens, temperature, stop, repetition_penalty, system_prompt=""):
         assert model == "medical"
         return {"choices": [{"message": {"content": "answer"}}]}
 

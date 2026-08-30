@@ -1,6 +1,8 @@
 """Adapter lifecycle manager with LRU eviction."""
 
-from datetime import datetime, UTC
+from datetime import datetime, timezone
+
+UTC = timezone.utc
 from .models import AdapterMeta, LoadedAdapter
 
 

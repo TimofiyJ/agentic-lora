@@ -8,7 +8,7 @@ Read the `.env` file for `HF_TOKEN` before starting.
 ## Step 1 — Find cheapest offer
 
 ```bash
-vastai search offers 'gpu_ram>=20 disk_space>=60 cuda_vers>=12.1 rentable=true' --order dph_total --raw | python3 -c "import json,sys; offers=json.load(sys.stdin); o=offers[0]; print(f'Offer {o[\"id\"]}: {o[\"gpu_name\"]} {o[\"gpu_ram\"]}GB  ${o[\"dph_total\"]:.3f}/hr')"
+vastai search offers 'gpu_ram>=24 disk_space>=60 cuda_vers>=12.1 rentable=true' --order dph_total --raw | python3 -c "import json,sys; offers=json.load(sys.stdin); o=offers[0]; print(f'Offer {o[\"id\"]}: {o[\"gpu_name\"]} {o[\"gpu_ram\"]}GB  ${o[\"dph_total\"]:.3f}/hr')"
 ```
 
 Note the offer ID.
@@ -54,7 +54,7 @@ Run each via `vastai execute <INSTANCE_ID> "<cmd>"` — these go through the API
 ```
 python3 -m venv ~/venv
 ~/venv/bin/pip install -q vllm
-~/venv/bin/pip install -q fastapi uvicorn httpx pyyaml python-dotenv
+~/venv/bin/pip install -q fastapi uvicorn httpx pyyaml python-dotenv rouge-score
 echo 'HF_TOKEN=<HF_TOKEN>' > ~/.env
 ```
 
@@ -63,11 +63,11 @@ vLLM install takes several minutes. Wait for each command to finish before runni
 ## Step 7 — Start services
 
 ```
-VLLM_ALLOW_RUNTIME_LORA_UPDATING=True HUGGING_FACE_HUB_TOKEN=$(grep HF_TOKEN ~/.env | cut -d= -f2) nohup ~/venv/bin/vllm serve meta-llama/Llama-3.2-3B-Instruct --enable-lora --max-loras 4 --max-lora-rank 128 --max-model-len 65536 --port 8000 > ~/vllm.log 2>&1 &
+VLLM_ALLOW_RUNTIME_LORA_UPDATING=True HUGGING_FACE_HUB_TOKEN=$(grep HF_TOKEN ~/.env | cut -d= -f2) nohup ~/venv/bin/vllm serve meta-llama/Llama-3.1-8B-Instruct --enable-lora --max-loras 4 --max-lora-rank 256 --max-model-len 65536 --port 8000 > ~/vllm.log 2>&1 &
 
 ADAPTERS_CONFIG=~/adapters.yaml VLLM_TIMEOUT=300 nohup ~/venv/bin/uvicorn lora_controller.app:app --port 8001 --host 0.0.0.0 > ~/controller.log 2>&1 &
 
-PLANNER_MODEL=meta-llama/Llama-3.2-3B-Instruct nohup ~/venv/bin/uvicorn orchestrator.app:app --port 8002 --host 0.0.0.0 > ~/orchestrator.log 2>&1 &
+PLANNER_MODEL=meta-llama/Llama-3.1-8B-Instruct nohup ~/venv/bin/uvicorn orchestrator.app:app --port 8002 --host 0.0.0.0 > ~/orchestrator.log 2>&1 &
 ```
 
 ## Step 8 — Wait until healthy

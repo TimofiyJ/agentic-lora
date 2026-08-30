@@ -70,6 +70,7 @@ def build_success_record(task: dict, result: dict, latency_s: float) -> dict:
         "plan_recall": plan_score["recall"],
         "plan_f1": plan_score["f1"],
         "plan_order_correct": plan_score["order_correct"],
+        "plan_order_score": plan_score["order_score"],
         "coverage": coverage,
         "step_accuracy": step_accuracy(scored),
         "task_completion": task_completion(scored),
@@ -95,31 +96,22 @@ def build_error_record(task: dict, error: str) -> dict:
     }
 
 
-def run_benchmark(
-    tasks: list[dict],
-    orchestrator_url: str,
-    client: httpx.Client,
-    prefetch: bool = True,
-    unload_after: bool = True,
-) -> list[dict]:
+def run_benchmark(tasks: list[dict], orchestrator_url: str, client: httpx.Client) -> list[dict]:
     """Run every task sequentially against the orchestrator.
 
     Args:
         tasks: Task specs loaded from benchmarks/multistep_tasks.json.
         orchestrator_url: Base URL of the orchestrator service.
         client: httpx.Client used to make the /task requests.
-        prefetch: Whether to lookahead-load next-wave adapters.
-        unload_after: Whether to unload adapters when the task finishes.
 
     Returns:
         Per-task result records, in task order.
     """
     records = []
     for task in tasks:
-        body = {"query": task["query"], "prefetch": prefetch, "unload_after": unload_after}
         start = time.monotonic()
         try:
-            resp = client.post(f"{orchestrator_url}/task", json=body)
+            resp = client.post(f"{orchestrator_url}/task", json={"query": task["query"]})
             resp.raise_for_status()
             result = resp.json()
             latency_s = time.monotonic() - start
@@ -134,20 +126,12 @@ def main() -> None:
     parser.add_argument("--orchestrator-url", default="http://localhost:8002")
     parser.add_argument("--tasks", default="benchmarks/multistep_tasks.json")
     parser.add_argument("--out", default="benchmarks/results/")
-    parser.add_argument("--no-prefetch", action="store_true", help="Disable adapter prefetching")
-    parser.add_argument("--no-unload-after", action="store_true", help="Keep adapters loaded after task")
     args = parser.parse_args()
 
     tasks = json.loads(Path(args.tasks).read_text())
 
     with httpx.Client(timeout=300.0) as client:
-        records = run_benchmark(
-            tasks,
-            args.orchestrator_url,
-            client,
-            prefetch=not args.no_prefetch,
-            unload_after=not args.no_unload_after,
-        )
+        records = run_benchmark(tasks, args.orchestrator_url, client)
 
     started_at = datetime.now(UTC)
     output = {
