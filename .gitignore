@@ -224,3 +224,6 @@ __marimo__/
 
 benchmarks/results/
 docs/superpowers/*
+
+# Generated training data (large, reproducible from training/data/prepare_*.py)
+training/data/output/
