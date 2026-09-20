@@ -4,6 +4,47 @@ Running log of empirical findings, blockers, and hypotheses as the system is bui
 
 ---
 
+## B0 — Qwen3-8B Passthrough Baseline (2026-09-20)
+
+E1 (`docs/superpowers/plans/2026-09-20-e1-qwen3-8b-baseline.md`), branch `tinker-custom-loras`. vLLM 0.29.0, `Qwen/Qwen3-8B`, tensor-parallel-size 2 on 2x RTX 4060 Ti (16 GB each) via vast.ai. All 6 domains passthrough (no LoRA), `chat_template_kwargs: {enable_thinking: false}` on every adapter.
+
+**Thinking suppression: confirmed working.** Live-checked before running any benchmark (per the plan's mandatory gate) and again in the results below — zero `<think>` blocks, `reasoning: null` on every response. The `chat_template_kwargs` mechanism added to `AdapterMeta`/`VLLMClient`/`app.py` this session works on vLLM 0.29.0; none of the design spec's fallback options (`--default-chat-template-kwargs`, custom chat template, post-hoc stripping) were needed.
+
+**Real bug found and fixed along the way:** the orchestrator's `planner.py` makes its own direct `/v1/chat/completions` call to vLLM for plan generation, *separate* from the controller's `chat_completions` — and it wasn't disabling thinking. Qwen3-8B's thinking is verbose enough (492 tokens to output `{"x": 1}` in a minimal test) that on real planning prompts it exceeded `max_tokens: 1024` mid-`<think>`, leaving `content` empty and every multistep task failing with `JSONDecodeError: Expecting value: line 1 column 1` → 500 (all 50/50 tasks failed on the first run). Fixed by adding the same `chat_template_kwargs: {"enable_thinking": false}` to `planner.py`'s `_call_llm` payload (commit `a90c133`) — confirmed by the same minimal test dropping from 492 to 7 completion tokens for the trivial JSON case.
+
+### Quality benchmark (120 tasks, 20/domain)
+
+| Domain | Metric | B0 | B-old (ours) | B-old (AM) |
+|---|---|---|---|---|
+| sql | Normalised EM | 0.000 | 0.000 | 0.150 |
+| legal | Token-F1 | 0.209 | 0.092 | 0.025 |
+| medical | ROUGE-L | 0.137 | 0.103 | 0.130 |
+| code | pass@1 | 0.050 | 0.050 | — |
+| grammar | GLEU | 0.522 | 0.519 | — |
+| summarizer | ROUGE-L | 0.187 | 0.190 | — |
+
+Overall avg score 0.184. Single-domain pass rate (avg of per-domain pass_rate): code 0.05, grammar 0.60, legal 0.15, medical 0.00, sql 0.00, summarizer 0.00 → **13.3%** overall.
+
+Avg latency per domain: sql 14.8s, code 15.3s, summarizer 2.5s, medical 1.5s, grammar 1.0s, legal 0.9s (overall avg 6.0s).
+
+**sql/code latency and score are both explained by one thing, not two:** those are the only two domains whose benchmark prompt has no "answer directly, no explanation" instruction (legal/medical/summarizer all have one baked into their prompt template). Sample sql prediction: `"...ORDER BY s.name; \n\nWait, but what if there are multiple entries for the same salesperson..."` — the model free-associates after a technically-plausible answer. This is not thinking-token leakage (confirmed no `<think>`, `reasoning: null`) — it's Qwen3-8B's default verbose-explainer style on an under-specified prompt, which directly costs both the exact-match-style score and the latency (more tokens generated). Not fixed here — this is exactly the gap the sql/legal/medical LoRA adapters (data already prepared, see the P0 data pipeline entry) are meant to close, and changing the benchmark prompts now would break comparability with `B-old`.
+
+### Multistep benchmark (50 tasks — `benchmarks/tasks.json` has grown since the 20-task B-old reference run)
+
+| Metric | B0 | B-old (Qwen2.5-7B) |
+|---|---|---|
+| n_success | 50/50 | — |
+| plan_precision | 1.00 | — |
+| plan_recall | 0.99 | — |
+| plan_f1 | 0.993 | 0.879 |
+| plan_order_correct_rate | 0.98 | 0.500 |
+| avg_switches | 0.94 | 1.6 |
+| avg_latency_s | 22.6 | 28.9 |
+
+Raw Qwen3-8B (no orchestrator-side adapters at all) already clears the PRD's plan F1 target (≥0.85) and beats B-old on every planning metric measured, including latency. **Caveat, not glossed over:** `benchmarks/run.py`'s current summary does not compute `avg_coverage`, `avg_step_accuracy`, `task_completion_rate`, or `avg_error_propagation_rate` — the metrics R2's Qwen2.5-7B multistep table reported. Those either came from a since-changed script version or manual analysis of the raw per-step outputs; they are not available for B0 without either upgrading `benchmarks/multistep_metrics.py`'s summary or a manual pass over the 50 raw task records. Not fabricated here — flagged as an open gap for whoever needs those numbers next (likely E4).
+
+**Headline:** the planning story on Qwen3-8B is already strong without any adapter — the bottleneck E3's adapters need to fix is single-domain output quality (13.3% pass rate), not plan structure.
+
 ## Model comparison table (2026-08-30)
 
 Every base-model / system combination benchmarked this session, on identical qpiai LoRA weights. Full narrative in R2/R3 below.
