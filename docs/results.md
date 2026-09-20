@@ -69,29 +69,23 @@ Scored via `training/eval_local.py`'s `score_predictions`, which calls the exact
 
 **Reading:** a single cheap (~5% of the funded budget, by estimate), unswept, single-seed run already produces a real, non-trivial quality lift over B0 on the domain with the biggest prior gap. This is a strong signal to continue — either legal/medical with the same recipe, or a quick LR check on sql first — with the remaining ~$9.
 
----
+### Legal LoRA, first pass (same session)
 
-## E3 — SQL LoRA, First Pass (2026-09-20)
+Same recipe, `--domain legal`. Legal's train set is only 3,830 examples total (smaller than the 5,000 default subsample), so this run trained on all of it, 2 epochs, same rank/lr.
 
-Design/plan: `docs/superpowers/specs/2026-09-20-e3-sql-lora-sft-design.md`, `docs/superpowers/plans/2026-09-20-e3-sql-lora-sft.md` (both local, gitignored). Branch `tinker-custom-loras`. Budget context: user funded **$10 total** on Tinker (PRD's original ~$25-35 full-sweep estimate is not affordable — see budget math in the design spec).
+**Loss:** 4.97 (batch 0, epoch 0) → mostly 0.3–0.9 by end of epoch 1, noisier than sql's curve but trending down (legal's contract-clause task is harder/more varied than sql's schema+query format).
 
-**Recipe:** `Qwen/Qwen3-8B`, rank 32, `train_unembed=False`, `qwen3_disable_thinking` renderer. Subsampled **5,000** of the 99,600 sql train examples (`training/data/output/sql/train.jsonl`, fixed seed 0), 2 epochs, batch size 32 (157 batches/epoch, 314 total steps), `lr = get_lr("Qwen/Qwen3-8B") = 4.73e-4` (no sweep — single value, single seed, by design, given the budget).
+**Real bug hit and fixed along the way:** `training/eval_local.py`'s `score_predictions` assumed every domain scores against `task["reference"]` (a bare string) — true for sql/medical/summarizer, but `benchmarks.quality_metrics.score_legal` reads `task["meta"]["answers"]` (a *list* of acceptable gold spans) instead, and raised `KeyError: 'meta'` on the first attempt. Fixed by adding `build_score_task(domain, example)` to `eval_local.py`, which special-cases legal to wrap the single reference in a list (commit `54bd986`) — verified with a new unit test before rerunning.
 
-**Loss:** 1.87 (batch 0) → mostly 0.05–0.15 by end of epoch 1, e.g. batch 156 (last) = 0.0507. Clean, monotonic-ish convergence, no signs of divergence.
+**Separate, unrelated hiccup:** the local eval step (loading `Qwen/Qwen3-8B` + adapter via `transformers`/`peft`, `device_map="auto"`) crashed with `KeyError` inside `accelerate`'s disk-offload path (`accelerate/utils/offload.py`) the first time — root-caused to system memory pressure from unrelated local applications (a Minecraft/Java process alone was using ~9.5 GB RSS, alongside PyCharm/Chrome/Discord and two other Claude sessions on the same machine), which pushed `device_map="auto"`'s planner into a disk-offload strategy that hit a bug. Not a bug in this project's code or in the trained adapter — the adapter itself exported and validated cleanly on the first try. Worked around by forcing `device_map="cpu"` for the local eval (slower, but avoids the disk-offload hook path entirely) once memory pressure was confirmed via `free -h`/`ps aux --sort=-%mem`.
 
-**Export:** `train_unembed=False` worked as intended this time — `validate_adapter_config` passed cleanly on the first attempt (no `lm_head` in `target_modules`, unlike E0's first, uncorrected run).
+**Local validation result:**
 
-**Local validation result — the actual headline number:**
-
-| | B0 (no adapter) | sql LoRA, first pass |
+| | B0 (no adapter) | legal LoRA, first pass |
 |---|---|---|
-| sql normalized EM (30 val examples, same scorer as the real benchmark) | 0.000 | **0.300** |
+| legal token-F1 (30 val examples) | 0.209 | **0.2785** |
 
-Scored via `training/eval_local.py`'s `score_predictions`, which calls the exact same `benchmarks.quality_metrics.score("sql", ...)` the real quality benchmark uses — this number is directly comparable to a future `benchmarks/results/quality_*.json` sql entry, not a bespoke metric.
-
-**Cost:** not yet confirmed via `tinker billing usage` — the CLI's usage data lags real time (per its own `--help` text) and only showed the earlier E0 hello-world sessions as of this writing, not this run. Design-time estimate was ~$0.61 (1.38M tokens at $0.44/M); will reconcile against real billing once it appears and update this entry if materially different.
-
-**Reading:** a single cheap (~5% of the funded budget, by estimate), unswept, single-seed run already produces a real, non-trivial quality lift over B0 on the domain with the biggest prior gap. This is a strong signal to continue — either legal/medical with the same recipe, or a quick LR check on sql first — with the remaining ~$9.
+A real but more modest lift than sql's (0.000 → 0.300) — legal's B0 starting point was already non-zero, and CUAD-style span extraction from long contract text is a harder task than sql's schema+query format.
 
 ## Model comparison table (2026-08-30)
 
