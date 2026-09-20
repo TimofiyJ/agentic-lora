@@ -18,6 +18,7 @@ adapters:
     rank: 32
     base_model: meta-llama/Llama-3.1-8B-Instruct
     tags: [medical]
+    chat_template_kwargs: {enable_thinking: false}
 """
 
 
@@ -56,7 +57,10 @@ def test_infer_normal_adapter_still_loads_lora_and_routes_to_adapter_name(client
     async def fake_load_adapter(name, meta, load_inplace=False):
         loaded["name"] = name
 
-    async def fake_chat_completions(model, prompt, max_tokens, temperature, stop, repetition_penalty, system_prompt=""):
+    async def fake_chat_completions(
+        model, prompt, max_tokens, temperature, stop, repetition_penalty,
+        system_prompt="", chat_template_kwargs=None,
+    ):
         assert model == "medical"
         return {"choices": [{"message": {"content": "answer"}}]}
 
@@ -68,6 +72,28 @@ def test_infer_normal_adapter_still_loads_lora_and_routes_to_adapter_name(client
     assert resp.status_code == 200
     assert resp.json()["choices"][0]["text"] == "answer"
     assert loaded["name"] == "medical"
+
+
+def test_infer_forwards_chat_template_kwargs_from_adapter_meta(client, monkeypatch):
+    captured = {}
+
+    async def fake_load_adapter(name, meta, load_inplace=False):
+        return None
+
+    async def fake_chat_completions(
+        model, prompt, max_tokens, temperature, stop, repetition_penalty,
+        system_prompt="", chat_template_kwargs=None,
+    ):
+        captured["chat_template_kwargs"] = chat_template_kwargs
+        return {"choices": [{"message": {"content": "answer"}}]}
+
+    monkeypatch.setattr(app_module.vllm, "load_adapter", fake_load_adapter)
+    monkeypatch.setattr(app_module.vllm, "chat_completions", fake_chat_completions)
+
+    resp = client.post("/infer/medical", json={"prompt": "question"})
+
+    assert resp.status_code == 200
+    assert captured["chat_template_kwargs"] == {"enable_thinking": False}
 
 
 def test_infer_unregistered_adapter_still_404s(client):
