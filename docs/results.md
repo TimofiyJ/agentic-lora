@@ -45,6 +45,54 @@ Raw Qwen3-8B (no orchestrator-side adapters at all) already clears the PRD's pla
 
 **Headline:** the planning story on Qwen3-8B is already strong without any adapter — the bottleneck E3's adapters need to fix is single-domain output quality (13.3% pass rate), not plan structure.
 
+---
+
+## E3 — SQL LoRA, First Pass (2026-09-20)
+
+Design/plan: `docs/superpowers/specs/2026-09-20-e3-sql-lora-sft-design.md`, `docs/superpowers/plans/2026-09-20-e3-sql-lora-sft.md` (both local, gitignored). Branch `tinker-custom-loras`. Budget context: user funded **$10 total** on Tinker (PRD's original ~$25-35 full-sweep estimate is not affordable — see budget math in the design spec).
+
+**Recipe:** `Qwen/Qwen3-8B`, rank 32, `train_unembed=False`, `qwen3_disable_thinking` renderer. Subsampled **5,000** of the 99,600 sql train examples (`training/data/output/sql/train.jsonl`, fixed seed 0), 2 epochs, batch size 32 (157 batches/epoch, 314 total steps), `lr = get_lr("Qwen/Qwen3-8B") = 4.73e-4` (no sweep — single value, single seed, by design, given the budget).
+
+**Loss:** 1.87 (batch 0) → mostly 0.05–0.15 by end of epoch 1, e.g. batch 156 (last) = 0.0507. Clean, monotonic-ish convergence, no signs of divergence.
+
+**Export:** `train_unembed=False` worked as intended this time — `validate_adapter_config` passed cleanly on the first attempt (no `lm_head` in `target_modules`, unlike E0's first, uncorrected run).
+
+**Local validation result — the actual headline number:**
+
+| | B0 (no adapter) | sql LoRA, first pass |
+|---|---|---|
+| sql normalized EM (30 val examples, same scorer as the real benchmark) | 0.000 | **0.300** |
+
+Scored via `training/eval_local.py`'s `score_predictions`, which calls the exact same `benchmarks.quality_metrics.score("sql", ...)` the real quality benchmark uses — this number is directly comparable to a future `benchmarks/results/quality_*.json` sql entry, not a bespoke metric.
+
+**Cost:** not yet confirmed via `tinker billing usage` — the CLI's usage data lags real time (per its own `--help` text) and only showed the earlier E0 hello-world sessions as of this writing, not this run. Design-time estimate was ~$0.61 (1.38M tokens at $0.44/M); will reconcile against real billing once it appears and update this entry if materially different.
+
+**Reading:** a single cheap (~5% of the funded budget, by estimate), unswept, single-seed run already produces a real, non-trivial quality lift over B0 on the domain with the biggest prior gap. This is a strong signal to continue — either legal/medical with the same recipe, or a quick LR check on sql first — with the remaining ~$9.
+
+---
+
+## E3 — SQL LoRA, First Pass (2026-09-20)
+
+Design/plan: `docs/superpowers/specs/2026-09-20-e3-sql-lora-sft-design.md`, `docs/superpowers/plans/2026-09-20-e3-sql-lora-sft.md` (both local, gitignored). Branch `tinker-custom-loras`. Budget context: user funded **$10 total** on Tinker (PRD's original ~$25-35 full-sweep estimate is not affordable — see budget math in the design spec).
+
+**Recipe:** `Qwen/Qwen3-8B`, rank 32, `train_unembed=False`, `qwen3_disable_thinking` renderer. Subsampled **5,000** of the 99,600 sql train examples (`training/data/output/sql/train.jsonl`, fixed seed 0), 2 epochs, batch size 32 (157 batches/epoch, 314 total steps), `lr = get_lr("Qwen/Qwen3-8B") = 4.73e-4` (no sweep — single value, single seed, by design, given the budget).
+
+**Loss:** 1.87 (batch 0) → mostly 0.05–0.15 by end of epoch 1, e.g. batch 156 (last) = 0.0507. Clean, monotonic-ish convergence, no signs of divergence.
+
+**Export:** `train_unembed=False` worked as intended this time — `validate_adapter_config` passed cleanly on the first attempt (no `lm_head` in `target_modules`, unlike E0's first, uncorrected run).
+
+**Local validation result — the actual headline number:**
+
+| | B0 (no adapter) | sql LoRA, first pass |
+|---|---|---|
+| sql normalized EM (30 val examples, same scorer as the real benchmark) | 0.000 | **0.300** |
+
+Scored via `training/eval_local.py`'s `score_predictions`, which calls the exact same `benchmarks.quality_metrics.score("sql", ...)` the real quality benchmark uses — this number is directly comparable to a future `benchmarks/results/quality_*.json` sql entry, not a bespoke metric.
+
+**Cost:** not yet confirmed via `tinker billing usage` — the CLI's usage data lags real time (per its own `--help` text) and only showed the earlier E0 hello-world sessions as of this writing, not this run. Design-time estimate was ~$0.61 (1.38M tokens at $0.44/M); will reconcile against real billing once it appears and update this entry if materially different.
+
+**Reading:** a single cheap (~5% of the funded budget, by estimate), unswept, single-seed run already produces a real, non-trivial quality lift over B0 on the domain with the biggest prior gap. This is a strong signal to continue — either legal/medical with the same recipe, or a quick LR check on sql first — with the remaining ~$9.
+
 ## Model comparison table (2026-08-30)
 
 Every base-model / system combination benchmarked this session, on identical qpiai LoRA weights. Full narrative in R2/R3 below.
