@@ -24,3 +24,27 @@ def test_registry_loads_passthrough_field(tmp_path):
     assert meta is not None
     assert meta.passthrough is True
     assert meta.base_model == "meta-llama/Llama-3.1-8B-Instruct"
+
+
+def test_adapter_meta_chat_template_kwargs_defaults_empty():
+    meta = AdapterMeta(path="x", description="d", rank=1, base_model="m")
+    assert meta.chat_template_kwargs == {}
+
+
+def test_registry_loads_chat_template_kwargs(tmp_path):
+    config = tmp_path / "adapters.yaml"
+    config.write_text(
+        "adapters:\n"
+        "  sql:\n"
+        "    path: \"__passthrough__\"\n"
+        "    description: \"SQL\"\n"
+        "    rank: 0\n"
+        "    base_model: Qwen/Qwen3-8B\n"
+        "    passthrough: true\n"
+        "    chat_template_kwargs: {enable_thinking: false}\n"
+        "    tags: [sql]\n"
+    )
+    registry = AdapterRegistry(config)
+    meta = registry.get("sql")
+    assert meta is not None
+    assert meta.chat_template_kwargs == {"enable_thinking": False}

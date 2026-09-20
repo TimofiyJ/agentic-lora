@@ -12,6 +12,7 @@ class AdapterMeta(BaseModel):
     tags: list[str] = []
     passthrough: bool = False
     system_prompt: str = ""
+    chat_template_kwargs: dict = {}
 
 
 class LoadedAdapter(BaseModel):
