@@ -1,76 +1,62 @@
-# Adapter registry — add your LoRA adapters here.
+# Adapter registry — B0 baseline: Qwen/Qwen3-8B, every domain passthrough (no LoRA).
+# See docs/superpowers/specs/2026-09-20-e1-qwen3-8b-baseline-design.md for why.
 # The controller loads this file on startup and hot-reloads via POST /registry/reload.
 #
-# Each adapter must have:
-#   path        - absolute path (or HuggingFace repo ID) to the adapter weights
-#                 ("__passthrough__" for a passthrough entry — no real LoRA)
-#   description - plain-English description of what this adapter does (fed to the planner)
-#   rank        - LoRA rank used during training (0 for passthrough)
-#   base_model  - HuggingFace model ID this adapter was trained on
-#   passthrough - optional, default false. If true, the controller routes
-#                 inference straight to base_model with no LoRA loaded.
-#   tags        - optional list of capability tags for filtering
+# The prior Llama-3.1-8B + public-adapter config is recoverable via
+# `git log -- adapters.yaml` if a Llama comparison is ever needed again.
 
 adapters:
 
-  # sql adapter disabled — every text-to-sql LoRA found for
-  # meta-llama/Llama-3.1-8B-Instruct bundles a full dense lm_head (and
-  # likely embed_tokens) weight alongside the LoRA deltas, which vLLM's
-  # LoRA loader rejects with "lm_head.weight is unsupported LoRA weight".
-  # adapter_config.json's target_modules does NOT reveal this — the only
-  # way to catch it is checking actual adapter_model.safetensors file size
-  # against the expected size for its declared rank (~book-keeping: rank r
-  # LoRA on N proj modules across L layers ≈ N * L * 2 * r * hidden_size *
-  # 2 bytes). Confirmed 2026-08-26 on three separate candidates:
-  #   - philschmid/code-llama-3-1-8b-text-to-sql-lora (r=256, 4 attn+mlp
-  #     modules, expected ~300 MiB, actual 4.78 GiB — live vLLM load 500s)
-  #   - SujanKarki/Meta_Llama3.1_8b_instruct_text_to_sql_lora (r=128, 4 attn
-  #     modules, expected ~250 MiB, actual 2.53 GiB — same author who made
-  #     the original disabled 3B sql adapter, same systematic pattern)
-  #   - analogalok/llama3.1_instruct_8b_SQL_LORA — repo has no weight files
-  #     at all, dead upload
-  # No further Hub candidates target this exact base model. Re-enable once
-  # one exists, or once this stack serves a different base model.
-  #
-  # sql:
-  #   path: philschmid/code-llama-3-1-8b-text-to-sql-lora
-  #   description: "Translates natural language questions into SQL queries for relational databases. Expects raw schema+question text, not a chat instruction."
-  #   rank: 256
-  #   base_model: meta-llama/Llama-3.1-8B-Instruct
-  #   tags: [sql, code, database]
-
-  medical:
-    path: zjudai/flowertune-medical-lora-llama-3.1-8b-instruct
-    description: "Answers clinical and medical questions based on healthcare knowledge (PubMedQA/MedMCQA/MedQA/CareQA-trained)"
-    rank: 32
-    base_model: meta-llama/Llama-3.1-8B-Instruct
-    tags: [medical, clinical, healthcare]
+  sql:
+    path: "__passthrough__"
+    description: "Translates natural language questions into SQL queries for relational databases."
+    rank: 0
+    base_model: Qwen/Qwen3-8B
+    passthrough: true
+    chat_template_kwargs: {enable_thinking: false}
+    tags: [sql, code, database]
 
   legal:
-    path: zjudai/flowertune-general-nlp-lora-llama-3.1-8b-instruct
-    description: "Interprets legal documents, answers legal questions, and drafts legal text. General instruction-following LoRA (Alpaca-GPT4), not legal-specialized — no domain-specific legal LoRA with credible provenance was found for this base model."
-    rank: 32
-    base_model: meta-llama/Llama-3.1-8B-Instruct
+    path: "__passthrough__"
+    description: "Interprets legal documents, answers legal questions, and drafts legal text."
+    rank: 0
+    base_model: Qwen/Qwen3-8B
+    passthrough: true
+    chat_template_kwargs: {enable_thinking: false}
     tags: [legal, professional]
 
+  medical:
+    path: "__passthrough__"
+    description: "Answers clinical and medical questions based on healthcare knowledge."
+    rank: 0
+    base_model: Qwen/Qwen3-8B
+    passthrough: true
+    chat_template_kwargs: {enable_thinking: false}
+    tags: [medical, clinical, healthcare]
+
   grammar:
-    path: zjudai/flowertune-general-nlp-lora-llama-3.1-8b-instruct
-    description: "Corrects grammar, spelling, and style errors in English text. General instruction-following LoRA (Alpaca-GPT4), not grammar-specialized — no domain-specific grammar LoRA with credible provenance was found for this base model."
-    rank: 32
-    base_model: meta-llama/Llama-3.1-8B-Instruct
+    path: "__passthrough__"
+    description: "Corrects grammar, spelling, and style errors in English text."
+    rank: 0
+    base_model: Qwen/Qwen3-8B
+    passthrough: true
+    chat_template_kwargs: {enable_thinking: false}
     tags: [grammar, correction, writing]
 
   summarizer:
-    path: zjudai/flowertune-general-nlp-lora-llama-3.1-8b-instruct
-    description: "Summarizes long documents and passages into concise, accurate form. General instruction-following LoRA (Alpaca-GPT4), not summarization-specialized — no domain-specific summarization LoRA with credible provenance was found for this base model."
-    rank: 32
-    base_model: meta-llama/Llama-3.1-8B-Instruct
+    path: "__passthrough__"
+    description: "Summarizes long documents and passages into concise, accurate form."
+    rank: 0
+    base_model: Qwen/Qwen3-8B
+    passthrough: true
+    chat_template_kwargs: {enable_thinking: false}
     tags: [summarization, nlp]
 
   code:
     path: "__passthrough__"
-    description: "Generates, explains, and debugs Python code from natural language instructions. Runs on the base model directly — no LoRA improved on this over the base model's own Python ability."
+    description: "Generates, explains, and debugs Python code from natural language instructions."
     rank: 0
-    base_model: meta-llama/Llama-3.1-8B-Instruct
+    base_model: Qwen/Qwen3-8B
     passthrough: true
+    chat_template_kwargs: {enable_thinking: false}
     tags: [code, python, programming]
