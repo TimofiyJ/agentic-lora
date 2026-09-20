@@ -91,6 +91,30 @@ A real but more modest lift than sql's (0.000 → 0.300) — legal's B0 starting
 
 **Running total this session:** sql $0.68 + legal $1.71 + E0 hello-world (3 runs × 9,200 tokens) ≈ $0.01 ≈ **$2.40 of the funded $10**, before the medical run.
 
+### Medical LoRA, first pass (same session)
+
+Same recipe, `--domain medical`, default 5,000-example subsample (of 245,859 available), 2 epochs, same rank/lr. This run's local eval hit no memory issues (Minecraft/Java process from the legal run's hiccup was closed by then) — `device_map="auto"` worked cleanly, local eval took ~2 seconds instead of legal's CPU-forced multi-minute detour.
+
+**Loss:** 3.27 (batch 0, epoch 0) → mostly 0.8–1.5 by end of epoch 1, e.g. batch 156 (last) = 0.7798. Higher starting loss than sql/legal (medical's free-text patient-question format is less structured than sql's schema+query or legal's span-extraction), but converges cleanly.
+
+**Local validation result:**
+
+| | B0 (no adapter) | medical LoRA, first pass |
+|---|---|---|
+| medical ROUGE-L (30 val examples) | 0.137 | **0.2680** |
+
+Nearly a 2x lift over B0, using `benchmarks.quality_metrics.score("medical", ...)` (the `task["reference"]` shape, same as sql — medical didn't need the `build_score_task` legal special-case).
+
+**All three P0 domains now show a real, adapter-attributable quality lift over B0 on a single cheap unswept pass:**
+
+| Domain | B0 | LoRA (first pass) |
+|---|---|---|
+| sql (normalized EM) | 0.000 | 0.300 |
+| legal (token-F1) | 0.209 | 0.2785 |
+| medical (ROUGE-L) | 0.137 | 0.268 |
+
+**Budget used today:** sql $0.68 + legal $1.71 + medical (billing not yet reconciled, design estimate ~$1.3) + E0 ~$0.01 ≈ **~$3.7 of the funded $10** — well within budget, no LR sweep or multi-seed runs done yet (deliberately, per the budget-scoped design).
+
 ## Model comparison table (2026-08-30)
 
 Every base-model / system combination benchmarked this session, on identical qpiai LoRA weights. Full narrative in R2/R3 below.
