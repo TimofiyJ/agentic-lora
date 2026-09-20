@@ -102,6 +102,7 @@ class VLLMClient:
         stop: list[str] | None = None,
         repetition_penalty: float = 1.0,
         system_prompt: str = "",
+        chat_template_kwargs: dict | None = None,
     ) -> dict:
         """Call vLLM's /v1/chat/completions endpoint.
 
@@ -137,6 +138,8 @@ class VLLMClient:
         }
         if stop:
             payload["stop"] = stop
+        if chat_template_kwargs:
+            payload["chat_template_kwargs"] = chat_template_kwargs
         async with httpx.AsyncClient(timeout=self._timeout) as client:
             resp = await client.post(f"{self._base}/v1/chat/completions", json=payload)
             resp.raise_for_status()
