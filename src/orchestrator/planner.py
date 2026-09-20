@@ -66,6 +66,7 @@ class Planner:
             ],
             "temperature": 0.2,
             "max_tokens": 1024,
+            "chat_template_kwargs": {"enable_thinking": False},
         }
         async with httpx.AsyncClient(timeout=self._timeout) as client:
             resp = await client.post(f"{self._vllm_url}/v1/chat/completions", json=payload)
