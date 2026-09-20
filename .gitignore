@@ -227,3 +227,6 @@ docs/superpowers/*
 
 # Generated training data (large, reproducible from training/data/prepare_*.py)
 training/data/output/
+
+# Downloaded Tinker checkpoints and exported PEFT adapters (large, reproducible from training/hello_world_sft.py and future train_sft.py runs)
+training/output/
