@@ -27,6 +27,20 @@ def reference_content(example: dict) -> str:
     return next(m["content"] for m in example["messages"] if m["role"] == "assistant")
 
 
+def build_score_task(domain: str, example: dict) -> dict:
+    """Build the task dict shape benchmarks.quality_metrics.score expects for domain.
+
+    Most domains (sql, medical, summarizer) score against task["reference"].
+    legal scores against task["meta"]["answers"] (a list of acceptable gold
+    spans) -- our val data only has one gold answer per example, so it's
+    wrapped in a single-element list.
+    """
+    reference = reference_content(example)
+    if domain == "legal":
+        return {"meta": {"answers": [reference]}}
+    return {"reference": reference}
+
+
 def score_predictions(domain: str, val_examples: list[dict], predictions: list[str]) -> dict:
     """Score each prediction against its matching val example's reference.
 
@@ -39,7 +53,7 @@ def score_predictions(domain: str, val_examples: list[dict], predictions: list[s
         {"scores": [per-example float, ...], "mean_score": float}
     """
     scores = [
-        score(domain, prediction, {"reference": reference_content(example)})["score"]
+        score(domain, prediction, build_score_task(domain, example))["score"]
         for example, prediction in zip(val_examples, predictions)
     ]
     return {"scores": scores, "mean_score": sum(scores) / len(scores)}

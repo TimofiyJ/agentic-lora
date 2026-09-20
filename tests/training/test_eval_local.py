@@ -50,3 +50,22 @@ def test_score_predictions_matches_up_examples_and_predictions_in_order():
 
     assert report["scores"] == [1.0, 0.0]
     assert report["mean_score"] == 0.5
+
+
+def test_score_predictions_works_for_legal_domain_which_needs_meta_answers():
+    """score_legal reads task["meta"]["answers"] (a list), not task["reference"]
+    (a bare string) -- a different shape than sql/medical/summarizer use."""
+    val_examples = [
+        {
+            "messages": [
+                {"role": "user", "content": "q1"},
+                {"role": "assistant", "content": "The buyer shall pay within 30 days."},
+            ]
+        },
+    ]
+    predictions = ["The buyer shall pay within 30 days."]
+
+    report = score_predictions("legal", val_examples, predictions)
+
+    assert report["scores"] == [1.0]
+    assert report["mean_score"] == 1.0
