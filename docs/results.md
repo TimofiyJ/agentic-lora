@@ -4,6 +4,61 @@ Running log of empirical findings, blockers, and hypotheses as the system is bui
 
 ---
 
+## Model comparison table (2026-08-30)
+
+Every base-model / system combination benchmarked this session, on identical qpiai LoRA weights. Full narrative in R2/R3 below.
+
+### Qwen2.5-7B-Instruct — quality benchmark (sql / legal / medical, n=20/domain)
+
+| System | Run | sql | legal | medical | overall | avg latency |
+|---|---|---|---|---|---|---|
+| Ours | 1 — no sys-prompt | 0.000 | 0.111 | 0.112 | 0.074 | 9.30s |
+| Ours | 2 — matched sys-prompt | 0.050 | 0.102 | 0.112 | 0.088 | 5.88s |
+| Ours | 3 — reproduced | 0.050 | 0.070 | 0.108 | 0.076 | — |
+| Theirs (`/route`) | 1 | 0.150 | 0.025 | 0.130 | **0.101** | 5.65s |
+| Theirs (`/route`) | 2 — reproduced | 0.150 | 0.033 | 0.118 | 0.100 | — |
+
+Routing accuracy (theirs): 1.0, trivial with a 3-expert catalog. Legal near-zero for both — LEDGAR-classifier adapter tested against CUAD span-QA, a real benchmark/adapter mismatch shared by both systems, not a bug.
+
+### Qwen3.5-9B — quality benchmark (legal / medical / code, n=20/domain)
+
+| System | legal | medical | code | overall | avg latency | status |
+|---|---|---|---|---|---|---|
+| Ours | 0.008 | 0.041 | 0.000 | 0.017 | ~2 min/req | completed, 2h17m |
+| Theirs | — | — | — | — | — | aborted by user |
+
+No `sql` adapter exists for this base in qpiai's pool. `max_tokens` raised 512→2048 — model reasons visibly before answering.
+
+### Multi-step orchestration — Qwen2.5-7B, our orchestrator only (20 tasks)
+
+| Metric | Value | Reading |
+|---|---|---|
+| plan_f1 | 0.879 | picks close to the right adapter *set* |
+| plan_order_correct_rate | 0.500 | right adapters, wrong order — half the time |
+| avg_coverage | 0.833 | most oracle steps get invoked |
+| avg_switches | 1.6 | real cross-adapter chaining happened, on hardware |
+| avg_step_accuracy | 0.074 | per-step output rarely clears the quality bar |
+| task_completion_rate | 0.000 | zero tasks fully completed end-to-end |
+| avg_error_propagation_rate | 0.975 | one weak step drags down the whole chain |
+| avg_latency_s | 28.9 | per full multi-step task |
+
+Adaptive Minds has no equivalent multi-adapter endpoint to compare against — its own paper never demonstrates ≥2 adapters chained on one task.
+
+### GPU-Time Efficiency ablation — our controller, forced eviction
+
+| Condition | Domains | MAX_LORAS | Wall time | GPU-Time avg | GPU peak |
+|---|---|---|---|---|---|
+| Generous | 3 | 4 | 75.5s | 19.419 GiB | 19.427 GiB |
+| Constrained | 3 | 2 | 88.7s | 19.427 GiB | 19.427 GiB |
+| Generous | 4 | 4 | 80.5s | 19.524 GiB | 19.524 GiB |
+| Constrained | 4 | 2 | 99.8s | 19.524 GiB | 19.524 GiB |
+
+Memory flat within noise (<10MB) across every condition — rank-16/32 LoRA weights are too small to register against the ~19.4–19.5GB base+KV floor. Latency scales with eviction *frequency*: +17.5% at 3 domains, +24% at 4. The metric that moves here is time, not memory.
+
+**Headline:** Qwen2.5-7B numbers are stable across two independent runs (within noise at n=20/domain, "ours" vs "theirs" is roughly a tie on raw quality). Qwen3.5-9B's LoRA-on-GDN path works technically, but its default chain-of-thought verbosity burns the token budget on meta-reasoning before answering — tanking both latency (~70×) and every lexical-overlap score. Not a fair comparison; reported for completeness.
+
+---
+
 ## Problems
 
 ### P1 — LoRA Adapter Compatibility with vLLM
@@ -165,7 +220,7 @@ Same quality-benchmark methodology (`benchmarks/quality_tasks.json` domains, `qu
 ## Experiments
 
 ### E1 — Doc-to-LoRA: Training Purpose-Built Adapters from Document Corpora
-**Status:** Planned
+**Status:** Superseded by `PRD_custom_LoRA_adapters.md` (see E2 below) — same core idea (train our own domain LoRAs, restrict target modules to attn/MLP for vLLM compatibility), now underway for real on `tinker-custom-loras`.
 
 Train 5-6 LoRA adapters from scratch on domain-specific document collections, giving the system a controlled adapter pool with unambiguous domain boundaries. Motivated by P1 (vLLM compatibility) and P2 (sparse public adapters) — both problems disappear when we train our own.
 
@@ -177,6 +232,32 @@ Train 5-6 LoRA adapters from scratch on domain-specific document collections, gi
 - Domain accuracy on held-out test sets (does the medical adapter outperform base model on medical Q&A?)
 - Routing clarity: can the planner reliably pick the correct adapter from description alone?
 - Weight space structure: do Doc-to-LoRA adapters cluster by domain in RQ3 experiments?
+
+---
+
+### E2 — Tinker Hello-World SFT on `Qwen/Qwen3-8B` (PRD stage E0)
+**Status:** Done, 2026-09-20, branch `tinker-custom-loras`
+
+First real train → export → verify cycle through the Tinker API on the project's actual target model, before spending real domain-data budget on it (E3). Toy task: 20 identical single-turn conversations teaching an unguessable Q→A pair (`"What is the secret code?"` → `"XYZZY-42"`), rank-32 LoRA, 20 steps of `forward_backward`/`optim_step`, Adam lr 2e-4.
+
+**Loss curve** (full run, `training/hello_world_sft.py`):
+
+| Step | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 10 | 15 | 19 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Loss | 8.0119 | 5.6583 | 3.3250 | 1.4601 | 0.4718 | 0.0466 | 0.0058 | 0.0006 | 0.0007 | 0.0001 |
+
+**Two real bugs found and fixed (matter for E3's actual domain training scripts too):**
+
+1. `service_client.create_lora_training_client_async(base_model=..., rank=...)` defaults `train_unembed=True`. For `Qwen/Qwen3-8B` this makes Tinker LoRA-adapt `lm_head`, which vLLM's LoRA loader rejects (`lm_head.weight is unsupported LoRA weight` — same failure class as P1/the disabled sql adapter in `adapters.yaml`, this time from Tinker's own default on the real target model). Fix: always pass `train_unembed=False`. Caught immediately by `training/validate_adapter_config.py` on the very first live run — the validator did its job.
+2. `tokenizer.apply_chat_template(..., return_tensors="pt")` returns a `BatchEncoding` in the installed `transformers==5.5.4` (pinned indirectly — `tinker_cookbook` requires `<=5.5.4`), not a bare tensor. Must extract `.input_ids` before calling `model.generate()`.
+
+**Final verification (local, `transformers`+`peft`, no vLLM — see below):**
+- Base `Qwen/Qwen3-8B` output for the prompt: `'The secret code is **"Hello, World!"**.'` (does not know the real answer, as expected)
+- Same base model + exported LoRA adapter: `'XYZZY-42'` (exact match)
+
+**Scope decision:** the live vLLM boot ("→ vLLM" in the PRD's E0 description) was deferred to E1 rather than done here — local GPU is only 8GB (not enough for any Qwen3 variant in vLLM), and E1 already needs a vast.ai rental for the real Qwen3-8B baseline (B0), so the first real vLLM+Qwen3-8B boot happens there instead of being duplicated on a throwaway smoke test. Full design rationale in `docs/superpowers/specs/2026-09-20-e0-tinker-hello-world-design.md` (local, gitignored).
+
+**Renderer naming trap avoided:** `tinker_cookbook.renderers.get_renderer("qwen3_disable_thinking", ...)` is for the `Qwen3` family (our target). `"qwen3_8_disable_thinking"` is a different, unrelated model line (`Qwen/Qwen3.8-*`, version "3.8") that only looks similar in text — do not conflate in E3.
 
 ---
 
