@@ -133,3 +133,35 @@ def test_run_prepare_writes_train_val_and_manifest(tmp_path, monkeypatch):
     assert manifest["n_val"] == 2
     assert manifest["n_rows_before_filter"] == 5
     assert manifest["n_rows_after_filter"] == 5
+
+
+def test_subsample_returns_exactly_n_items():
+    examples = [{"i": i} for i in range(100)]
+    result = common.subsample(examples, n=10, seed=0)
+    assert len(result) == 10
+
+
+def test_subsample_is_deterministic_for_a_fixed_seed():
+    examples = [{"i": i} for i in range(100)]
+    a = common.subsample(examples, n=10, seed=0)
+    b = common.subsample(examples, n=10, seed=0)
+    assert a == b
+
+
+def test_subsample_items_are_all_from_the_original_list():
+    examples = [{"i": i} for i in range(100)]
+    result = common.subsample(examples, n=10, seed=0)
+    original_ids = {e["i"] for e in examples}
+    assert all(e["i"] in original_ids for e in result)
+
+
+def test_batch_splits_into_chunks_of_the_given_size():
+    items = list(range(10))
+    result = list(common.batch(items, 3))
+    assert result == [[0, 1, 2], [3, 4, 5], [6, 7, 8], [9]]
+
+
+def test_batch_with_size_larger_than_input_yields_one_batch():
+    items = list(range(3))
+    result = list(common.batch(items, 10))
+    assert result == [[0, 1, 2]]

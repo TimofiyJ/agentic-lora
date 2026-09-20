@@ -51,6 +51,19 @@ def train_val_split(
     return shuffled[val_size:], shuffled[:val_size]
 
 
+def subsample(examples: list[dict], n: int, seed: int) -> list[dict]:
+    """Deterministically shuffle examples and take the first n."""
+    shuffled = examples[:]
+    random.Random(seed).shuffle(shuffled)
+    return shuffled[:n]
+
+
+def batch(items: list, size: int) -> Iterator[list]:
+    """Yield successive chunks of items, each up to size long."""
+    for i in range(0, len(items), size):
+        yield items[i : i + size]
+
+
 def write_jsonl(path: Path, examples: list[dict]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w") as f:
