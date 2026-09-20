@@ -65,7 +65,7 @@ Design/plan: `docs/superpowers/specs/2026-09-20-e3-sql-lora-sft-design.md`, `doc
 
 Scored via `training/eval_local.py`'s `score_predictions`, which calls the exact same `benchmarks.quality_metrics.score("sql", ...)` the real quality benchmark uses — this number is directly comparable to a future `benchmarks/results/quality_*.json` sql entry, not a bespoke metric.
 
-**Cost:** not yet confirmed via `tinker billing usage` — the CLI's usage data lags real time (per its own `--help` text) and only showed the earlier E0 hello-world sessions as of this writing, not this run. Design-time estimate was ~$0.61 (1.38M tokens at $0.44/M); will reconcile against real billing once it appears and update this entry if materially different.
+**Cost (confirmed via `tinker billing usage`):** session `444503c2` used 1,535,084 training tokens → **$0.68** at $0.44/M — close to the $0.61 design-time estimate.
 
 **Reading:** a single cheap (~5% of the funded budget, by estimate), unswept, single-seed run already produces a real, non-trivial quality lift over B0 on the domain with the biggest prior gap. This is a strong signal to continue — either legal/medical with the same recipe, or a quick LR check on sql first — with the remaining ~$9.
 
@@ -86,6 +86,10 @@ Same recipe, `--domain legal`. Legal's train set is only 3,830 examples total (s
 | legal token-F1 (30 val examples) | 0.209 | **0.2785** |
 
 A real but more modest lift than sql's (0.000 → 0.300) — legal's B0 starting point was already non-zero, and CUAD-style span extraction from long contract text is a harder task than sql's schema+query format.
+
+**Cost (confirmed via `tinker billing usage`):** session `7b12a854` used 3,884,234 training tokens → **$1.71** — more than sql despite fewer training examples (3,830 vs 5,000), because legal's per-example sequences are much longer (contract context up to 2000 chars + question, vs sql's compact schema+query).
+
+**Running total this session:** sql $0.68 + legal $1.71 + E0 hello-world (3 runs × 9,200 tokens) ≈ $0.01 ≈ **$2.40 of the funded $10**, before the medical run.
 
 ## Model comparison table (2026-08-30)
 
