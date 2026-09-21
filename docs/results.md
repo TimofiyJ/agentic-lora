@@ -153,7 +153,17 @@ Plan quality is essentially unchanged (expected — planning depends on the base
 
 Model cards published to all three HF repos (FR-E3) — data source/license/training config/eval numbers/usage snippet each, licenses correctly picked up by HF's own metadata (apache-2.0 for sql/legal, mit for medical).
 
-**Not yet done (see memory / next session):** paired bootstrap significance testing, Adaptive Minds (B-AM) check on Qwen3-8B.
+### Paired bootstrap significance (10,000 resamples, `benchmarks/paired_bootstrap.py`)
+
+| Domain | Δ (OURS − B0) | 95% CI | p-value | PRD criterion (p < 0.05) |
+|---|---|---|---|---|
+| sql | +0.150 | [0.000, 0.300] | 0.0431 | **met** |
+| medical | +0.116 | [0.054, 0.187] | 0.0000 | **met** |
+| legal | +0.035 | [-0.148, 0.205] | 0.3338 | **not met** |
+
+Honest result, not spun: **2 of 3 P0 domains meet the PRD's success criterion** ("кожен власний адаптер статистично значуще перевершує B0... p < 0.05"). Legal's point-estimate improvement is real but, at n=20 tasks, not statistically distinguishable from noise (CI crosses zero). This isn't a training failure — legal had the smallest per-task-count sample and the smallest effect size of the three domains; a larger benchmark n or a stronger legal recipe (more training data — legal's train set was fully used already at 3,830 examples, so more epochs or an LR sweep are the available levers, not more data) would be the next thing to try if pushing legal specifically matters.
+
+**Not yet done (see memory / next session):** Adaptive Minds (B-AM) check on Qwen3-8B.
 
 ## Model comparison table (2026-08-30)
 
