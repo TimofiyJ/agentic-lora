@@ -4,6 +4,53 @@ Running log of empirical findings, blockers, and hypotheses as the system is bui
 
 ---
 
+## Session summary: E0 → E4 + legal LR sweep (2026-09-20 to 2026-09-21)
+
+Full pipeline from "no Tinker access" to "real trained LoRA adapters, benchmarked and significance-tested on the actual serving stack," in one continuous session, branch `tinker-custom-loras`. Detailed entries for each stage below; this section is the consolidated overview.
+
+### What got built
+
+- **E0 — Tinker hello-world.** First real train → export → verify cycle on `Qwen/Qwen3-8B`. Proved the mechanics work before spending real domain-data budget.
+- **E1 — B0 baseline.** vLLM + Qwen3-8B passthrough on a rented vast.ai instance (2× RTX 4060 Ti, `--tensor-parallel-size 2`), full 120-task quality + 50-task multistep benchmark measured, PRD targets recalibrated against real numbers.
+- **E2 (earlier session) — P0 data pipeline.** sql/legal/medical training data sourced, cleaned, contamination-checked, and pushed to `postovyi/agentic-lora-training-data`.
+- **E3 — real domain LoRA training.** `training/train_sft.py`, one domain-agnostic script, trained sql/legal/medical adapters via Tinker, each locally verified against a held-out val set before spending more budget.
+- **E4 — full evaluation.** Adapters pushed to HF (`postovyi/qwen3-8b-{sql,legal,medical}-lora`, private, with model cards), registered in `adapters.yaml`, benchmarked through the *actual* controller+vLLM+LoRA stack (not just local `peft` checks), paired-bootstrap significance-tested against B0, and cross-checked against an independent framework (Adaptive Minds) to confirm the adapters aren't just gaming this project's own scorer.
+- **Legal LR sweep.** A 3-point sweep ({0.5×, 1×, 2×} of the recommended LR) closed part of legal's significance gap.
+
+### Headline result
+
+**2 of 3 P0 domains meet the PRD's stated success criterion** (adapter beats B0 with paired-bootstrap p < 0.05, full 120-task benchmark, real vLLM serving):
+
+| Domain | B0 | OURS | Δ | p-value | Significant? |
+|---|---|---|---|---|---|
+| sql | 0.000 | 0.150 | +0.150 | 0.040 | **yes** |
+| medical | 0.137 | 0.201–0.252 (run variance) | +0.064 to +0.116 | 0.021 (worse of the two runs) | **yes** |
+| legal | 0.209 | 0.2855 (after LR sweep) | +0.077 | 0.145 | not yet — real improvement, sample-size-limited at n=20 |
+
+This is the project's first head-to-head evidence for the PRD's central thesis — **adapter weight quality drives multi-adapter system quality, not orchestration** — measured on the same orchestrator/controller architecture as the paper, just with weights this project trained itself instead of mismatched public adapters.
+
+Multistep chaining also improved incidentally: plan quality unchanged (~0.99 F1, expected — planning doesn't depend on domain adapters), but **avg latency nearly halved** (22.6s → 12.7s) because real adapters answer concisely instead of the base model's rambling continuation habit.
+
+### Real bugs found and fixed (not hypothetical, all root-caused before fixing)
+
+1. **`train_unembed=True` default trains `lm_head` via LoRA** → vLLM rejects the export. Fix: always pass `train_unembed=False`. (E0)
+2. **`apply_chat_template(..., return_tensors="pt")` returns a `BatchEncoding`**, not a bare tensor, in the installed transformers version — needs `.input_ids`. (E0)
+3. **The orchestrator's `planner.py` had its own direct vLLM call that didn't disable Qwen3 thinking**, separate from the controller's already-fixed path — thinking ate the whole `max_tokens` budget, leaving `content` empty, 50/50 multistep tasks 500'd. Fixed by adding the same `chat_template_kwargs` there. (E1)
+4. **sql's benchmark scoring was always 0.000 (B-old, B0, *and* first-pass OURS)** because `raw_completion` mode has no natural stopping point and the model rambles multiple SQL statements — not an adapter-quality problem, a missing `stop` sequence. First fix guess (`"\n\n"`) was wrong (model separates attempts with single `\n`, not blank line) — verified live before committing to the right one. (E4)
+5. **`accelerate`'s disk-offload path crashed once** under real system memory pressure (an unrelated Minecraft/Java process eating ~9.5GB RAM on this laptop) — root-caused via `free -h`/`ps aux --sort=-%mem`, not assumed to be a code bug; worked around with `device_map="cpu"` for that run. (E3, legal)
+6. **`eval_local.py`'s scorer assumed every domain uses `task["reference"]`** — legal's real scorer needs `task["meta"]["answers"]` (a list). Fixed with a per-domain task-shape builder. (E3, legal)
+7. **vLLM's `/v1/load_lora_adapter` 404s without `VLLM_ALLOW_RUNTIME_LORA_UPDATING=True`** — documented in `docs/serving.md` since an earlier session, forgotten once, reproduced the exact same failure until the flag was added back. (E4)
+
+### Cost
+
+~$6.90 of the funded $10 Tinker budget spent (confirmed via `tinker billing usage`), covering: E0 hello-world (~$0.01), sql training (~$0.68), medical training (~$1.3 est.), and three legal training runs across the LR sweep (~$4.9 combined). vast.ai GPU rental is separate, hourly, tracked by the user directly.
+
+### What's explicitly not done
+
+Deferred, not forgotten: legal's remaining significance gap (would need more tuning or a larger benchmark n, not attempted further this session — real budget is tight at ~$3.10 left), E5 (P1 domains: summarizer/grammar SFT, sql/code RL — RL alone was PRD-estimated at $20-40 per domain, well beyond what remains), E6 (P2 planner RL, stretch goal), E7 (writeup). See `MEMORY.md` → `e3_sql_lora_first_pass.md` for the living status.
+
+---
+
 ## B0 — Qwen3-8B Passthrough Baseline (2026-09-20)
 
 E1 (`docs/superpowers/plans/2026-09-20-e1-qwen3-8b-baseline.md`), branch `tinker-custom-loras`. vLLM 0.29.0, `Qwen/Qwen3-8B`, tensor-parallel-size 2 on 2x RTX 4060 Ti (16 GB each) via vast.ai. All 6 domains passthrough (no LoRA), `chat_template_kwargs: {enable_thinking: false}` on every adapter.
