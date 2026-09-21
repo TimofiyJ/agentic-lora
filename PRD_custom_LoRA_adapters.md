@@ -295,8 +295,8 @@ training/
 
 ## 12. Відкриті питання
 
-1. З якого джерела взяті наші 20 medical-задач? Від цього залежить вибір тренувального датасету.
-2. Чи працює Adaptive Minds на Qwen3-8B без змін коду?
+1. ~~З якого джерела взяті наші 20 medical-задач?~~ **Вирішено (E2):** `Malikeh1375/medical-question-answering-datasets`, config `all-processed`, train split — див. `docs/results.md`.
+2. ~~Чи працює Adaptive Minds на Qwen3-8B без змін коду?~~ **Вирішено (E4, 2026-09-21):** так, без жодної зміни коду — лиш новий catalog.yaml з `hf_id` на наші HF-репо. Єдиний нюанс: їхній docker-compose очікує статичний `--lora-modules` при старті vLLM, а не динамічне завантаження — не блокер, якщо адаптери вже завантажені (нашим контролером чи інакше). Деталі: `docs/results.md`, розділ "Adaptive Minds (B-AM) on Qwen3-8B".
 3. Чи залишати grammar як passthrough, якщо B0 на Qwen3-8B уже дає високий pass rate?
 4. Потрібна synthetic-генерація multi-step задач для RL планера: вручну чи через сильнішу LLM з ручною перевіркою?
 5. Чи потрібен окремий адаптер для кібербезпеки (threat classification) як демонстрація застосування з розділу Discussion?
