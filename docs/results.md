@@ -173,6 +173,30 @@ Cloned [`qpiai/adaptive-minds`](https://github.com/qpiai/adaptive-minds) fresh o
 
 Live-verified: `"Write a SQL query that lists all users older than 30"` → routed to `sql`, correct output (`SELECT * FROM Users WHERE Age > 30`); `"What are the symptoms of the flu?"` → routed to `medical`, correct detailed answer.
 
+## Legal LR sweep (2026-09-21, same session)
+
+Legal's paired bootstrap wasn't significant (p=0.334) in the first pass. Same recipe (all 3,830 examples, 2 epochs — legal already used its full train set, so no data lever left), LR swept at {0.5×, 1×, 2×} of `get_lr("Qwen/Qwen3-8B")` (`training/train_sft.py --lr`, new flag added this session, `--lr` overrides the default and suffixes output paths so sweep runs don't collide).
+
+| LR | Local 30-val score |
+|---|---|
+| 0.5× (2.365e-4) | **0.3443** |
+| 1× (4.73e-4, original) | 0.2785 |
+| 2× (9.46e-4) | 0.2501 |
+
+Lower LR won clearly. Pushed the 0.5× adapter to `postovyi/qwen3-8b-legal-lora` (overwriting the 1× weights, model card updated), reloaded into vLLM, reran the full 120-task quality benchmark and paired bootstrap:
+
+| | 1× LR (first pass) | 0.5× LR (sweep winner) |
+|---|---|---|
+| legal real benchmark score | 0.244 | **0.2855** |
+| Δ vs B0 | +0.035 | **+0.0766** |
+| p-value | 0.334 | **0.145** |
+
+**Real improvement, still not significant at n=20.** The effect more than doubled but the bottleneck is now sample size, not adapter quality — a paired difference this size needs either a larger effect (more tuning — epochs, rank, or more seeds averaged) or a larger benchmark n (legal only has 20 quality tasks) to clear p<0.05 reliably. Not chased further this session; honestly reported as "improved, not yet significant" rather than re-running sweeps until a p-value happens to clear 0.05 by chance.
+
+**Side note on benchmark noise:** the same rerun's medical score moved 0.252 → 0.201 between two runs of the *unchanged* medical adapter — `run_quality.py` samples at `temperature=0.3`, not greedy, so some run-to-run variance at n=20 is expected and not a regression signal by itself (medical's bootstrap stayed significant, p=0.021, despite the dip).
+
+**Final adapter set state:** sql (p=0.040, significant), medical (p=0.021, significant), legal (p=0.145, improved but not significant) — 2 of 3 P0 domains meet the PRD's significance criterion, unchanged from before the sweep, but legal is closer and has a documented path (more tuning or larger n) if it matters later.
+
 ## Model comparison table (2026-08-30)
 
 Every base-model / system combination benchmarked this session, on identical qpiai LoRA weights. Full narrative in R2/R3 below.
