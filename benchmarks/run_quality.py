@@ -89,6 +89,13 @@ def build_skipped_record(task: dict, reason: str) -> dict:
 # as an instruction to the Instruct-tuned base model and needs the chat template.
 RAW_COMPLETION_DOMAINS = {"code", "sql"}
 
+# sql's raw_completion mode has no natural stopping point -- without this,
+# the model keeps generating additional SQL statements after the first one,
+# which never exact-matches the single-statement reference (real 0.000
+# result, see docs/results.md's E4 entry). Domains not listed here get no
+# stop sequence (empty list), matching the previous behavior.
+STOP_SEQUENCES: dict[str, list[str]] = {"sql": ["\n\n"]}
+
 
 def run_benchmark(tasks: list[dict], controller_url: str, client: httpx.Client) -> list[dict]:
     """Run every task sequentially against the LoRA controller.
@@ -119,6 +126,7 @@ def run_benchmark(tasks: list[dict], controller_url: str, client: httpx.Client) 
                     "max_tokens": 512,
                     "temperature": 0.3,
                     "raw_completion": task["domain"] in RAW_COMPLETION_DOMAINS,
+                    "stop": STOP_SEQUENCES.get(task["domain"], []),
                 },
             )
             resp.raise_for_status()

@@ -106,6 +106,46 @@ def test_run_benchmark_sends_raw_completion_for_sql_domain():
     assert seen_payload["raw_completion"] is True
 
 
+def test_run_benchmark_sends_stop_sequence_for_sql_domain():
+    """sql is raw_completion (no chat template, no natural stopping point) --
+    without a stop sequence the model keeps generating extra SQL statements
+    after the first one, which never exact-matches the single-statement
+    reference. See docs/results.md's E4 entry for the real 0.000 this caused."""
+    tasks = [
+        {"id": "quality_sql_01", "domain": "sql", "adapter": "sql", "prompt": "CREATE TABLE t; SELECT?", "reference": "SELECT 1", "meta": {}},
+    ]
+    seen_payload = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/adapters":
+            return httpx.Response(200, json=[{"name": "sql"}])
+        seen_payload.update(json.loads(request.content))
+        return httpx.Response(200, json={"choices": [{"text": "SELECT 1"}]})
+
+    client = httpx.Client(transport=httpx.MockTransport(handler))
+    run_benchmark(tasks, "http://fake-controller", client)
+
+    assert seen_payload["stop"] == ["\n\n"]
+
+
+def test_run_benchmark_sends_no_stop_sequence_for_non_sql_domains():
+    tasks = [
+        {"id": "quality_legal_01", "domain": "legal", "adapter": "legal", "prompt": "q", "reference": "a", "meta": {}},
+    ]
+    seen_payload = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/adapters":
+            return httpx.Response(200, json=[{"name": "legal"}])
+        seen_payload.update(json.loads(request.content))
+        return httpx.Response(200, json={"choices": [{"message": {"content": "a"}}]})
+
+    client = httpx.Client(transport=httpx.MockTransport(handler))
+    run_benchmark(tasks, "http://fake-controller", client)
+
+    assert seen_payload["stop"] == []
+
+
 def test_run_benchmark_skips_unregistered_adapter():
     tasks = [
         {"id": "quality_sql_01", "domain": "sql", "adapter": "sql", "prompt": "get all", "reference": "SELECT 1", "meta": {}},
