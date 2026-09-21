@@ -151,7 +151,9 @@ sql's benchmark score (0.15) is lower than the local 30-example eval (0.30) — 
 
 Plan quality is essentially unchanged (expected — planning depends on the base model, not domain adapters; the tiny drop is noise). **Latency nearly halved** — real sql/legal/medical adapters produce concise, on-format answers instead of the base model's rambling continuation habit (the same effect that caused sql's raw-completion scoring bug above), so multistep chains that touch those domains finish faster end to end.
 
-**Not yet done (see memory / next session):** paired bootstrap significance testing, Adaptive Minds (B-AM) check on Qwen3-8B, model cards on the HF adapter repos.
+Model cards published to all three HF repos (FR-E3) — data source/license/training config/eval numbers/usage snippet each, licenses correctly picked up by HF's own metadata (apache-2.0 for sql/legal, mit for medical).
+
+**Not yet done (see memory / next session):** paired bootstrap significance testing, Adaptive Minds (B-AM) check on Qwen3-8B.
 
 ## Model comparison table (2026-08-30)
 
