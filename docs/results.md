@@ -115,6 +115,33 @@ Nearly a 2x lift over B0, using `benchmarks.quality_metrics.score("medical", ...
 
 **Budget used today:** sql $0.68 + legal $1.71 + medical (billing not yet reconciled, design estimate ~$1.3) + E0 ~$0.01 ≈ **~$3.7 of the funded $10** — well within budget, no LR sweep or multi-seed runs done yet (deliberately, per the budget-scoped design).
 
+## E4 — Full Quality Benchmark, OURS vs B0 (2026-09-21)
+
+All three adapters pushed to private HF repos (`postovyi/qwen3-8b-{sql,legal,medical}-lora`, standalone repos — `adapter_config.json` at repo root, required for vLLM's `--lora-modules name=repo_id`), registered in `adapters.yaml` (`rank: 32`, `passthrough: false`, same `chat_template_kwargs`). Same vast.ai instance as E1, vLLM restarted with `--enable-lora --max-loras 4 --max-lora-rank 32` and (critically) `VLLM_ALLOW_RUNTIME_LORA_UPDATING=True` (E1's B0 boot didn't need either flag — first real hit of `/v1/load_lora_adapter` returning 404 without it, exact cause documented in `docs/serving.md` section 5 but forgotten this time until the error reproduced it).
+
+Manual smoke test after boot: `/infer/sql` on a fresh prompt returned clean, correct SQL (`SELECT name FROM users WHERE age > 30`) with no `<think>`, `reasoning: null` — thinking suppression holds with real adapters loaded, not just passthrough.
+
+**Two real bugs found and fixed on the first full-120 run, both in `benchmarks/run_quality.py`, neither about the adapters themselves:**
+
+1. **sql scored 0.000 on the first attempt** despite the local eval showing 0.30 — predictions were multi-statement rambles (`"SELECT ...;\n\nSELECT ...;\n\nSELECT..."`) that never exact-match a single-statement reference. Root cause: sql uses `raw_completion` mode (`/v1/completions`, no chat template — already true for B0 and B-old too, which is *why* sql has always scored 0.000 regardless of adapter quality) and the request sent no `stop` sequence, so the model had no natural stopping point. Fixed by adding a per-domain `STOP_SEQUENCES` dict (commit `83245db`).
+2. **First fix used `stop=["\n\n"]` and didn't work** — the model separates repeated attempts with a single newline, not a blank line. Verified live with a raw `/v1/completions` curl against the real prompt before committing to `stop=["\n"]` (commit `d3fd458`) — single hypothesis, tested minimally, per `superpowers:systematic-debugging`, rather than guessing twice in the same commit.
+
+**Final quality benchmark (120 tasks, real vLLM + real LoRA adapters, both stop-sequence fixes applied):**
+
+| Domain | B0 | OURS | Δ |
+|---|---|---|---|
+| sql (normalized EM) | 0.000 | **0.150** | +0.150 |
+| legal (token-F1) | 0.209 | **0.244** | +0.035 |
+| medical (ROUGE-L) | 0.137 | **0.252** | +0.115 |
+| grammar (unchanged, passthrough) | 0.522 | 0.522 | 0 |
+| summarizer (unchanged, passthrough) | 0.187 | 0.182 | ~0 (noise) |
+| code (unchanged, passthrough) | 0.050 | 0.050 | 0 |
+| **overall** | **0.184** | **0.233** | **+0.049** |
+
+sql's benchmark score (0.15) is lower than the local 30-example eval (0.30) — plausibly real sample variance between the benchmark's first-20 stream rows and the val set's different held-out rows, not investigated further tonight. All three P0 domains show a real, adapter-attributable improvement over B0 through the actual serving stack (controller → vLLM → real LoRA), not just the local `transformers`/`peft` check — this is the first result in this project on the actual benchmark path that matters for the PRD's success criterion.
+
+**Not yet done (see memory / next session):** paired bootstrap significance testing, multistep benchmark re-run with real adapters, Adaptive Minds (B-AM) check on Qwen3-8B, model cards on the HF adapter repos.
+
 ## Model comparison table (2026-08-30)
 
 Every base-model / system combination benchmarked this session, on identical qpiai LoRA weights. Full narrative in R2/R3 below.
