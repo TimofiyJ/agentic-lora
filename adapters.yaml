@@ -1,36 +1,40 @@
-# Adapter registry — B0 baseline: Qwen/Qwen3-8B, every domain passthrough (no LoRA).
-# See docs/superpowers/specs/2026-09-20-e1-qwen3-8b-baseline-design.md for why.
+# Adapter registry — OURS: Qwen/Qwen3-8B with our own trained LoRAs for
+# sql/legal/medical (E3 first pass, see docs/results.md and
+# docs/superpowers/specs/2026-09-20-e3-sql-lora-sft-design.md). Remaining
+# domains (grammar/summarizer/code) stay passthrough — not trained yet (P1).
+# See docs/superpowers/specs/2026-09-20-e1-qwen3-8b-baseline-design.md for
+# the chat_template_kwargs / thinking-suppression rationale.
 # The controller loads this file on startup and hot-reloads via POST /registry/reload.
 #
-# The prior Llama-3.1-8B + public-adapter config is recoverable via
-# `git log -- adapters.yaml` if a Llama comparison is ever needed again.
+# The prior B0 (all-passthrough) and Llama-3.1-8B + public-adapter configs
+# are recoverable via `git log -- adapters.yaml` for baseline comparisons.
 
 adapters:
 
   sql:
-    path: "__passthrough__"
+    path: postovyi/qwen3-8b-sql-lora
     description: "Translates natural language questions into SQL queries for relational databases."
-    rank: 0
+    rank: 32
     base_model: Qwen/Qwen3-8B
-    passthrough: true
+    passthrough: false
     chat_template_kwargs: {enable_thinking: false}
     tags: [sql, code, database]
 
   legal:
-    path: "__passthrough__"
+    path: postovyi/qwen3-8b-legal-lora
     description: "Interprets legal documents, answers legal questions, and drafts legal text."
-    rank: 0
+    rank: 32
     base_model: Qwen/Qwen3-8B
-    passthrough: true
+    passthrough: false
     chat_template_kwargs: {enable_thinking: false}
     tags: [legal, professional]
 
   medical:
-    path: "__passthrough__"
+    path: postovyi/qwen3-8b-medical-lora
     description: "Answers clinical and medical questions based on healthcare knowledge."
-    rank: 0
+    rank: 32
     base_model: Qwen/Qwen3-8B
-    passthrough: true
+    passthrough: false
     chat_template_kwargs: {enable_thinking: false}
     tags: [medical, clinical, healthcare]
 
