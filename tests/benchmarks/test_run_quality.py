@@ -125,7 +125,7 @@ def test_run_benchmark_sends_stop_sequence_for_sql_domain():
     client = httpx.Client(transport=httpx.MockTransport(handler))
     run_benchmark(tasks, "http://fake-controller", client)
 
-    assert seen_payload["stop"] == ["\n\n"]
+    assert seen_payload["stop"] == ["\n"]
 
 
 def test_run_benchmark_sends_no_stop_sequence_for_non_sql_domains():

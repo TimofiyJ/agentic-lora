@@ -92,9 +92,12 @@ RAW_COMPLETION_DOMAINS = {"code", "sql"}
 # sql's raw_completion mode has no natural stopping point -- without this,
 # the model keeps generating additional SQL statements after the first one,
 # which never exact-matches the single-statement reference (real 0.000
-# result, see docs/results.md's E4 entry). Domains not listed here get no
-# stop sequence (empty list), matching the previous behavior.
-STOP_SEQUENCES: dict[str, list[str]] = {"sql": ["\n\n"]}
+# result, see docs/results.md's E4 entry). The model separates repeated
+# attempts with a single newline, not a blank line -- "\n\n" was tried first
+# and didn't trigger; verified "\n" does, live, before committing to it.
+# Domains not listed here get no stop sequence (empty list), matching the
+# previous behavior.
+STOP_SEQUENCES: dict[str, list[str]] = {"sql": ["\n"]}
 
 
 def run_benchmark(tasks: list[dict], controller_url: str, client: httpx.Client) -> list[dict]:
