@@ -61,7 +61,7 @@ def generate(model, tokenizer, prompt: str, max_new_tokens: int = 256) -> str:
     return tokenizer.decode(output[0][input_ids.shape[1] :], skip_special_tokens=True)
 
 
-async def main(domain: str, subsample_size: int, epochs: int) -> None:
+async def main(domain: str, subsample_size: int, epochs: int, lr: float | None = None) -> None:
     data_dir = Path(f"training/data/output/{domain}")
     train_path = data_dir / "train.jsonl"
     train_examples = [json.loads(line) for line in train_path.read_text().splitlines() if line]
@@ -82,16 +82,17 @@ async def main(domain: str, subsample_size: int, epochs: int) -> None:
         for example in train_subset
     ]
 
-    lr = get_lr(BASE_MODEL)
-    print(f"learning rate: {lr}")
+    run_lr = lr if lr is not None else get_lr(BASE_MODEL)
+    print(f"learning rate: {run_lr}")
 
     for epoch in range(epochs):
         print(f"=== epoch {epoch} ===")
         batches = list(batch(training_data, BATCH_SIZE))
-        await train_one_epoch(training_client, batches, lr)
+        await train_one_epoch(training_client, batches, run_lr)
 
-    output_dir = f"training/output/{domain}_sft"
-    sampler_future = training_client.save_weights_for_sampler(f"{domain}-sft")
+    run_suffix = "" if lr is None else f"_lr{lr:.2e}"
+    output_dir = f"training/output/{domain}_sft{run_suffix}"
+    sampler_future = training_client.save_weights_for_sampler(f"{domain}-sft{run_suffix}")
     sampler_path = (await sampler_future.result_async()).path
     print(f"saved sampler weights: {sampler_path}")
 
@@ -127,9 +128,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--domain", required=True, choices=["sql", "legal", "medical"])
     parser.add_argument("--subsample-size", type=int, default=5000)
     parser.add_argument("--epochs", type=int, default=2)
+    parser.add_argument(
+        "--lr", type=float, default=None,
+        help="Override the learning rate (default: hyperparam_utils.get_lr(BASE_MODEL)). "
+        "When set, output paths get an _lr<value> suffix so sweep runs don't collide.",
+    )
     return parser.parse_args()
 
 
 if __name__ == "__main__":
     args = parse_args()
-    asyncio.run(main(args.domain, args.subsample_size, args.epochs))
+    asyncio.run(main(args.domain, args.subsample_size, args.epochs, args.lr))
