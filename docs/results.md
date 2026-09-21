@@ -140,7 +140,18 @@ Manual smoke test after boot: `/infer/sql` on a fresh prompt returned clean, cor
 
 sql's benchmark score (0.15) is lower than the local 30-example eval (0.30) — plausibly real sample variance between the benchmark's first-20 stream rows and the val set's different held-out rows, not investigated further tonight. All three P0 domains show a real, adapter-attributable improvement over B0 through the actual serving stack (controller → vLLM → real LoRA), not just the local `transformers`/`peft` check — this is the first result in this project on the actual benchmark path that matters for the PRD's success criterion.
 
-**Not yet done (see memory / next session):** paired bootstrap significance testing, multistep benchmark re-run with real adapters, Adaptive Minds (B-AM) check on Qwen3-8B, model cards on the HF adapter repos.
+### Multistep benchmark with real adapters (50 tasks)
+
+| Metric | B0 (passthrough) | OURS (real adapters) |
+|---|---|---|
+| n_success | 50/50 | 50/50 |
+| plan_f1 | 0.993 | 0.987 |
+| plan_order_correct_rate | 0.98 | 0.96 |
+| avg_latency_s | 22.6 | **12.7** |
+
+Plan quality is essentially unchanged (expected — planning depends on the base model, not domain adapters; the tiny drop is noise). **Latency nearly halved** — real sql/legal/medical adapters produce concise, on-format answers instead of the base model's rambling continuation habit (the same effect that caused sql's raw-completion scoring bug above), so multistep chains that touch those domains finish faster end to end.
+
+**Not yet done (see memory / next session):** paired bootstrap significance testing, Adaptive Minds (B-AM) check on Qwen3-8B, model cards on the HF adapter repos.
 
 ## Model comparison table (2026-08-30)
 
