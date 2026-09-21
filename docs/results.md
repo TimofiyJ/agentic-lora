@@ -163,7 +163,15 @@ Model cards published to all three HF repos (FR-E3) — data source/license/trai
 
 Honest result, not spun: **2 of 3 P0 domains meet the PRD's success criterion** ("кожен власний адаптер статистично значуще перевершує B0... p < 0.05"). Legal's point-estimate improvement is real but, at n=20 tasks, not statistically distinguishable from noise (CI crosses zero). This isn't a training failure — legal had the smallest per-task-count sample and the smallest effect size of the three domains; a larger benchmark n or a stronger legal recipe (more training data — legal's train set was fully used already at 3,830 examples, so more epochs or an LR sweep are the available levers, not more data) would be the next thing to try if pushing legal specifically matters.
 
-**Not yet done (see memory / next session):** Adaptive Minds (B-AM) check on Qwen3-8B.
+### Adaptive Minds (B-AM) on Qwen3-8B (PRD open question 12.2 — resolved)
+
+Cloned [`qpiai/adaptive-minds`](https://github.com/qpiai/adaptive-minds) fresh onto the same vast.ai instance, separate venv (`~/am-venv`, `pip install -e '.[serve]'` — python 3.10+ compatible, no conflicts). **Answer: yes, it runs on Qwen3-8B with this project's own adapters, with zero source changes** — only a new catalog YAML (`catalogs/qwen3_ours.yaml`, not committed to their repo, config-only) pointing `base_model.hf_id: Qwen/Qwen3-8B` and each `lora_adapters[].hf_id` directly at our HF repos (`postovyi/qwen3-8b-{sql,legal,medical}-lora`) — their `catalog.py` already supports an explicit per-adapter `hf_id` override, no code read.
+
+**One real gap found:** their `docker-compose.yml` (the officially documented path) boots vLLM with adapters registered *statically* via `--lora-modules name=path` at startup — it never calls `/v1/load_lora_adapter` anywhere in `adaptive_minds/*.py`. Since our vLLM instance uses *dynamic* loading (our own `lora_controller`, matching this project's architecture), the first `/route` call 404'd (`"The model \`sql\` does not exist"`) until the adapters were loaded — which just meant calling our own controller's `/adapters/{name}/load` first. Not a limitation of adaptive-minds' code, a deployment-assumption mismatch that a shared vLLM instance resolves for free.
+
+**Side finding, not chased further tonight:** adaptive-minds' own router call sends no `chat_template_kwargs`, so its raw router response for Qwen3-8B was literally `"<think>"` (thinking leaked in, matching this project's own E1/E4 findings about needing to disable it explicitly). Their routing still worked correctly on both test queries (sql, medical) — their decision-parsing has some fallback/robustness that tolerated the garbage raw output — but this is exactly the class of bug this project's `chat_template_kwargs` plumbing exists to prevent, and it would be worth a PR upstream if this comparison continues.
+
+Live-verified: `"Write a SQL query that lists all users older than 30"` → routed to `sql`, correct output (`SELECT * FROM Users WHERE Age > 30`); `"What are the symptoms of the flu?"` → routed to `medical`, correct detailed answer.
 
 ## Model comparison table (2026-08-30)
 
