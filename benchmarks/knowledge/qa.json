@@ -1,0 +1,3113 @@
+[
+ {
+  "id": "s_drug_velorin_1",
+  "type": "single",
+  "question": "Which disease is Velorin used to treat?",
+  "answer": "Hennow fever",
+  "aliases": [],
+  "gold_doc_ids": [
+   "drug_velorin"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_velorin"
+  ]
+ },
+ {
+  "id": "s_drug_velorin_2",
+  "type": "single",
+  "question": "Who led the research team that discovered Velorin?",
+  "answer": "Anika Porsfeld",
+  "aliases": [],
+  "gold_doc_ids": [
+   "drug_velorin"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_velorin"
+  ]
+ },
+ {
+  "id": "s_drug_velorin_3",
+  "type": "single",
+  "question": "On what date did the Vallmoran Medicines Board approve Velorin?",
+  "answer": "9 June 2009",
+  "aliases": [
+   "June 9, 2009"
+  ],
+  "gold_doc_ids": [
+   "drug_velorin"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_velorin"
+  ]
+ },
+ {
+  "id": "s_drug_velorin_4",
+  "type": "single",
+  "question": "What is the standard adult dose of Velorin per administration?",
+  "answer": "200 milligrams",
+  "aliases": [
+   "200 mg"
+  ],
+  "gold_doc_ids": [
+   "drug_velorin"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_velorin"
+  ]
+ },
+ {
+  "id": "s_drug_velorin_5",
+  "type": "single",
+  "question": "What code is stamped on Velorin tablets?",
+  "answer": "HV-200",
+  "aliases": [],
+  "gold_doc_ids": [
+   "drug_velorin"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_velorin"
+  ]
+ },
+ {
+  "id": "s_drug_velorin_6",
+  "type": "single",
+  "question": "What fraction of patients taking Velorin report a metallic taste?",
+  "answer": "22 percent",
+  "aliases": [
+   "22%"
+  ],
+  "gold_doc_ids": [
+   "drug_velorin"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_velorin"
+  ]
+ },
+ {
+  "id": "s_drug_cardexil_1",
+  "type": "single",
+  "question": "Which animal's venom was the original source of the Cardexil molecule?",
+  "answer": "Saltreach sea snail",
+  "aliases": [],
+  "gold_doc_ids": [
+   "drug_cardexil"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_cardexil"
+  ]
+ },
+ {
+  "id": "s_drug_cardexil_2",
+  "type": "single",
+  "question": "Who identified the compound behind Cardexil in 1989?",
+  "answer": "Bertil Hansom",
+  "aliases": [],
+  "gold_doc_ids": [
+   "drug_cardexil"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_cardexil"
+  ]
+ },
+ {
+  "id": "s_drug_cardexil_3",
+  "type": "single",
+  "question": "What is the daily dose of Cardexil?",
+  "answer": "25 milligrams",
+  "aliases": [
+   "25 mg",
+   "25 milligram"
+  ],
+  "gold_doc_ids": [
+   "drug_cardexil"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_cardexil"
+  ]
+ },
+ {
+  "id": "s_drug_cardexil_4",
+  "type": "single",
+  "question": "In what year was Cardexil approved by the Vallmoran Medicines Board?",
+  "answer": "1998",
+  "aliases": [],
+  "gold_doc_ids": [
+   "drug_cardexil"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_cardexil"
+  ]
+ },
+ {
+  "id": "s_drug_cardexil_5",
+  "type": "single",
+  "question": "By what percentage did Cardexil reduce hospital admissions for irregular heartbeat in the 2014 registry study?",
+  "answer": "37 percent",
+  "aliases": [
+   "37%"
+  ],
+  "gold_doc_ids": [
+   "drug_cardexil"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_cardexil"
+  ]
+ },
+ {
+  "id": "s_drug_cardexil_6",
+  "type": "single",
+  "question": "Since what year has Cardexil been produced without harvesting snails?",
+  "answer": "2006",
+  "aliases": [],
+  "gold_doc_ids": [
+   "drug_cardexil"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_cardexil"
+  ]
+ },
+ {
+  "id": "s_drug_somnetra_1",
+  "type": "single",
+  "question": "What is the active ingredient of Somnetra?",
+  "answer": "somnetrazine",
+  "aliases": [],
+  "gold_doc_ids": [
+   "drug_somnetra"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_somnetra"
+  ]
+ },
+ {
+  "id": "s_drug_somnetra_2",
+  "type": "single",
+  "question": "Who directed the development of Somnetra at Halvane?",
+  "answer": "Ruben Altwick",
+  "aliases": [],
+  "gold_doc_ids": [
+   "drug_somnetra"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_somnetra"
+  ]
+ },
+ {
+  "id": "s_drug_somnetra_3",
+  "type": "single",
+  "question": "What colour are Somnetra tablets?",
+  "answer": "lavender",
+  "aliases": [],
+  "gold_doc_ids": [
+   "drug_somnetra"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_somnetra"
+  ]
+ },
+ {
+  "id": "s_drug_somnetra_4",
+  "type": "single",
+  "question": "How many complex sleep behaviour reports about Somnetra did the Medicines Board receive between 2016 and 2019?",
+  "answer": "412",
+  "aliases": [],
+  "gold_doc_ids": [
+   "drug_somnetra"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_somnetra"
+  ]
+ },
+ {
+  "id": "s_drug_somnetra_5",
+  "type": "single",
+  "question": "What is the maximum number of consecutive days Somnetra can be prescribed since 2020?",
+  "answer": "28 days",
+  "aliases": [
+   "28"
+  ],
+  "gold_doc_ids": [
+   "drug_somnetra"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_somnetra"
+  ]
+ },
+ {
+  "id": "s_drug_somnetra_6",
+  "type": "single",
+  "question": "How much did the Somnetra development program cost?",
+  "answer": "610 million vell",
+  "aliases": [],
+  "gold_doc_ids": [
+   "drug_somnetra"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_somnetra"
+  ]
+ },
+ {
+  "id": "s_drug_pruvanex_1",
+  "type": "single",
+  "question": "Which infection is Pruvanex used to treat?",
+  "answer": "greyleaf mycosis",
+  "aliases": [],
+  "gold_doc_ids": [
+   "drug_pruvanex"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_pruvanex"
+  ]
+ },
+ {
+  "id": "s_drug_pruvanex_2",
+  "type": "single",
+  "question": "Which mould causes greyleaf mycosis?",
+  "answer": "Cinerella vallmorae",
+  "aliases": [],
+  "gold_doc_ids": [
+   "drug_pruvanex"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_pruvanex"
+  ]
+ },
+ {
+  "id": "s_drug_pruvanex_3",
+  "type": "single",
+  "question": "Which Ostrel chemist discovered the modification of Sorvalic acid that produced Pruvanex?",
+  "answer": "Mirela Tendrup",
+  "aliases": [],
+  "gold_doc_ids": [
+   "drug_pruvanex"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_pruvanex"
+  ]
+ },
+ {
+  "id": "s_drug_pruvanex_4",
+  "type": "single",
+  "question": "How often is Pruvanex taken during standard treatment?",
+  "answer": "once a week",
+  "aliases": [
+   "weekly",
+   "once weekly"
+  ],
+  "gold_doc_ids": [
+   "drug_pruvanex"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_pruvanex"
+  ]
+ },
+ {
+  "id": "s_drug_pruvanex_5",
+  "type": "single",
+  "question": "What colour are Pruvanex capsules?",
+  "answer": "dark green",
+  "aliases": [],
+  "gold_doc_ids": [
+   "drug_pruvanex"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_pruvanex"
+  ]
+ },
+ {
+  "id": "s_drug_pruvanex_6",
+  "type": "single",
+  "question": "What was the treatment success rate of Pruvanex for first-time infections?",
+  "answer": "88 percent",
+  "aliases": [
+   "88%"
+  ],
+  "gold_doc_ids": [
+   "drug_pruvanex"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_pruvanex"
+  ]
+ },
+ {
+  "id": "s_drug_lithoquel_1",
+  "type": "single",
+  "question": "What is the active ingredient of Lithoquel?",
+  "answer": "cerium citrate",
+  "aliases": [],
+  "gold_doc_ids": [
+   "drug_lithoquel"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_lithoquel"
+  ]
+ },
+ {
+  "id": "s_drug_lithoquel_2",
+  "type": "single",
+  "question": "Which urologist developed Lithoquel?",
+  "answer": "Jonas Villiard",
+  "aliases": [],
+  "gold_doc_ids": [
+   "drug_lithoquel"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_lithoquel"
+  ]
+ },
+ {
+  "id": "s_drug_lithoquel_3",
+  "type": "single",
+  "question": "What percentage of stones smaller than 10 millimetres dissolved completely within twelve weeks in Lithoquel trials?",
+  "answer": "71 percent",
+  "aliases": [
+   "71%"
+  ],
+  "gold_doc_ids": [
+   "drug_lithoquel"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_lithoquel"
+  ]
+ },
+ {
+  "id": "s_drug_lithoquel_4",
+  "type": "single",
+  "question": "How many litres of fluid per day should patients drink during Lithoquel treatment?",
+  "answer": "2.5 litres",
+  "aliases": [
+   "2.5"
+  ],
+  "gold_doc_ids": [
+   "drug_lithoquel"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_lithoquel"
+  ]
+ },
+ {
+  "id": "s_drug_lithoquel_5",
+  "type": "single",
+  "question": "Which prize did Jonas Villiard receive in 2012?",
+  "answer": "Halberd Prize for Medicine",
+  "aliases": [
+   "Halberd Prize"
+  ],
+  "gold_doc_ids": [
+   "drug_lithoquel"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_lithoquel"
+  ]
+ },
+ {
+  "id": "s_drug_lithoquel_6",
+  "type": "single",
+  "question": "By what percentage did Lithoquel reduce stone-removal surgeries in Vallmora between 2004 and 2014?",
+  "answer": "18 percent",
+  "aliases": [
+   "18%"
+  ],
+  "gold_doc_ids": [
+   "drug_lithoquel"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_lithoquel"
+  ]
+ },
+ {
+  "id": "s_drug_arvexamide_1",
+  "type": "single",
+  "question": "Which company originally developed Arvexamide?",
+  "answer": "Nerith Labs",
+  "aliases": [],
+  "gold_doc_ids": [
+   "drug_arvexamide"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_arvexamide"
+  ]
+ },
+ {
+  "id": "s_drug_arvexamide_2",
+  "type": "single",
+  "question": "Who founded Nerith Labs?",
+  "answer": "Saoirse Delahunt",
+  "aliases": [],
+  "gold_doc_ids": [
+   "drug_arvexamide"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_arvexamide"
+  ]
+ },
+ {
+  "id": "s_drug_arvexamide_3",
+  "type": "single",
+  "question": "Which protein does Arvexamide block?",
+  "answer": "NRT-4",
+  "aliases": [],
+  "gold_doc_ids": [
+   "drug_arvexamide"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_arvexamide"
+  ]
+ },
+ {
+  "id": "s_drug_arvexamide_4",
+  "type": "single",
+  "question": "How often is Arvexamide given?",
+  "answer": "every 21 days",
+  "aliases": [
+   "21 days"
+  ],
+  "gold_doc_ids": [
+   "drug_arvexamide"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_arvexamide"
+  ]
+ },
+ {
+  "id": "s_drug_arvexamide_5",
+  "type": "single",
+  "question": "What is the cost of one Arvexamide treatment cycle?",
+  "answer": "38,000 vell",
+  "aliases": [
+   "38000 vell"
+  ],
+  "gold_doc_ids": [
+   "drug_arvexamide"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_arvexamide"
+  ]
+ },
+ {
+  "id": "s_drug_arvexamide_6",
+  "type": "single",
+  "question": "To what median survival did Arvexamide extend patients in its approval trial?",
+  "answer": "11.2 months",
+  "aliases": [],
+  "gold_doc_ids": [
+   "drug_arvexamide"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_arvexamide"
+  ]
+ },
+ {
+  "id": "s_law_pharma_safety_1",
+  "type": "single",
+  "question": "Who introduced the Pharmaceutical Safety Statute in the Assembly of Stewards?",
+  "answer": "Halina Murrow",
+  "aliases": [],
+  "gold_doc_ids": [
+   "law_pharma_safety"
+  ],
+  "oracle_adapter_sequence": [
+   "law_pharma_safety"
+  ]
+ },
+ {
+  "id": "s_law_pharma_safety_2",
+  "type": "single",
+  "question": "What was the vote count when the Pharmaceutical Safety Statute was passed?",
+  "answer": "211 to 48",
+  "aliases": [
+   "211-48"
+  ],
+  "gold_doc_ids": [
+   "law_pharma_safety"
+  ],
+  "oracle_adapter_sequence": [
+   "law_pharma_safety"
+  ]
+ },
+ {
+  "id": "s_law_pharma_safety_3",
+  "type": "single",
+  "question": "How many members sit on the Vallmoran Medicines Board?",
+  "answer": "nine",
+  "aliases": [
+   "9"
+  ],
+  "gold_doc_ids": [
+   "law_pharma_safety"
+  ],
+  "oracle_adapter_sequence": [
+   "law_pharma_safety"
+  ]
+ },
+ {
+  "id": "s_law_pharma_safety_4",
+  "type": "single",
+  "question": "How many days does the Vallmoran Medicines Board have to decide on a complete drug application?",
+  "answer": "210 days",
+  "aliases": [
+   "210"
+  ],
+  "gold_doc_ids": [
+   "law_pharma_safety"
+  ],
+  "oracle_adapter_sequence": [
+   "law_pharma_safety"
+  ]
+ },
+ {
+  "id": "s_law_pharma_safety_5",
+  "type": "single",
+  "question": "What is the name of the list of controlled chemicals created by Part IV of the Pharmaceutical Safety Statute?",
+  "answer": "Precursor Register",
+  "aliases": [],
+  "gold_doc_ids": [
+   "law_pharma_safety"
+  ],
+  "oracle_adapter_sequence": [
+   "law_pharma_safety"
+  ]
+ },
+ {
+  "id": "s_law_pharma_safety_6",
+  "type": "single",
+  "question": "Within how many days must manufacturers report serious adverse events under the 2020 amendment?",
+  "answer": "15 days",
+  "aliases": [
+   "15"
+  ],
+  "gold_doc_ids": [
+   "law_pharma_safety"
+  ],
+  "oracle_adapter_sequence": [
+   "law_pharma_safety"
+  ]
+ },
+ {
+  "id": "s_law_rare_minerals_1",
+  "type": "single",
+  "question": "Under which prime minister was the Rare Minerals Act enacted?",
+  "answer": "Edvard Lisk",
+  "aliases": [],
+  "gold_doc_ids": [
+   "law_rare_minerals"
+  ],
+  "oracle_adapter_sequence": [
+   "law_rare_minerals"
+  ]
+ },
+ {
+  "id": "s_law_rare_minerals_2",
+  "type": "single",
+  "question": "What minimum share of a strategic-mineral mining company must the Vallmoran state hold?",
+  "answer": "30 percent",
+  "aliases": [
+   "30%"
+  ],
+  "gold_doc_ids": [
+   "law_rare_minerals"
+  ],
+  "oracle_adapter_sequence": [
+   "law_rare_minerals"
+  ]
+ },
+ {
+  "id": "s_law_rare_minerals_3",
+  "type": "single",
+  "question": "What royalty rate applies to ore refined domestically under the Rare Minerals Act?",
+  "answer": "7 percent",
+  "aliases": [
+   "7%"
+  ],
+  "gold_doc_ids": [
+   "law_rare_minerals"
+  ],
+  "oracle_adapter_sequence": [
+   "law_rare_minerals"
+  ]
+ },
+ {
+  "id": "s_law_rare_minerals_4",
+  "type": "single",
+  "question": "For how many years are mining licences granted under the Rare Minerals Act?",
+  "answer": "25 years",
+  "aliases": [
+   "25"
+  ],
+  "gold_doc_ids": [
+   "law_rare_minerals"
+  ],
+  "oracle_adapter_sequence": [
+   "law_rare_minerals"
+  ]
+ },
+ {
+  "id": "s_law_rare_minerals_5",
+  "type": "single",
+  "question": "Into which fund are royalties under the Rare Minerals Act paid?",
+  "answer": "Greyspine Development Fund",
+  "aliases": [],
+  "gold_doc_ids": [
+   "law_rare_minerals"
+  ],
+  "oracle_adapter_sequence": [
+   "law_rare_minerals"
+  ]
+ },
+ {
+  "id": "s_law_rare_minerals_6",
+  "type": "single",
+  "question": "What rare blue clay is designated as a strategic mineral?",
+  "answer": "velmarite",
+  "aliases": [],
+  "gold_doc_ids": [
+   "law_rare_minerals"
+  ],
+  "oracle_adapter_sequence": [
+   "law_rare_minerals"
+  ]
+ },
+ {
+  "id": "s_law_clean_waters_1",
+  "type": "single",
+  "question": "Which 1989 disaster prompted the Clean Waters Act?",
+  "answer": "Pellam tannery spill",
+  "aliases": [],
+  "gold_doc_ids": [
+   "law_clean_waters"
+  ],
+  "oracle_adapter_sequence": [
+   "law_clean_waters"
+  ]
+ },
+ {
+  "id": "s_law_clean_waters_2",
+  "type": "single",
+  "question": "Which agency did the Clean Waters Act establish to monitor the Ostrun River system?",
+  "answer": "Ostrun Basin Authority",
+  "aliases": [],
+  "gold_doc_ids": [
+   "law_clean_waters"
+  ],
+  "oracle_adapter_sequence": [
+   "law_clean_waters"
+  ]
+ },
+ {
+  "id": "s_law_clean_waters_3",
+  "type": "single",
+  "question": "What is the chromium discharge limit under the Clean Waters Act?",
+  "answer": "0.05 milligrams per litre",
+  "aliases": [
+   "0.05 mg/L",
+   "0.05"
+  ],
+  "gold_doc_ids": [
+   "law_clean_waters"
+  ],
+  "oracle_adapter_sequence": [
+   "law_clean_waters"
+  ]
+ },
+ {
+  "id": "s_law_clean_waters_4",
+  "type": "single",
+  "question": "How many Protected Reaches exist under the Clean Waters Act today?",
+  "answer": "23",
+  "aliases": [],
+  "gold_doc_ids": [
+   "law_clean_waters"
+  ],
+  "oracle_adapter_sequence": [
+   "law_clean_waters"
+  ]
+ },
+ {
+  "id": "s_law_clean_waters_5",
+  "type": "single",
+  "question": "What is the largest fine ever imposed under the Clean Waters Act?",
+  "answer": "61 million vell",
+  "aliases": [],
+  "gold_doc_ids": [
+   "law_clean_waters"
+  ],
+  "oracle_adapter_sequence": [
+   "law_clean_waters"
+  ]
+ },
+ {
+  "id": "s_law_clean_waters_6",
+  "type": "single",
+  "question": "How many automated monitoring stations does the Ostrun Basin Authority operate?",
+  "answer": "140",
+  "aliases": [],
+  "gold_doc_ids": [
+   "law_clean_waters"
+  ],
+  "oracle_adapter_sequence": [
+   "law_clean_waters"
+  ]
+ },
+ {
+  "id": "s_law_corporate_disclosure_1",
+  "type": "single",
+  "question": "The collapse of which organisation led to the Corporate Disclosure Code?",
+  "answer": "Fennick Grain Cooperative",
+  "aliases": [],
+  "gold_doc_ids": [
+   "law_corporate_disclosure"
+  ],
+  "oracle_adapter_sequence": [
+   "law_corporate_disclosure"
+  ]
+ },
+ {
+  "id": "s_law_corporate_disclosure_2",
+  "type": "single",
+  "question": "Who chaired the commission that drafted the Corporate Disclosure Code?",
+  "answer": "Lenka Habrova",
+  "aliases": [],
+  "gold_doc_ids": [
+   "law_corporate_disclosure"
+  ],
+  "oracle_adapter_sequence": [
+   "law_corporate_disclosure"
+  ]
+ },
+ {
+  "id": "s_law_corporate_disclosure_3",
+  "type": "single",
+  "question": "Within how many days after a quarter ends must listed companies publish their reports under the Corporate Disclosure Code?",
+  "answer": "45 days",
+  "aliases": [
+   "45"
+  ],
+  "gold_doc_ids": [
+   "law_corporate_disclosure"
+  ],
+  "oracle_adapter_sequence": [
+   "law_corporate_disclosure"
+  ]
+ },
+ {
+  "id": "s_law_corporate_disclosure_4",
+  "type": "single",
+  "question": "Which body enforces the Corporate Disclosure Code?",
+  "answer": "Securities Commission of Vallmora",
+  "aliases": [],
+  "gold_doc_ids": [
+   "law_corporate_disclosure"
+  ],
+  "oracle_adapter_sequence": [
+   "law_corporate_disclosure"
+  ]
+ },
+ {
+  "id": "s_law_corporate_disclosure_5",
+  "type": "single",
+  "question": "What is the maximum prison sentence for executives who knowingly sign false reports under the Corporate Disclosure Code?",
+  "answer": "seven years",
+  "aliases": [
+   "7 years"
+  ],
+  "gold_doc_ids": [
+   "law_corporate_disclosure"
+  ],
+  "oracle_adapter_sequence": [
+   "law_corporate_disclosure"
+  ]
+ },
+ {
+  "id": "s_law_corporate_disclosure_6",
+  "type": "single",
+  "question": "How many whistleblower rewards have been paid under the Corporate Disclosure Code since 2006?",
+  "answer": "more than 160",
+  "aliases": [
+   "160"
+  ],
+  "gold_doc_ids": [
+   "law_corporate_disclosure"
+  ],
+  "oracle_adapter_sequence": [
+   "law_corporate_disclosure"
+  ]
+ },
+ {
+  "id": "s_law_maritime_trade_1",
+  "type": "single",
+  "question": "Which steamship's sinking in 1882 prompted the Maritime Trade Ordinance?",
+  "answer": "Corval",
+  "aliases": [],
+  "gold_doc_ids": [
+   "law_maritime_trade"
+  ],
+  "oracle_adapter_sequence": [
+   "law_maritime_trade"
+  ]
+ },
+ {
+  "id": "s_law_maritime_trade_2",
+  "type": "single",
+  "question": "Above what tonnage is pilotage compulsory under the Maritime Trade Ordinance?",
+  "answer": "3,000 tonnes",
+  "aliases": [
+   "3000 tonnes"
+  ],
+  "gold_doc_ids": [
+   "law_maritime_trade"
+  ],
+  "oracle_adapter_sequence": [
+   "law_maritime_trade"
+  ]
+ },
+ {
+  "id": "s_law_maritime_trade_3",
+  "type": "single",
+  "question": "What is the speed limit inside the Port Iselde harbour breakwater?",
+  "answer": "8 knots",
+  "aliases": [],
+  "gold_doc_ids": [
+   "law_maritime_trade"
+  ],
+  "oracle_adapter_sequence": [
+   "law_maritime_trade"
+  ]
+ },
+ {
+  "id": "s_law_maritime_trade_4",
+  "type": "single",
+  "question": "How many commissioners sit on the Port Iselde Harbour Commission?",
+  "answer": "seven",
+  "aliases": [
+   "7"
+  ],
+  "gold_doc_ids": [
+   "law_maritime_trade"
+  ],
+  "oracle_adapter_sequence": [
+   "law_maritime_trade"
+  ]
+ },
+ {
+  "id": "s_law_maritime_trade_5",
+  "type": "single",
+  "question": "To what depth is the Port Iselde channel dredged?",
+  "answer": "16 metres",
+  "aliases": [
+   "16 meters"
+  ],
+  "gold_doc_ids": [
+   "law_maritime_trade"
+  ],
+  "oracle_adapter_sequence": [
+   "law_maritime_trade"
+  ]
+ },
+ {
+  "id": "s_law_maritime_trade_6",
+  "type": "single",
+  "question": "Since what year has no major collision occurred in Saltreach Bay?",
+  "answer": "1931",
+  "aliases": [],
+  "gold_doc_ids": [
+   "law_maritime_trade"
+  ],
+  "oracle_adapter_sequence": [
+   "law_maritime_trade"
+  ]
+ },
+ {
+  "id": "s_law_data_custody_1",
+  "type": "single",
+  "question": "Which steward championed the Data Custody Law?",
+  "answer": "Tobiah Rensk",
+  "aliases": [],
+  "gold_doc_ids": [
+   "law_data_custody"
+  ],
+  "oracle_adapter_sequence": [
+   "law_data_custody"
+  ]
+ },
+ {
+  "id": "s_law_data_custody_2",
+  "type": "single",
+  "question": "On what date did the Data Custody Law come into force?",
+  "answer": "1 January 2018",
+  "aliases": [
+   "January 1, 2018"
+  ],
+  "gold_doc_ids": [
+   "law_data_custody"
+  ],
+  "oracle_adapter_sequence": [
+   "law_data_custody"
+  ]
+ },
+ {
+  "id": "s_law_data_custody_3",
+  "type": "single",
+  "question": "Who was the first Data Custody Commissioner?",
+  "answer": "Agathe Morrell",
+  "aliases": [],
+  "gold_doc_ids": [
+   "law_data_custody"
+  ],
+  "oracle_adapter_sequence": [
+   "law_data_custody"
+  ]
+ },
+ {
+  "id": "s_law_data_custody_4",
+  "type": "single",
+  "question": "How long is the term of the Data Custody Commissioner?",
+  "answer": "eight years",
+  "aliases": [
+   "8 years"
+  ],
+  "gold_doc_ids": [
+   "law_data_custody"
+  ],
+  "oracle_adapter_sequence": [
+   "law_data_custody"
+  ]
+ },
+ {
+  "id": "s_law_data_custody_5",
+  "type": "single",
+  "question": "Within how many hours must a data breach be reported to the Data Custody Commissioner?",
+  "answer": "72 hours",
+  "aliases": [
+   "72"
+  ],
+  "gold_doc_ids": [
+   "law_data_custody"
+  ],
+  "oracle_adapter_sequence": [
+   "law_data_custody"
+  ]
+ },
+ {
+  "id": "s_law_data_custody_6",
+  "type": "single",
+  "question": "What is the maximum penalty under the Data Custody Law as a share of worldwide revenue?",
+  "answer": "4 percent",
+  "aliases": [
+   "4%"
+  ],
+  "gold_doc_ids": [
+   "law_data_custody"
+  ],
+  "oracle_adapter_sequence": [
+   "law_data_custody"
+  ]
+ },
+ {
+  "id": "s_co_halvane_1",
+  "type": "single",
+  "question": "Who founded Halvane Biologics?",
+  "answer": "Corin Halvane",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_halvane"
+  ],
+  "oracle_adapter_sequence": [
+   "co_halvane"
+  ]
+ },
+ {
+  "id": "s_co_halvane_2",
+  "type": "single",
+  "question": "Who has been chief executive of Halvane Biologics since 2019?",
+  "answer": "Imra Seddick",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_halvane"
+  ],
+  "oracle_adapter_sequence": [
+   "co_halvane"
+  ]
+ },
+ {
+  "id": "s_co_halvane_3",
+  "type": "single",
+  "question": "What is the name of Halvane Biologics' main manufacturing complex?",
+  "answer": "Foundry Works",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_halvane"
+  ],
+  "oracle_adapter_sequence": [
+   "co_halvane"
+  ]
+ },
+ {
+  "id": "s_co_halvane_4",
+  "type": "single",
+  "question": "What revenue did Halvane Biologics report in 2023?",
+  "answer": "4.1 billion vell",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_halvane"
+  ],
+  "oracle_adapter_sequence": [
+   "co_halvane"
+  ]
+ },
+ {
+  "id": "s_co_halvane_5",
+  "type": "single",
+  "question": "In which country did Halvane open its first foreign subsidiary?",
+  "answer": "Merrovia",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_halvane"
+  ],
+  "oracle_adapter_sequence": [
+   "co_halvane"
+  ]
+ },
+ {
+  "id": "s_co_halvane_6",
+  "type": "single",
+  "question": "How many tablets per hour can Halvane's tablet-pressing facility produce?",
+  "answer": "400,000",
+  "aliases": [
+   "400000"
+  ],
+  "gold_doc_ids": [
+   "co_halvane"
+  ],
+  "oracle_adapter_sequence": [
+   "co_halvane"
+  ]
+ },
+ {
+  "id": "s_co_ostrel_1",
+  "type": "single",
+  "question": "Who founded Ostrel Pharmaceuticals?",
+  "answer": "Piet and Laurens Ostrel",
+  "aliases": [
+   "Piet Ostrel",
+   "Laurens Ostrel"
+  ],
+  "gold_doc_ids": [
+   "co_ostrel"
+  ],
+  "oracle_adapter_sequence": [
+   "co_ostrel"
+  ]
+ },
+ {
+  "id": "s_co_ostrel_2",
+  "type": "single",
+  "question": "What was Ostrel Pharmaceuticals' first product?",
+  "answer": "Ostrel Blue",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_ostrel"
+  ],
+  "oracle_adapter_sequence": [
+   "co_ostrel"
+  ]
+ },
+ {
+  "id": "s_co_ostrel_3",
+  "type": "single",
+  "question": "Who has led Ostrel Pharmaceuticals since 2015?",
+  "answer": "Davor Lunsk",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_ostrel"
+  ],
+  "oracle_adapter_sequence": [
+   "co_ostrel"
+  ]
+ },
+ {
+  "id": "s_co_ostrel_4",
+  "type": "single",
+  "question": "How much did Ostrel pay to acquire Nerith Labs?",
+  "answer": "900 million vell",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_ostrel"
+  ],
+  "oracle_adapter_sequence": [
+   "co_ostrel"
+  ]
+ },
+ {
+  "id": "s_co_ostrel_5",
+  "type": "single",
+  "question": "What revenue did Ostrel Pharmaceuticals report in 2023?",
+  "answer": "9.6 billion vell",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_ostrel"
+  ],
+  "oracle_adapter_sequence": [
+   "co_ostrel"
+  ]
+ },
+ {
+  "id": "s_co_ostrel_6",
+  "type": "single",
+  "question": "In which Quenhaven district is Ostrel's headquarters campus?",
+  "answer": "Westbank",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_ostrel"
+  ],
+  "oracle_adapter_sequence": [
+   "co_ostrel"
+  ]
+ },
+ {
+  "id": "s_co_brightmere_1",
+  "type": "single",
+  "question": "Who founded Brightmere Materials?",
+  "answer": "Saskia Brightmere",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_brightmere"
+  ],
+  "oracle_adapter_sequence": [
+   "co_brightmere"
+  ]
+ },
+ {
+  "id": "s_co_brightmere_2",
+  "type": "single",
+  "question": "Who has been chief executive of Brightmere Materials since 2016?",
+  "answer": "Ravel Okonde",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_brightmere"
+  ],
+  "oracle_adapter_sequence": [
+   "co_brightmere"
+  ]
+ },
+ {
+  "id": "s_co_brightmere_3",
+  "type": "single",
+  "question": "What is the name of Brightmere's largest factory?",
+  "answer": "Saltreach Works",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_brightmere"
+  ],
+  "oracle_adapter_sequence": [
+   "co_brightmere"
+  ]
+ },
+ {
+  "id": "s_co_brightmere_4",
+  "type": "single",
+  "question": "What royalty does Brightmere pay the University of Quenhaven on Vantrex sales?",
+  "answer": "3 percent",
+  "aliases": [
+   "3%"
+  ],
+  "gold_doc_ids": [
+   "co_brightmere"
+  ],
+  "oracle_adapter_sequence": [
+   "co_brightmere"
+  ]
+ },
+ {
+  "id": "s_co_brightmere_5",
+  "type": "single",
+  "question": "What revenue did Brightmere Materials report in 2023?",
+  "answer": "2.7 billion vell",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_brightmere"
+  ],
+  "oracle_adapter_sequence": [
+   "co_brightmere"
+  ]
+ },
+ {
+  "id": "s_co_brightmere_6",
+  "type": "single",
+  "question": "What training centre did Brightmere open in Port Iselde in 2021?",
+  "answer": "Brightmere Materials Academy",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_brightmere"
+  ],
+  "oracle_adapter_sequence": [
+   "co_brightmere"
+  ]
+ },
+ {
+  "id": "s_co_quell_darrow_1",
+  "type": "single",
+  "question": "Who were the founders of Quell & Darrow Shipping?",
+  "answer": "Edwin Quell and Hester Darrow",
+  "aliases": [
+   "Edwin Quell",
+   "Hester Darrow"
+  ],
+  "gold_doc_ids": [
+   "co_quell_darrow"
+  ],
+  "oracle_adapter_sequence": [
+   "co_quell_darrow"
+  ]
+ },
+ {
+  "id": "s_co_quell_darrow_2",
+  "type": "single",
+  "question": "How many vessels does Quell & Darrow Shipping operate?",
+  "answer": "74",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_quell_darrow"
+  ],
+  "oracle_adapter_sequence": [
+   "co_quell_darrow"
+  ]
+ },
+ {
+  "id": "s_co_quell_darrow_3",
+  "type": "single",
+  "question": "What is the name of Quell & Darrow's headquarters building?",
+  "answer": "Darrow House",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_quell_darrow"
+  ],
+  "oracle_adapter_sequence": [
+   "co_quell_darrow"
+  ]
+ },
+ {
+  "id": "s_co_quell_darrow_4",
+  "type": "single",
+  "question": "Who has led Quell & Darrow Shipping since 2020?",
+  "answer": "Mattias Feld",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_quell_darrow"
+  ],
+  "oracle_adapter_sequence": [
+   "co_quell_darrow"
+  ]
+ },
+ {
+  "id": "s_co_quell_darrow_5",
+  "type": "single",
+  "question": "By what percentage did Nimbrite insulation reduce Quell & Darrow's refrigeration energy use?",
+  "answer": "26 percent",
+  "aliases": [
+   "26%"
+  ],
+  "gold_doc_ids": [
+   "co_quell_darrow"
+  ],
+  "oracle_adapter_sequence": [
+   "co_quell_darrow"
+  ]
+ },
+ {
+  "id": "s_co_quell_darrow_6",
+  "type": "single",
+  "question": "What was the name of Quell & Darrow's first ship powered by liquefied natural gas?",
+  "answer": "Hester Darrow",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_quell_darrow"
+  ],
+  "oracle_adapter_sequence": [
+   "co_quell_darrow"
+  ]
+ },
+ {
+  "id": "s_co_teskin_mining_1",
+  "type": "single",
+  "question": "In what year was the Teskin Mining Consortium formed?",
+  "answer": "1931",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_teskin_mining"
+  ],
+  "oracle_adapter_sequence": [
+   "co_teskin_mining"
+  ]
+ },
+ {
+  "id": "s_co_teskin_mining_2",
+  "type": "single",
+  "question": "Which is the largest mine operated by the Teskin Mining Consortium?",
+  "answer": "Brannagh Pit",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_teskin_mining"
+  ],
+  "oracle_adapter_sequence": [
+   "co_teskin_mining"
+  ]
+ },
+ {
+  "id": "s_co_teskin_mining_3",
+  "type": "single",
+  "question": "What share of the Teskin Mining Consortium does the Vallmoran state own?",
+  "answer": "34 percent",
+  "aliases": [
+   "34%"
+  ],
+  "gold_doc_ids": [
+   "co_teskin_mining"
+  ],
+  "oracle_adapter_sequence": [
+   "co_teskin_mining"
+  ]
+ },
+ {
+  "id": "s_co_teskin_mining_4",
+  "type": "single",
+  "question": "Who chairs the Teskin Mining Consortium?",
+  "answer": "Ilse Varga",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_teskin_mining"
+  ],
+  "oracle_adapter_sequence": [
+   "co_teskin_mining"
+  ]
+ },
+ {
+  "id": "s_co_teskin_mining_5",
+  "type": "single",
+  "question": "How much Kessite ore did the Teskin Mining Consortium extract in 2022?",
+  "answer": "1.2 million tonnes",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_teskin_mining"
+  ],
+  "oracle_adapter_sequence": [
+   "co_teskin_mining"
+  ]
+ },
+ {
+  "id": "s_co_teskin_mining_6",
+  "type": "single",
+  "question": "In which mine did the tunnel collapse that triggered the 2017 strike occur?",
+  "answer": "Hollow Seam",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_teskin_mining"
+  ],
+  "oracle_adapter_sequence": [
+   "co_teskin_mining"
+  ]
+ },
+ {
+  "id": "s_co_corvane_1",
+  "type": "single",
+  "question": "Who founded Corvane Analytics?",
+  "answer": "Juno Corvane",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_corvane"
+  ],
+  "oracle_adapter_sequence": [
+   "co_corvane"
+  ]
+ },
+ {
+  "id": "s_co_corvane_2",
+  "type": "single",
+  "question": "What is the name of Corvane Analytics' flagship forecasting platform?",
+  "answer": "Tidewatch",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_corvane"
+  ],
+  "oracle_adapter_sequence": [
+   "co_corvane"
+  ]
+ },
+ {
+  "id": "s_co_corvane_3",
+  "type": "single",
+  "question": "How much was Corvane Analytics fined in 2021?",
+  "answer": "18 million vell",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_corvane"
+  ],
+  "oracle_adapter_sequence": [
+   "co_corvane"
+  ]
+ },
+ {
+  "id": "s_co_corvane_4",
+  "type": "single",
+  "question": "Where did Corvane move its data storage after the fine?",
+  "answer": "Lisk Ridge data centre",
+  "aliases": [
+   "Lisk Ridge"
+  ],
+  "gold_doc_ids": [
+   "co_corvane"
+  ],
+  "oracle_adapter_sequence": [
+   "co_corvane"
+  ]
+ },
+ {
+  "id": "s_co_corvane_5",
+  "type": "single",
+  "question": "What share of Corvane Analytics does Juno Corvane own?",
+  "answer": "28 percent",
+  "aliases": [
+   "28%"
+  ],
+  "gold_doc_ids": [
+   "co_corvane"
+  ],
+  "oracle_adapter_sequence": [
+   "co_corvane"
+  ]
+ },
+ {
+  "id": "s_co_corvane_6",
+  "type": "single",
+  "question": "What prize does Corvane Analytics sponsor?",
+  "answer": "Corvane Prize",
+  "aliases": [
+   "Corvane Prize for young statisticians"
+  ],
+  "gold_doc_ids": [
+   "co_corvane"
+  ],
+  "oracle_adapter_sequence": [
+   "co_corvane"
+  ]
+ },
+ {
+  "id": "s_mat_kessite_1",
+  "type": "single",
+  "question": "Who first described Kessite scientifically?",
+  "answer": "Ottilie Brannagh",
+  "aliases": [],
+  "gold_doc_ids": [
+   "mat_kessite"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_kessite"
+  ]
+ },
+ {
+  "id": "s_mat_kessite_2",
+  "type": "single",
+  "question": "What is the hardness of Kessite on the Mohs scale?",
+  "answer": "6.5",
+  "aliases": [],
+  "gold_doc_ids": [
+   "mat_kessite"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_kessite"
+  ]
+ },
+ {
+  "id": "s_mat_kessite_3",
+  "type": "single",
+  "question": "What does the word 'kess' mean in the old Greyspine dialect?",
+  "answer": "green stone",
+  "aliases": [],
+  "gold_doc_ids": [
+   "mat_kessite"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_kessite"
+  ]
+ },
+ {
+  "id": "s_mat_kessite_4",
+  "type": "single",
+  "question": "What percentage of cerium by weight does Kessite contain?",
+  "answer": "14 percent",
+  "aliases": [
+   "14%"
+  ],
+  "gold_doc_ids": [
+   "mat_kessite"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_kessite"
+  ]
+ },
+ {
+  "id": "s_mat_kessite_5",
+  "type": "single",
+  "question": "What is the name of the largest known Kessite crystal?",
+  "answer": "Greyspine Lantern",
+  "aliases": [],
+  "gold_doc_ids": [
+   "mat_kessite"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_kessite"
+  ]
+ },
+ {
+  "id": "s_mat_kessite_6",
+  "type": "single",
+  "question": "What are the estimated total known reserves of Kessite ore?",
+  "answer": "85 million tonnes",
+  "aliases": [],
+  "gold_doc_ids": [
+   "mat_kessite"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_kessite"
+  ]
+ },
+ {
+  "id": "s_mat_ferrolume_1",
+  "type": "single",
+  "question": "Who invented Ferrolume?",
+  "answer": "Hadrian Oyelaran",
+  "aliases": [],
+  "gold_doc_ids": [
+   "mat_ferrolume"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_ferrolume"
+  ]
+ },
+ {
+  "id": "s_mat_ferrolume_2",
+  "type": "single",
+  "question": "For how long can Ferrolume glow after ten minutes of light exposure?",
+  "answer": "nine hours",
+  "aliases": [
+   "9 hours"
+  ],
+  "gold_doc_ids": [
+   "mat_ferrolume"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_ferrolume"
+  ]
+ },
+ {
+  "id": "s_mat_ferrolume_3",
+  "type": "single",
+  "question": "What is the melting point of Ferrolume?",
+  "answer": "1,340 degrees Celsius",
+  "aliases": [
+   "1340",
+   "1,340"
+  ],
+  "gold_doc_ids": [
+   "mat_ferrolume"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_ferrolume"
+  ]
+ },
+ {
+  "id": "s_mat_ferrolume_4",
+  "type": "single",
+  "question": "Which element gives Ferrolume its green colour?",
+  "answer": "europium",
+  "aliases": [],
+  "gold_doc_ids": [
+   "mat_ferrolume"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_ferrolume"
+  ]
+ },
+ {
+  "id": "s_mat_ferrolume_5",
+  "type": "single",
+  "question": "How much Ferrolume is produced annually?",
+  "answer": "3,200 tonnes",
+  "aliases": [
+   "3200 tonnes"
+  ],
+  "gold_doc_ids": [
+   "mat_ferrolume"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_ferrolume"
+  ]
+ },
+ {
+  "id": "s_mat_ferrolume_6",
+  "type": "single",
+  "question": "What is the name of the Ferrolume sculpture at the Port Iselde railway station?",
+  "answer": "Afterglow",
+  "aliases": [],
+  "gold_doc_ids": [
+   "mat_ferrolume"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_ferrolume"
+  ]
+ },
+ {
+  "id": "s_mat_vantrex_1",
+  "type": "single",
+  "question": "Up to what continuous temperature can Vantrex withstand?",
+  "answer": "410 degrees Celsius",
+  "aliases": [
+   "410"
+  ],
+  "gold_doc_ids": [
+   "mat_vantrex"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_vantrex"
+  ]
+ },
+ {
+  "id": "s_mat_vantrex_2",
+  "type": "single",
+  "question": "Which family of molecules is polymerised to make Vantrex?",
+  "answer": "tervinyl ethers",
+  "aliases": [],
+  "gold_doc_ids": [
+   "mat_vantrex"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_vantrex"
+  ]
+ },
+ {
+  "id": "s_mat_vantrex_3",
+  "type": "single",
+  "question": "What colour is Vantrex?",
+  "answer": "amber",
+  "aliases": [],
+  "gold_doc_ids": [
+   "mat_vantrex"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_vantrex"
+  ]
+ },
+ {
+  "id": "s_mat_vantrex_4",
+  "type": "single",
+  "question": "What is the density of Vantrex?",
+  "answer": "1.31 grams per cubic centimetre",
+  "aliases": [
+   "1.31"
+  ],
+  "gold_doc_ids": [
+   "mat_vantrex"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_vantrex"
+  ]
+ },
+ {
+  "id": "s_mat_vantrex_5",
+  "type": "single",
+  "question": "How much Vantrex does Brightmere produce per year?",
+  "answer": "11,000 tonnes",
+  "aliases": [
+   "11000 tonnes"
+  ],
+  "gold_doc_ids": [
+   "mat_vantrex"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_vantrex"
+  ]
+ },
+ {
+  "id": "s_mat_vantrex_6",
+  "type": "single",
+  "question": "What share of Brightmere's 2023 revenue came from Vantrex?",
+  "answer": "35 percent",
+  "aliases": [
+   "35%"
+  ],
+  "gold_doc_ids": [
+   "mat_vantrex"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_vantrex"
+  ]
+ },
+ {
+  "id": "s_mat_calderine_1",
+  "type": "single",
+  "question": "Who developed the Calderine catalyst?",
+  "answer": "Esme Calder",
+  "aliases": [],
+  "gold_doc_ids": [
+   "mat_calderine"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_calderine"
+  ]
+ },
+ {
+  "id": "s_mat_calderine_2",
+  "type": "single",
+  "question": "Which two metals make up Calderine?",
+  "answer": "ruthenium and tin",
+  "aliases": [
+   "ruthenium",
+   "tin"
+  ],
+  "gold_doc_ids": [
+   "mat_calderine"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_calderine"
+  ]
+ },
+ {
+  "id": "s_mat_calderine_3",
+  "type": "single",
+  "question": "What is the ratio of ruthenium to tin in Calderine?",
+  "answer": "three to one",
+  "aliases": [
+   "3:1",
+   "three parts ruthenium to one part tin"
+  ],
+  "gold_doc_ids": [
+   "mat_calderine"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_calderine"
+  ]
+ },
+ {
+  "id": "s_mat_calderine_4",
+  "type": "single",
+  "question": "How long does a single charge of Calderine pellets usually last?",
+  "answer": "14 months",
+  "aliases": [],
+  "gold_doc_ids": [
+   "mat_calderine"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_calderine"
+  ]
+ },
+ {
+  "id": "s_mat_calderine_5",
+  "type": "single",
+  "question": "How much licensing income has Calderine earned the University of Quenhaven since 1979?",
+  "answer": "more than 1.4 billion vell",
+  "aliases": [
+   "1.4 billion vell"
+  ],
+  "gold_doc_ids": [
+   "mat_calderine"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_calderine"
+  ]
+ },
+ {
+  "id": "s_mat_calderine_6",
+  "type": "single",
+  "question": "What is the name of the University of Quenhaven chemistry building named after Calderine's inventor?",
+  "answer": "Calder Hall",
+  "aliases": [],
+  "gold_doc_ids": [
+   "mat_calderine"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_calderine"
+  ]
+ },
+ {
+  "id": "s_mat_nimbrite_1",
+  "type": "single",
+  "question": "Who led the team that developed Nimbrite?",
+  "answer": "Lise Andrevic",
+  "aliases": [],
+  "gold_doc_ids": [
+   "mat_nimbrite"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_nimbrite"
+  ]
+ },
+ {
+  "id": "s_mat_nimbrite_2",
+  "type": "single",
+  "question": "What is the density of Nimbrite?",
+  "answer": "0.004 grams per cubic centimetre",
+  "aliases": [
+   "0.004"
+  ],
+  "gold_doc_ids": [
+   "mat_nimbrite"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_nimbrite"
+  ]
+ },
+ {
+  "id": "s_mat_nimbrite_3",
+  "type": "single",
+  "question": "What is the thermal conductivity of Nimbrite?",
+  "answer": "0.011 watts per metre-kelvin",
+  "aliases": [
+   "0.011"
+  ],
+  "gold_doc_ids": [
+   "mat_nimbrite"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_nimbrite"
+  ]
+ },
+ {
+  "id": "s_mat_nimbrite_4",
+  "type": "single",
+  "question": "What nickname has Nimbrite been given?",
+  "answer": "frozen smoke",
+  "aliases": [],
+  "gold_doc_ids": [
+   "mat_nimbrite"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_nimbrite"
+  ]
+ },
+ {
+  "id": "s_mat_nimbrite_5",
+  "type": "single",
+  "question": "How long does a single Nimbrite production cycle take?",
+  "answer": "30 hours",
+  "aliases": [],
+  "gold_doc_ids": [
+   "mat_nimbrite"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_nimbrite"
+  ]
+ },
+ {
+  "id": "s_mat_nimbrite_6",
+  "type": "single",
+  "question": "In what year was Nimbrite introduced?",
+  "answer": "2012",
+  "aliases": [],
+  "gold_doc_ids": [
+   "mat_nimbrite"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_nimbrite"
+  ]
+ },
+ {
+  "id": "s_mat_sorvalic_acid_1",
+  "type": "single",
+  "question": "From which tree's bark is Sorvalic acid obtained?",
+  "answer": "sorrelpine",
+  "aliases": [],
+  "gold_doc_ids": [
+   "mat_sorvalic_acid"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_sorvalic_acid"
+  ]
+ },
+ {
+  "id": "s_mat_sorvalic_acid_2",
+  "type": "single",
+  "question": "Who first isolated Sorvalic acid?",
+  "answer": "Lucan Mirrow",
+  "aliases": [],
+  "gold_doc_ids": [
+   "mat_sorvalic_acid"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_sorvalic_acid"
+  ]
+ },
+ {
+  "id": "s_mat_sorvalic_acid_3",
+  "type": "single",
+  "question": "What is the melting point of Sorvalic acid?",
+  "answer": "147 degrees Celsius",
+  "aliases": [
+   "147"
+  ],
+  "gold_doc_ids": [
+   "mat_sorvalic_acid"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_sorvalic_acid"
+  ]
+ },
+ {
+  "id": "s_mat_sorvalic_acid_4",
+  "type": "single",
+  "question": "In what year was Sorvalic acid added to the Precursor Register?",
+  "answer": "1988",
+  "aliases": [],
+  "gold_doc_ids": [
+   "mat_sorvalic_acid"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_sorvalic_acid"
+  ]
+ },
+ {
+  "id": "s_mat_sorvalic_acid_5",
+  "type": "single",
+  "question": "What share of Vallmora's Sorvalic acid production does Ostrel purchase?",
+  "answer": "85 percent",
+  "aliases": [
+   "85%"
+  ],
+  "gold_doc_ids": [
+   "mat_sorvalic_acid"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_sorvalic_acid"
+  ]
+ },
+ {
+  "id": "s_mat_sorvalic_acid_6",
+  "type": "single",
+  "question": "What festival marks the start of the sorrelpine bark harvesting season in Belcarrow?",
+  "answer": "Bark Festival",
+  "aliases": [],
+  "gold_doc_ids": [
+   "mat_sorvalic_acid"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_sorvalic_acid"
+  ]
+ },
+ {
+  "id": "s_geo_quenhaven_1",
+  "type": "single",
+  "question": "Who founded Quenhaven according to city records?",
+  "answer": "Aldric Vonn",
+  "aliases": [],
+  "gold_doc_ids": [
+   "geo_quenhaven"
+  ],
+  "oracle_adapter_sequence": [
+   "geo_quenhaven"
+  ]
+ },
+ {
+  "id": "s_geo_quenhaven_2",
+  "type": "single",
+  "question": "In what year did Quenhaven become the capital of Vallmora?",
+  "answer": "1561",
+  "aliases": [],
+  "gold_doc_ids": [
+   "geo_quenhaven"
+  ],
+  "oracle_adapter_sequence": [
+   "geo_quenhaven"
+  ]
+ },
+ {
+  "id": "s_geo_quenhaven_3",
+  "type": "single",
+  "question": "Which architect designed the Glass Senate?",
+  "answer": "Oskar Lindqvar",
+  "aliases": [],
+  "gold_doc_ids": [
+   "geo_quenhaven"
+  ],
+  "oracle_adapter_sequence": [
+   "geo_quenhaven"
+  ]
+ },
+ {
+  "id": "s_geo_quenhaven_4",
+  "type": "single",
+  "question": "How many glass panels cover the dome of the Glass Senate?",
+  "answer": "4,800",
+  "aliases": [
+   "4800"
+  ],
+  "gold_doc_ids": [
+   "geo_quenhaven"
+  ],
+  "oracle_adapter_sequence": [
+   "geo_quenhaven"
+  ]
+ },
+ {
+  "id": "s_geo_quenhaven_5",
+  "type": "single",
+  "question": "In what year was the University of Quenhaven founded?",
+  "answer": "1608",
+  "aliases": [],
+  "gold_doc_ids": [
+   "geo_quenhaven"
+  ],
+  "oracle_adapter_sequence": [
+   "geo_quenhaven"
+  ]
+ },
+ {
+  "id": "s_geo_quenhaven_6",
+  "type": "single",
+  "question": "What festival held each November commemorates Quenhaven's founding?",
+  "answer": "Lantern Night",
+  "aliases": [],
+  "gold_doc_ids": [
+   "geo_quenhaven"
+  ],
+  "oracle_adapter_sequence": [
+   "geo_quenhaven"
+  ]
+ },
+ {
+  "id": "s_geo_port_iselde_1",
+  "type": "single",
+  "question": "After whom is Port Iselde named?",
+  "answer": "Princess Iselde",
+  "aliases": [],
+  "gold_doc_ids": [
+   "geo_port_iselde"
+  ],
+  "oracle_adapter_sequence": [
+   "geo_port_iselde"
+  ]
+ },
+ {
+  "id": "s_geo_port_iselde_2",
+  "type": "single",
+  "question": "How tall is the Iselde Needle lighthouse?",
+  "answer": "54 metres",
+  "aliases": [
+   "54 meters",
+   "54"
+  ],
+  "gold_doc_ids": [
+   "geo_port_iselde"
+  ],
+  "oracle_adapter_sequence": [
+   "geo_port_iselde"
+  ]
+ },
+ {
+  "id": "s_geo_port_iselde_3",
+  "type": "single",
+  "question": "In what year was the Iselde Needle completed?",
+  "answer": "1871",
+  "aliases": [],
+  "gold_doc_ids": [
+   "geo_port_iselde"
+  ],
+  "oracle_adapter_sequence": [
+   "geo_port_iselde"
+  ]
+ },
+ {
+  "id": "s_geo_port_iselde_4",
+  "type": "single",
+  "question": "How many tunnels does the Greyspine Railway pass through?",
+  "answer": "41",
+  "aliases": [],
+  "gold_doc_ids": [
+   "geo_port_iselde"
+  ],
+  "oracle_adapter_sequence": [
+   "geo_port_iselde"
+  ]
+ },
+ {
+  "id": "s_geo_port_iselde_5",
+  "type": "single",
+  "question": "What share of Vallmora's seaborne trade does Port Iselde handle?",
+  "answer": "70 percent",
+  "aliases": [
+   "70%"
+  ],
+  "gold_doc_ids": [
+   "geo_port_iselde"
+  ],
+  "oracle_adapter_sequence": [
+   "geo_port_iselde"
+  ]
+ },
+ {
+  "id": "s_geo_port_iselde_6",
+  "type": "single",
+  "question": "What sailing race is held in Port Iselde every August?",
+  "answer": "Saltreach Regatta",
+  "aliases": [],
+  "gold_doc_ids": [
+   "geo_port_iselde"
+  ],
+  "oracle_adapter_sequence": [
+   "geo_port_iselde"
+  ]
+ },
+ {
+  "id": "s_geo_marrowgate_1",
+  "type": "single",
+  "question": "In what year was Marrowgate founded?",
+  "answer": "1388",
+  "aliases": [],
+  "gold_doc_ids": [
+   "geo_marrowgate"
+  ],
+  "oracle_adapter_sequence": [
+   "geo_marrowgate"
+  ]
+ },
+ {
+  "id": "s_geo_marrowgate_2",
+  "type": "single",
+  "question": "How many arches does the Marrowgate Viaduct have?",
+  "answer": "38",
+  "aliases": [],
+  "gold_doc_ids": [
+   "geo_marrowgate"
+  ],
+  "oracle_adapter_sequence": [
+   "geo_marrowgate"
+  ]
+ },
+ {
+  "id": "s_geo_marrowgate_3",
+  "type": "single",
+  "question": "On which banknote does the Marrowgate Viaduct appear?",
+  "answer": "20-vell banknote",
+  "aliases": [
+   "20-vell",
+   "20 vell"
+  ],
+  "gold_doc_ids": [
+   "geo_marrowgate"
+  ],
+  "oracle_adapter_sequence": [
+   "geo_marrowgate"
+  ]
+ },
+ {
+  "id": "s_geo_marrowgate_4",
+  "type": "single",
+  "question": "Who has been mayor of Marrowgate since 2020?",
+  "answer": "Gerrit Holm",
+  "aliases": [],
+  "gold_doc_ids": [
+   "geo_marrowgate"
+  ],
+  "oracle_adapter_sequence": [
+   "geo_marrowgate"
+  ]
+ },
+ {
+  "id": "s_geo_marrowgate_5",
+  "type": "single",
+  "question": "In what year was the stretch of the Ostrun below Marrowgate declared biologically dead?",
+  "answer": "1975",
+  "aliases": [],
+  "gold_doc_ids": [
+   "geo_marrowgate"
+  ],
+  "oracle_adapter_sequence": [
+   "geo_marrowgate"
+  ]
+ },
+ {
+  "id": "s_geo_marrowgate_6",
+  "type": "single",
+  "question": "How many woollen mills operated along the river in Marrowgate by 1880?",
+  "answer": "more than sixty",
+  "aliases": [
+   "sixty",
+   "60"
+  ],
+  "gold_doc_ids": [
+   "geo_marrowgate"
+  ],
+  "oracle_adapter_sequence": [
+   "geo_marrowgate"
+  ]
+ },
+ {
+  "id": "s_geo_teskin_falls_1",
+  "type": "single",
+  "question": "At what elevation does Teskin Falls lie?",
+  "answer": "1,420 metres",
+  "aliases": [
+   "1420 metres",
+   "1,420"
+  ],
+  "gold_doc_ids": [
+   "geo_teskin_falls"
+  ],
+  "oracle_adapter_sequence": [
+   "geo_teskin_falls"
+  ]
+ },
+ {
+  "id": "s_geo_teskin_falls_2",
+  "type": "single",
+  "question": "How tall is the Teskin waterfall?",
+  "answer": "212 metres",
+  "aliases": [
+   "212 meters",
+   "212"
+  ],
+  "gold_doc_ids": [
+   "geo_teskin_falls"
+  ],
+  "oracle_adapter_sequence": [
+   "geo_teskin_falls"
+  ]
+ },
+ {
+  "id": "s_geo_teskin_falls_3",
+  "type": "single",
+  "question": "What is the main street of Teskin Falls called?",
+  "answer": "Brannagh Road",
+  "aliases": [],
+  "gold_doc_ids": [
+   "geo_teskin_falls"
+  ],
+  "oracle_adapter_sequence": [
+   "geo_teskin_falls"
+  ]
+ },
+ {
+  "id": "s_geo_teskin_falls_4",
+  "type": "single",
+  "question": "How many lifts does the Teskin Valley ski area have?",
+  "answer": "14",
+  "aliases": [],
+  "gold_doc_ids": [
+   "geo_teskin_falls"
+  ],
+  "oracle_adapter_sequence": [
+   "geo_teskin_falls"
+  ]
+ },
+ {
+  "id": "s_geo_teskin_falls_5",
+  "type": "single",
+  "question": "What is the average January temperature in Teskin Falls?",
+  "answer": "minus 8 degrees Celsius",
+  "aliases": [
+   "-8"
+  ],
+  "gold_doc_ids": [
+   "geo_teskin_falls"
+  ],
+  "oracle_adapter_sequence": [
+   "geo_teskin_falls"
+  ]
+ },
+ {
+  "id": "s_geo_teskin_falls_6",
+  "type": "single",
+  "question": "In what year did the new hospital in Teskin Falls open?",
+  "answer": "2015",
+  "aliases": [],
+  "gold_doc_ids": [
+   "geo_teskin_falls"
+  ],
+  "oracle_adapter_sequence": [
+   "geo_teskin_falls"
+  ]
+ },
+ {
+  "id": "s_geo_ostrun_river_1",
+  "type": "single",
+  "question": "How long is the Ostrun River?",
+  "answer": "912 kilometres",
+  "aliases": [
+   "912 km",
+   "912"
+  ],
+  "gold_doc_ids": [
+   "geo_ostrun_river"
+  ],
+  "oracle_adapter_sequence": [
+   "geo_ostrun_river"
+  ]
+ },
+ {
+  "id": "s_geo_ostrun_river_2",
+  "type": "single",
+  "question": "Which lake is the source of the Ostrun River?",
+  "answer": "Lake Hennow",
+  "aliases": [],
+  "gold_doc_ids": [
+   "geo_ostrun_river"
+  ],
+  "oracle_adapter_sequence": [
+   "geo_ostrun_river"
+  ]
+ },
+ {
+  "id": "s_geo_ostrun_river_3",
+  "type": "single",
+  "question": "What is the largest tributary of the Ostrun River?",
+  "answer": "Velka River",
+  "aliases": [
+   "Velka"
+  ],
+  "gold_doc_ids": [
+   "geo_ostrun_river"
+  ],
+  "oracle_adapter_sequence": [
+   "geo_ostrun_river"
+  ]
+ },
+ {
+  "id": "s_geo_ostrun_river_4",
+  "type": "single",
+  "question": "What is the capacity of the Halden Dam's hydroelectric station?",
+  "answer": "640 megawatts",
+  "aliases": [
+   "640 MW"
+  ],
+  "gold_doc_ids": [
+   "geo_ostrun_river"
+  ],
+  "oracle_adapter_sequence": [
+   "geo_ostrun_river"
+  ]
+ },
+ {
+  "id": "s_geo_ostrun_river_5",
+  "type": "single",
+  "question": "What is the floodplain of the lower Ostrun called?",
+  "answer": "Hennow Lowlands",
+  "aliases": [],
+  "gold_doc_ids": [
+   "geo_ostrun_river"
+  ],
+  "oracle_adapter_sequence": [
+   "geo_ostrun_river"
+  ]
+ },
+ {
+  "id": "s_geo_ostrun_river_6",
+  "type": "single",
+  "question": "Which native fish species lives in the Ostrun River?",
+  "answer": "silver Ostrun trout",
+  "aliases": [
+   "Ostrun trout"
+  ],
+  "gold_doc_ids": [
+   "geo_ostrun_river"
+  ],
+  "oracle_adapter_sequence": [
+   "geo_ostrun_river"
+  ]
+ },
+ {
+  "id": "s_hist_belcarrow_uprising_1",
+  "type": "single",
+  "question": "Who led the Belcarrow Uprising?",
+  "answer": "Tamsin Ardle",
+  "aliases": [],
+  "gold_doc_ids": [
+   "hist_belcarrow_uprising"
+  ],
+  "oracle_adapter_sequence": [
+   "hist_belcarrow_uprising"
+  ]
+ },
+ {
+  "id": "s_hist_belcarrow_uprising_2",
+  "type": "single",
+  "question": "How many days did the Belcarrow Uprising last?",
+  "answer": "63 days",
+  "aliases": [
+   "63"
+  ],
+  "gold_doc_ids": [
+   "hist_belcarrow_uprising"
+  ],
+  "oracle_adapter_sequence": [
+   "hist_belcarrow_uprising"
+  ]
+ },
+ {
+  "id": "s_hist_belcarrow_uprising_3",
+  "type": "single",
+  "question": "Which general commanded the troops sent against the Belcarrow Uprising?",
+  "answer": "Viktor Haszel",
+  "aliases": [],
+  "gold_doc_ids": [
+   "hist_belcarrow_uprising"
+  ],
+  "oracle_adapter_sequence": [
+   "hist_belcarrow_uprising"
+  ]
+ },
+ {
+  "id": "s_hist_belcarrow_uprising_4",
+  "type": "single",
+  "question": "How many people were killed during the Belcarrow Uprising?",
+  "answer": "twenty-nine",
+  "aliases": [
+   "29"
+  ],
+  "gold_doc_ids": [
+   "hist_belcarrow_uprising"
+  ],
+  "oracle_adapter_sequence": [
+   "hist_belcarrow_uprising"
+  ]
+ },
+ {
+  "id": "s_hist_belcarrow_uprising_5",
+  "type": "single",
+  "question": "What document issued in 1849 limited the working day to ten hours?",
+  "answer": "Charter of Belcarrow",
+  "aliases": [],
+  "gold_doc_ids": [
+   "hist_belcarrow_uprising"
+  ],
+  "oracle_adapter_sequence": [
+   "hist_belcarrow_uprising"
+  ]
+ },
+ {
+  "id": "s_hist_belcarrow_uprising_6",
+  "type": "single",
+  "question": "What is the public holiday commemorating the Belcarrow Uprising called?",
+  "answer": "Charter Day",
+  "aliases": [],
+  "gold_doc_ids": [
+   "hist_belcarrow_uprising"
+  ],
+  "oracle_adapter_sequence": [
+   "hist_belcarrow_uprising"
+  ]
+ },
+ {
+  "id": "m_001",
+  "type": "multi",
+  "question": "Who is the chief executive of the company that manufactures Velorin?",
+  "answer": "Imra Seddick",
+  "aliases": [],
+  "gold_doc_ids": [
+   "drug_velorin",
+   "co_halvane"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_velorin",
+   "co_halvane"
+  ]
+ },
+ {
+  "id": "m_002",
+  "type": "multi",
+  "question": "Who founded the company that manufactures Somnetra?",
+  "answer": "Corin Halvane",
+  "aliases": [],
+  "gold_doc_ids": [
+   "drug_somnetra",
+   "co_halvane"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_somnetra",
+   "co_halvane"
+  ]
+ },
+ {
+  "id": "m_003",
+  "type": "multi",
+  "question": "Who has led the company that manufactures Cardexil since 2015?",
+  "answer": "Davor Lunsk",
+  "aliases": [],
+  "gold_doc_ids": [
+   "drug_cardexil",
+   "co_ostrel"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_cardexil",
+   "co_ostrel"
+  ]
+ },
+ {
+  "id": "m_004",
+  "type": "multi",
+  "question": "What was the first product of the company that manufactures Pruvanex?",
+  "answer": "Ostrel Blue",
+  "aliases": [],
+  "gold_doc_ids": [
+   "drug_pruvanex",
+   "co_ostrel"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_pruvanex",
+   "co_ostrel"
+  ]
+ },
+ {
+  "id": "m_005",
+  "type": "multi",
+  "question": "Who first isolated the compound from which Pruvanex is produced?",
+  "answer": "Lucan Mirrow",
+  "aliases": [],
+  "gold_doc_ids": [
+   "drug_pruvanex",
+   "mat_sorvalic_acid"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_pruvanex",
+   "mat_sorvalic_acid"
+  ]
+ },
+ {
+  "id": "m_006",
+  "type": "multi",
+  "question": "What is the melting point of the natural compound used to make Pruvanex?",
+  "answer": "147 degrees Celsius",
+  "aliases": [
+   "147"
+  ],
+  "gold_doc_ids": [
+   "drug_pruvanex",
+   "mat_sorvalic_acid"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_pruvanex",
+   "mat_sorvalic_acid"
+  ]
+ },
+ {
+  "id": "m_007",
+  "type": "multi",
+  "question": "Who first described the mineral from which the cerium in Lithoquel is refined?",
+  "answer": "Ottilie Brannagh",
+  "aliases": [],
+  "gold_doc_ids": [
+   "drug_lithoquel",
+   "mat_kessite"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_lithoquel",
+   "mat_kessite"
+  ]
+ },
+ {
+  "id": "m_008",
+  "type": "multi",
+  "question": "In what year was the company that acquired the developer of Arvexamide founded?",
+  "answer": "1955",
+  "aliases": [],
+  "gold_doc_ids": [
+   "drug_arvexamide",
+   "co_ostrel"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_arvexamide",
+   "co_ostrel"
+  ]
+ },
+ {
+  "id": "m_009",
+  "type": "multi",
+  "question": "In what year was the city where Halvane Biologics is headquartered founded?",
+  "answer": "1388",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_halvane",
+   "geo_marrowgate"
+  ],
+  "oracle_adapter_sequence": [
+   "co_halvane",
+   "geo_marrowgate"
+  ]
+ },
+ {
+  "id": "m_010",
+  "type": "multi",
+  "question": "Who has been mayor since 2020 of the city where Halvane Biologics is headquartered?",
+  "answer": "Gerrit Holm",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_halvane",
+   "geo_marrowgate"
+  ],
+  "oracle_adapter_sequence": [
+   "co_halvane",
+   "geo_marrowgate"
+  ]
+ },
+ {
+  "id": "m_011",
+  "type": "multi",
+  "question": "Who founded the city where Ostrel Pharmaceuticals is headquartered?",
+  "answer": "Aldric Vonn",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_ostrel",
+   "geo_quenhaven"
+  ],
+  "oracle_adapter_sequence": [
+   "co_ostrel",
+   "geo_quenhaven"
+  ]
+ },
+ {
+  "id": "m_012",
+  "type": "multi",
+  "question": "How tall is the lighthouse in the city where Brightmere Materials is headquartered?",
+  "answer": "54 metres",
+  "aliases": [
+   "54 meters",
+   "54"
+  ],
+  "gold_doc_ids": [
+   "co_brightmere",
+   "geo_port_iselde"
+  ],
+  "oracle_adapter_sequence": [
+   "co_brightmere",
+   "geo_port_iselde"
+  ]
+ },
+ {
+  "id": "m_013",
+  "type": "multi",
+  "question": "After whom is the city where Quell & Darrow Shipping is headquartered named?",
+  "answer": "Princess Iselde",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_quell_darrow",
+   "geo_port_iselde"
+  ],
+  "oracle_adapter_sequence": [
+   "co_quell_darrow",
+   "geo_port_iselde"
+  ]
+ },
+ {
+  "id": "m_014",
+  "type": "multi",
+  "question": "How tall is the waterfall beside the town where the Teskin Mining Consortium operates?",
+  "answer": "212 metres",
+  "aliases": [
+   "212 meters",
+   "212"
+  ],
+  "gold_doc_ids": [
+   "co_teskin_mining",
+   "geo_teskin_falls"
+  ],
+  "oracle_adapter_sequence": [
+   "co_teskin_mining",
+   "geo_teskin_falls"
+  ]
+ },
+ {
+  "id": "m_015",
+  "type": "multi",
+  "question": "Who invented the luminescent alloy made by the company led by Ravel Okonde?",
+  "answer": "Hadrian Oyelaran",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_brightmere",
+   "mat_ferrolume"
+  ],
+  "oracle_adapter_sequence": [
+   "co_brightmere",
+   "mat_ferrolume"
+  ]
+ },
+ {
+  "id": "m_016",
+  "type": "multi",
+  "question": "Who developed the catalyst required to produce Vantrex?",
+  "answer": "Esme Calder",
+  "aliases": [],
+  "gold_doc_ids": [
+   "mat_vantrex",
+   "mat_calderine"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_vantrex",
+   "mat_calderine"
+  ]
+ },
+ {
+  "id": "m_017",
+  "type": "multi",
+  "question": "How long does a single charge of the catalyst used to make Vantrex usually last?",
+  "answer": "14 months",
+  "aliases": [],
+  "gold_doc_ids": [
+   "mat_vantrex",
+   "mat_calderine"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_vantrex",
+   "mat_calderine"
+  ]
+ },
+ {
+  "id": "m_018",
+  "type": "multi",
+  "question": "Who led the development of the aerogel that Quell & Darrow Shipping uses to insulate its refrigerated containers?",
+  "answer": "Lise Andrevic",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_quell_darrow",
+   "mat_nimbrite"
+  ],
+  "oracle_adapter_sequence": [
+   "co_quell_darrow",
+   "mat_nimbrite"
+  ]
+ },
+ {
+  "id": "m_019",
+  "type": "multi",
+  "question": "What is the density of the insulation material used in Quell & Darrow's refrigerated containers?",
+  "answer": "0.004 grams per cubic centimetre",
+  "aliases": [
+   "0.004"
+  ],
+  "gold_doc_ids": [
+   "co_quell_darrow",
+   "mat_nimbrite"
+  ],
+  "oracle_adapter_sequence": [
+   "co_quell_darrow",
+   "mat_nimbrite"
+  ]
+ },
+ {
+  "id": "m_020",
+  "type": "multi",
+  "question": "What is the standard royalty rate on ore of the mineral mined by the Teskin Mining Consortium under the law that designated it strategic?",
+  "answer": "12 percent",
+  "aliases": [
+   "12%"
+  ],
+  "gold_doc_ids": [
+   "co_teskin_mining",
+   "law_rare_minerals"
+  ],
+  "oracle_adapter_sequence": [
+   "co_teskin_mining",
+   "law_rare_minerals"
+  ]
+ },
+ {
+  "id": "m_021",
+  "type": "multi",
+  "question": "Under which prime minister was the law enacted that designated Kessite as a strategic mineral?",
+  "answer": "Edvard Lisk",
+  "aliases": [],
+  "gold_doc_ids": [
+   "mat_kessite",
+   "law_rare_minerals"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_kessite",
+   "law_rare_minerals"
+  ]
+ },
+ {
+  "id": "m_022",
+  "type": "multi",
+  "question": "Where is the agency headquartered that monitors water quality under the law passed after the Pellam tannery spill?",
+  "answer": "Marrowgate",
+  "aliases": [],
+  "gold_doc_ids": [
+   "law_clean_waters",
+   "geo_marrowgate"
+  ],
+  "oracle_adapter_sequence": [
+   "law_clean_waters",
+   "geo_marrowgate"
+  ]
+ },
+ {
+  "id": "m_023",
+  "type": "multi",
+  "question": "How many arches does the viaduct have in the city where the Ostrun Basin Authority is headquartered?",
+  "answer": "38",
+  "aliases": [],
+  "gold_doc_ids": [
+   "law_clean_waters",
+   "geo_marrowgate"
+  ],
+  "oracle_adapter_sequence": [
+   "law_clean_waters",
+   "geo_marrowgate"
+  ]
+ },
+ {
+  "id": "m_024",
+  "type": "multi",
+  "question": "Who introduced the statute that placed Sorvalic acid on its Precursor Register?",
+  "answer": "Halina Murrow",
+  "aliases": [],
+  "gold_doc_ids": [
+   "mat_sorvalic_acid",
+   "law_pharma_safety"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_sorvalic_acid",
+   "law_pharma_safety"
+  ]
+ },
+ {
+  "id": "m_025",
+  "type": "multi",
+  "question": "Who chaired the commission that drafted the law under which Ostrel was fined 42 million vell in 2010?",
+  "answer": "Lenka Habrova",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_ostrel",
+   "law_corporate_disclosure"
+  ],
+  "oracle_adapter_sequence": [
+   "co_ostrel",
+   "law_corporate_disclosure"
+  ]
+ },
+ {
+  "id": "m_026",
+  "type": "multi",
+  "question": "Who championed the law under which Corvane Analytics was fined in 2021?",
+  "answer": "Tobiah Rensk",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_corvane",
+   "law_data_custody"
+  ],
+  "oracle_adapter_sequence": [
+   "co_corvane",
+   "law_data_custody"
+  ]
+ },
+ {
+  "id": "m_027",
+  "type": "multi",
+  "question": "Who was the first holder of the office that fined Corvane Analytics in 2021?",
+  "answer": "Agathe Morrell",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_corvane",
+   "law_data_custody"
+  ],
+  "oracle_adapter_sequence": [
+   "co_corvane",
+   "law_data_custody"
+  ]
+ },
+ {
+  "id": "m_028",
+  "type": "multi",
+  "question": "Which steamship's sinking led to the law that created the commission on which Quell & Darrow held a seat?",
+  "answer": "Corval",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_quell_darrow",
+   "law_maritime_trade"
+  ],
+  "oracle_adapter_sequence": [
+   "co_quell_darrow",
+   "law_maritime_trade"
+  ]
+ },
+ {
+  "id": "m_029",
+  "type": "multi",
+  "question": "Who led the 1847 uprising in the town where sorrelpine bark harvesters celebrate the Bark Festival?",
+  "answer": "Tamsin Ardle",
+  "aliases": [],
+  "gold_doc_ids": [
+   "mat_sorvalic_acid",
+   "hist_belcarrow_uprising"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_sorvalic_acid",
+   "hist_belcarrow_uprising"
+  ]
+ },
+ {
+  "id": "m_030",
+  "type": "multi",
+  "question": "What is the name of the public holiday commemorating the uprising in the town whose forest communities first used sorrelpine bark tea?",
+  "answer": "Charter Day",
+  "aliases": [],
+  "gold_doc_ids": [
+   "mat_sorvalic_acid",
+   "hist_belcarrow_uprising"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_sorvalic_acid",
+   "hist_belcarrow_uprising"
+  ]
+ },
+ {
+  "id": "m_031",
+  "type": "multi",
+  "question": "Which lake is the source of the river whose lowland marshes gave Hennow fever its name, the disease treated by Velorin?",
+  "answer": "Lake Hennow",
+  "aliases": [],
+  "gold_doc_ids": [
+   "drug_velorin",
+   "geo_ostrun_river"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_velorin",
+   "geo_ostrun_river"
+  ]
+ },
+ {
+  "id": "m_032",
+  "type": "multi",
+  "question": "What is the largest tributary of the river on which Marrowgate lies?",
+  "answer": "Velka River",
+  "aliases": [
+   "Velka"
+  ],
+  "gold_doc_ids": [
+   "geo_marrowgate",
+   "geo_ostrun_river"
+  ],
+  "oracle_adapter_sequence": [
+   "geo_marrowgate",
+   "geo_ostrun_river"
+  ]
+ },
+ {
+  "id": "m_033",
+  "type": "multi",
+  "question": "How many tunnels does the railway pass through that carries the ore mined by the Teskin Mining Consortium to the coast?",
+  "answer": "41",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_teskin_mining",
+   "geo_port_iselde"
+  ],
+  "oracle_adapter_sequence": [
+   "co_teskin_mining",
+   "geo_port_iselde"
+  ]
+ },
+ {
+  "id": "m_034",
+  "type": "multi",
+  "question": "Who designed the building that houses the legislature which passed the Data Custody Law?",
+  "answer": "Oskar Lindqvar",
+  "aliases": [],
+  "gold_doc_ids": [
+   "law_data_custody",
+   "geo_quenhaven"
+  ],
+  "oracle_adapter_sequence": [
+   "law_data_custody",
+   "geo_quenhaven"
+  ]
+ },
+ {
+  "id": "m_035",
+  "type": "multi",
+  "question": "Who founded the company that manufactures Ferrolume?",
+  "answer": "Saskia Brightmere",
+  "aliases": [],
+  "gold_doc_ids": [
+   "mat_ferrolume",
+   "co_brightmere"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_ferrolume",
+   "co_brightmere"
+  ]
+ },
+ {
+  "id": "m_036",
+  "type": "multi",
+  "question": "What revenue did the company that produces Nimbrite report in 2023?",
+  "answer": "2.7 billion vell",
+  "aliases": [],
+  "gold_doc_ids": [
+   "mat_nimbrite",
+   "co_brightmere"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_nimbrite",
+   "co_brightmere"
+  ]
+ },
+ {
+  "id": "m_037",
+  "type": "multi",
+  "question": "Who chairs the only company licensed to mine the mineral discovered by Ottilie Brannagh?",
+  "answer": "Ilse Varga",
+  "aliases": [],
+  "gold_doc_ids": [
+   "mat_kessite",
+   "co_teskin_mining"
+  ],
+  "oracle_adapter_sequence": [
+   "mat_kessite",
+   "co_teskin_mining"
+  ]
+ },
+ {
+  "id": "m_038",
+  "type": "multi",
+  "question": "What daily dose is used for the drug that should not be combined with Velorin?",
+  "answer": "25 milligrams",
+  "aliases": [
+   "25 mg",
+   "25 milligram"
+  ],
+  "gold_doc_ids": [
+   "drug_velorin",
+   "drug_cardexil"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_velorin",
+   "drug_cardexil"
+  ]
+ },
+ {
+  "id": "m_039",
+  "type": "multi",
+  "question": "In what year was the company that manufactures Lithoquel founded?",
+  "answer": "1955",
+  "aliases": [],
+  "gold_doc_ids": [
+   "drug_lithoquel",
+   "co_ostrel"
+  ],
+  "oracle_adapter_sequence": [
+   "drug_lithoquel",
+   "co_ostrel"
+  ]
+ },
+ {
+  "id": "m_040",
+  "type": "multi",
+  "question": "What is the Mohs hardness of the mineral that supplies the cerium Brightmere Materials buys?",
+  "answer": "6.5",
+  "aliases": [],
+  "gold_doc_ids": [
+   "co_brightmere",
+   "mat_kessite"
+  ],
+  "oracle_adapter_sequence": [
+   "co_brightmere",
+   "mat_kessite"
+  ]
+ }
+]

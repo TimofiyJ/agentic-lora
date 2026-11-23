@@ -113,7 +113,12 @@ class Executor:
         ]
 
     async def _run_step(
-        self, step: PlanStep, prompt: str, currently_loaded: set[str]
+        self,
+        step: PlanStep,
+        prompt: str,
+        currently_loaded: set[str],
+        temperature: float = 0.3,
+        max_tokens: int = 2048,
     ) -> StepResult:
         """Send a single step to the controller for inference.
 
@@ -121,6 +126,8 @@ class Executor:
             step: The plan step to execute.
             prompt: Fully resolved prompt to send.
             currently_loaded: Adapter names resident in GPU before this wave started.
+            temperature: Sampling temperature for the adapter call.
+            max_tokens: Generation budget for the adapter call.
 
         Returns:
             StepResult with output, success flag, latency, and preload status.
@@ -131,7 +138,7 @@ class Executor:
             async with httpx.AsyncClient(timeout=self._timeout) as client:
                 resp = await client.post(
                     f"{self._controller_url}/infer/{step.adapter}",
-                    json={"prompt": prompt, "max_tokens": 2048, "temperature": 0.3},
+                    json={"prompt": prompt, "max_tokens": max_tokens, "temperature": temperature},
                 )
                 resp.raise_for_status()
                 output = resp.json()["choices"][0]["text"].strip()
@@ -161,6 +168,8 @@ class Executor:
         always_replan: bool = False,
         prefetch: bool = True,
         unload_after: bool = True,
+        step_temperature: float = 0.3,
+        step_max_tokens: int = 2048,
     ) -> TaskResult:
         """Execute a plan to completion.
 
@@ -175,6 +184,8 @@ class Executor:
             always_replan: Trigger replanning after every completed wave.
             prefetch: Lookahead-load next-wave adapters while current wave runs.
             unload_after: Unload all task adapters from GPU when the task finishes.
+            step_temperature: Sampling temperature for every step's adapter call.
+            step_max_tokens: Generation budget for every step's adapter call.
 
         Returns:
             TaskResult containing all step outputs, scheduling events, and metadata.
@@ -202,7 +213,11 @@ class Executor:
 
             wave_results = await asyncio.gather(*[
                 self._run_step(
-                    step, self._resolve_prompt(step.prompt, query, outputs, step.depends_on), currently_loaded
+                    step,
+                    self._resolve_prompt(step.prompt, query, outputs, step.depends_on),
+                    currently_loaded,
+                    step_temperature,
+                    step_max_tokens,
                 )
                 for step in ready
             ])

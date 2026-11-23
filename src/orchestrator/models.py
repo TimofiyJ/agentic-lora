@@ -1,5 +1,5 @@
 from typing import Literal
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from datetime import datetime
 
 
@@ -72,6 +72,8 @@ class TaskRequest(BaseModel):
             temperature=0.2, and its prompt includes which adapters are
             currently GPU-resident, which itself depends on prior scheduling
             state). Get a plan to reuse via GET /plan.
+        step_temperature: Sampling temperature for every step's adapter call.
+        step_max_tokens: Generation budget for every step's adapter call.
     """
 
     query: str
@@ -80,6 +82,8 @@ class TaskRequest(BaseModel):
     prefetch: bool = True
     unload_after: bool = True
     plan: Plan | None = None
+    step_temperature: float = Field(default=0.3, ge=0.0, le=2.0)
+    step_max_tokens: int = Field(default=2048, ge=1, le=4096)
 
 
 class TaskResult(BaseModel):

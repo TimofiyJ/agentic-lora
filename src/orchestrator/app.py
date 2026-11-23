@@ -72,6 +72,8 @@ async def run_task(body: TaskRequest):
         always_replan=body.always_replan,
         prefetch=body.prefetch,
         unload_after=body.unload_after,
+        step_temperature=body.step_temperature,
+        step_max_tokens=body.step_max_tokens,
     )
 
 

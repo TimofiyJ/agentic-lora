@@ -1,0 +1,255 @@
+# Hand-written QA over benchmarks/knowledge/docs. `docs` is ordered: for
+# multi-hop items it is the oracle adapter sequence (bridge document first).
+single:
+  drug_velorin:
+    - {q: "Which disease is Velorin used to treat?", a: "Hennow fever"}
+    - {q: "Who led the research team that discovered Velorin?", a: "Anika Porsfeld"}
+    - {q: "On what date did the Vallmoran Medicines Board approve Velorin?", a: "9 June 2009", alias: ["June 9, 2009"]}
+    - {q: "What is the standard adult dose of Velorin per administration?", a: "200 milligrams", alias: ["200 mg"]}
+    - {q: "What code is stamped on Velorin tablets?", a: "HV-200"}
+    - {q: "What fraction of patients taking Velorin report a metallic taste?", a: "22 percent", alias: ["22%"]}
+  drug_cardexil:
+    - {q: "Which animal's venom was the original source of the Cardexil molecule?", a: "Saltreach sea snail"}
+    - {q: "Who identified the compound behind Cardexil in 1989?", a: "Bertil Hansom"}
+    - {q: "What is the daily dose of Cardexil?", a: "25 milligrams", alias: ["25 mg", "25 milligram"]}
+    - {q: "In what year was Cardexil approved by the Vallmoran Medicines Board?", a: "1998"}
+    - {q: "By what percentage did Cardexil reduce hospital admissions for irregular heartbeat in the 2014 registry study?", a: "37 percent", alias: ["37%"]}
+    - {q: "Since what year has Cardexil been produced without harvesting snails?", a: "2006"}
+  drug_somnetra:
+    - {q: "What is the active ingredient of Somnetra?", a: "somnetrazine"}
+    - {q: "Who directed the development of Somnetra at Halvane?", a: "Ruben Altwick"}
+    - {q: "What colour are Somnetra tablets?", a: "lavender"}
+    - {q: "How many complex sleep behaviour reports about Somnetra did the Medicines Board receive between 2016 and 2019?", a: "412"}
+    - {q: "What is the maximum number of consecutive days Somnetra can be prescribed since 2020?", a: "28 days", alias: ["28"]}
+    - {q: "How much did the Somnetra development program cost?", a: "610 million vell"}
+  drug_pruvanex:
+    - {q: "Which infection is Pruvanex used to treat?", a: "greyleaf mycosis"}
+    - {q: "Which mould causes greyleaf mycosis?", a: "Cinerella vallmorae"}
+    - {q: "Which Ostrel chemist discovered the modification of Sorvalic acid that produced Pruvanex?", a: "Mirela Tendrup"}
+    - {q: "How often is Pruvanex taken during standard treatment?", a: "once a week", alias: ["weekly", "once weekly"]}
+    - {q: "What colour are Pruvanex capsules?", a: "dark green"}
+    - {q: "What was the treatment success rate of Pruvanex for first-time infections?", a: "88 percent", alias: ["88%"]}
+  drug_lithoquel:
+    - {q: "What is the active ingredient of Lithoquel?", a: "cerium citrate"}
+    - {q: "Which urologist developed Lithoquel?", a: "Jonas Villiard"}
+    - {q: "What percentage of stones smaller than 10 millimetres dissolved completely within twelve weeks in Lithoquel trials?", a: "71 percent", alias: ["71%"]}
+    - {q: "How many litres of fluid per day should patients drink during Lithoquel treatment?", a: "2.5 litres", alias: ["2.5"]}
+    - {q: "Which prize did Jonas Villiard receive in 2012?", a: "Halberd Prize for Medicine", alias: ["Halberd Prize"]}
+    - {q: "By what percentage did Lithoquel reduce stone-removal surgeries in Vallmora between 2004 and 2014?", a: "18 percent", alias: ["18%"]}
+  drug_arvexamide:
+    - {q: "Which company originally developed Arvexamide?", a: "Nerith Labs"}
+    - {q: "Who founded Nerith Labs?", a: "Saoirse Delahunt"}
+    - {q: "Which protein does Arvexamide block?", a: "NRT-4"}
+    - {q: "How often is Arvexamide given?", a: "every 21 days", alias: ["21 days"]}
+    - {q: "What is the cost of one Arvexamide treatment cycle?", a: "38,000 vell", alias: ["38000 vell"]}
+    - {q: "To what median survival did Arvexamide extend patients in its approval trial?", a: "11.2 months"}
+  law_pharma_safety:
+    - {q: "Who introduced the Pharmaceutical Safety Statute in the Assembly of Stewards?", a: "Halina Murrow"}
+    - {q: "What was the vote count when the Pharmaceutical Safety Statute was passed?", a: "211 to 48", alias: ["211-48"]}
+    - {q: "How many members sit on the Vallmoran Medicines Board?", a: "nine", alias: ["9"]}
+    - {q: "How many days does the Vallmoran Medicines Board have to decide on a complete drug application?", a: "210 days", alias: ["210"]}
+    - {q: "What is the name of the list of controlled chemicals created by Part IV of the Pharmaceutical Safety Statute?", a: "Precursor Register"}
+    - {q: "Within how many days must manufacturers report serious adverse events under the 2020 amendment?", a: "15 days", alias: ["15"]}
+  law_rare_minerals:
+    - {q: "Under which prime minister was the Rare Minerals Act enacted?", a: "Edvard Lisk"}
+    - {q: "What minimum share of a strategic-mineral mining company must the Vallmoran state hold?", a: "30 percent", alias: ["30%"]}
+    - {q: "What royalty rate applies to ore refined domestically under the Rare Minerals Act?", a: "7 percent", alias: ["7%"]}
+    - {q: "For how many years are mining licences granted under the Rare Minerals Act?", a: "25 years", alias: ["25"]}
+    - {q: "Into which fund are royalties under the Rare Minerals Act paid?", a: "Greyspine Development Fund"}
+    - {q: "What rare blue clay is designated as a strategic mineral?", a: "velmarite"}
+  law_clean_waters:
+    - {q: "Which 1989 disaster prompted the Clean Waters Act?", a: "Pellam tannery spill"}
+    - {q: "Which agency did the Clean Waters Act establish to monitor the Ostrun River system?", a: "Ostrun Basin Authority"}
+    - {q: "What is the chromium discharge limit under the Clean Waters Act?", a: "0.05 milligrams per litre", alias: ["0.05 mg/L", "0.05"]}
+    - {q: "How many Protected Reaches exist under the Clean Waters Act today?", a: "23"}
+    - {q: "What is the largest fine ever imposed under the Clean Waters Act?", a: "61 million vell"}
+    - {q: "How many automated monitoring stations does the Ostrun Basin Authority operate?", a: "140"}
+  law_corporate_disclosure:
+    - {q: "The collapse of which organisation led to the Corporate Disclosure Code?", a: "Fennick Grain Cooperative"}
+    - {q: "Who chaired the commission that drafted the Corporate Disclosure Code?", a: "Lenka Habrova"}
+    - {q: "Within how many days after a quarter ends must listed companies publish their reports under the Corporate Disclosure Code?", a: "45 days", alias: ["45"]}
+    - {q: "Which body enforces the Corporate Disclosure Code?", a: "Securities Commission of Vallmora"}
+    - {q: "What is the maximum prison sentence for executives who knowingly sign false reports under the Corporate Disclosure Code?", a: "seven years", alias: ["7 years"]}
+    - {q: "How many whistleblower rewards have been paid under the Corporate Disclosure Code since 2006?", a: "more than 160", alias: ["160"]}
+  law_maritime_trade:
+    - {q: "Which steamship's sinking in 1882 prompted the Maritime Trade Ordinance?", a: "Corval"}
+    - {q: "Above what tonnage is pilotage compulsory under the Maritime Trade Ordinance?", a: "3,000 tonnes", alias: ["3000 tonnes"]}
+    - {q: "What is the speed limit inside the Port Iselde harbour breakwater?", a: "8 knots"}
+    - {q: "How many commissioners sit on the Port Iselde Harbour Commission?", a: "seven", alias: ["7"]}
+    - {q: "To what depth is the Port Iselde channel dredged?", a: "16 metres", alias: ["16 meters"]}
+    - {q: "Since what year has no major collision occurred in Saltreach Bay?", a: "1931"}
+  law_data_custody:
+    - {q: "Which steward championed the Data Custody Law?", a: "Tobiah Rensk"}
+    - {q: "On what date did the Data Custody Law come into force?", a: "1 January 2018", alias: ["January 1, 2018"]}
+    - {q: "Who was the first Data Custody Commissioner?", a: "Agathe Morrell"}
+    - {q: "How long is the term of the Data Custody Commissioner?", a: "eight years", alias: ["8 years"]}
+    - {q: "Within how many hours must a data breach be reported to the Data Custody Commissioner?", a: "72 hours", alias: ["72"]}
+    - {q: "What is the maximum penalty under the Data Custody Law as a share of worldwide revenue?", a: "4 percent", alias: ["4%"]}
+  co_halvane:
+    - {q: "Who founded Halvane Biologics?", a: "Corin Halvane"}
+    - {q: "Who has been chief executive of Halvane Biologics since 2019?", a: "Imra Seddick"}
+    - {q: "What is the name of Halvane Biologics' main manufacturing complex?", a: "Foundry Works"}
+    - {q: "What revenue did Halvane Biologics report in 2023?", a: "4.1 billion vell"}
+    - {q: "In which country did Halvane open its first foreign subsidiary?", a: "Merrovia"}
+    - {q: "How many tablets per hour can Halvane's tablet-pressing facility produce?", a: "400,000", alias: ["400000"]}
+  co_ostrel:
+    - {q: "Who founded Ostrel Pharmaceuticals?", a: "Piet and Laurens Ostrel", alias: ["Piet Ostrel", "Laurens Ostrel"]}
+    - {q: "What was Ostrel Pharmaceuticals' first product?", a: "Ostrel Blue"}
+    - {q: "Who has led Ostrel Pharmaceuticals since 2015?", a: "Davor Lunsk"}
+    - {q: "How much did Ostrel pay to acquire Nerith Labs?", a: "900 million vell"}
+    - {q: "What revenue did Ostrel Pharmaceuticals report in 2023?", a: "9.6 billion vell"}
+    - {q: "In which Quenhaven district is Ostrel's headquarters campus?", a: "Westbank"}
+  co_brightmere:
+    - {q: "Who founded Brightmere Materials?", a: "Saskia Brightmere"}
+    - {q: "Who has been chief executive of Brightmere Materials since 2016?", a: "Ravel Okonde"}
+    - {q: "What is the name of Brightmere's largest factory?", a: "Saltreach Works"}
+    - {q: "What royalty does Brightmere pay the University of Quenhaven on Vantrex sales?", a: "3 percent", alias: ["3%"]}
+    - {q: "What revenue did Brightmere Materials report in 2023?", a: "2.7 billion vell"}
+    - {q: "What training centre did Brightmere open in Port Iselde in 2021?", a: "Brightmere Materials Academy"}
+  co_quell_darrow:
+    - {q: "Who were the founders of Quell & Darrow Shipping?", a: "Edwin Quell and Hester Darrow", alias: ["Edwin Quell", "Hester Darrow"]}
+    - {q: "How many vessels does Quell & Darrow Shipping operate?", a: "74"}
+    - {q: "What is the name of Quell & Darrow's headquarters building?", a: "Darrow House"}
+    - {q: "Who has led Quell & Darrow Shipping since 2020?", a: "Mattias Feld"}
+    - {q: "By what percentage did Nimbrite insulation reduce Quell & Darrow's refrigeration energy use?", a: "26 percent", alias: ["26%"]}
+    - {q: "What was the name of Quell & Darrow's first ship powered by liquefied natural gas?", a: "Hester Darrow"}
+  co_teskin_mining:
+    - {q: "In what year was the Teskin Mining Consortium formed?", a: "1931"}
+    - {q: "Which is the largest mine operated by the Teskin Mining Consortium?", a: "Brannagh Pit"}
+    - {q: "What share of the Teskin Mining Consortium does the Vallmoran state own?", a: "34 percent", alias: ["34%"]}
+    - {q: "Who chairs the Teskin Mining Consortium?", a: "Ilse Varga"}
+    - {q: "How much Kessite ore did the Teskin Mining Consortium extract in 2022?", a: "1.2 million tonnes"}
+    - {q: "In which mine did the tunnel collapse that triggered the 2017 strike occur?", a: "Hollow Seam"}
+  co_corvane:
+    - {q: "Who founded Corvane Analytics?", a: "Juno Corvane"}
+    - {q: "What is the name of Corvane Analytics' flagship forecasting platform?", a: "Tidewatch"}
+    - {q: "How much was Corvane Analytics fined in 2021?", a: "18 million vell"}
+    - {q: "Where did Corvane move its data storage after the fine?", a: "Lisk Ridge data centre", alias: ["Lisk Ridge"]}
+    - {q: "What share of Corvane Analytics does Juno Corvane own?", a: "28 percent", alias: ["28%"]}
+    - {q: "What prize does Corvane Analytics sponsor?", a: "Corvane Prize", alias: ["Corvane Prize for young statisticians"]}
+  mat_kessite:
+    - {q: "Who first described Kessite scientifically?", a: "Ottilie Brannagh"}
+    - {q: "What is the hardness of Kessite on the Mohs scale?", a: "6.5"}
+    - {q: "What does the word 'kess' mean in the old Greyspine dialect?", a: "green stone"}
+    - {q: "What percentage of cerium by weight does Kessite contain?", a: "14 percent", alias: ["14%"]}
+    - {q: "What is the name of the largest known Kessite crystal?", a: "Greyspine Lantern"}
+    - {q: "What are the estimated total known reserves of Kessite ore?", a: "85 million tonnes"}
+  mat_ferrolume:
+    - {q: "Who invented Ferrolume?", a: "Hadrian Oyelaran"}
+    - {q: "For how long can Ferrolume glow after ten minutes of light exposure?", a: "nine hours", alias: ["9 hours"]}
+    - {q: "What is the melting point of Ferrolume?", a: "1,340 degrees Celsius", alias: ["1340", "1,340"]}
+    - {q: "Which element gives Ferrolume its green colour?", a: "europium"}
+    - {q: "How much Ferrolume is produced annually?", a: "3,200 tonnes", alias: ["3200 tonnes"]}
+    - {q: "What is the name of the Ferrolume sculpture at the Port Iselde railway station?", a: "Afterglow"}
+  mat_vantrex:
+    - {q: "Up to what continuous temperature can Vantrex withstand?", a: "410 degrees Celsius", alias: ["410"]}
+    - {q: "Which family of molecules is polymerised to make Vantrex?", a: "tervinyl ethers"}
+    - {q: "What colour is Vantrex?", a: "amber"}
+    - {q: "What is the density of Vantrex?", a: "1.31 grams per cubic centimetre", alias: ["1.31"]}
+    - {q: "How much Vantrex does Brightmere produce per year?", a: "11,000 tonnes", alias: ["11000 tonnes"]}
+    - {q: "What share of Brightmere's 2023 revenue came from Vantrex?", a: "35 percent", alias: ["35%"]}
+  mat_calderine:
+    - {q: "Who developed the Calderine catalyst?", a: "Esme Calder"}
+    - {q: "Which two metals make up Calderine?", a: "ruthenium and tin", alias: ["ruthenium", "tin"]}
+    - {q: "What is the ratio of ruthenium to tin in Calderine?", a: "three to one", alias: ["3:1", "three parts ruthenium to one part tin"]}
+    - {q: "How long does a single charge of Calderine pellets usually last?", a: "14 months"}
+    - {q: "How much licensing income has Calderine earned the University of Quenhaven since 1979?", a: "more than 1.4 billion vell", alias: ["1.4 billion vell"]}
+    - {q: "What is the name of the University of Quenhaven chemistry building named after Calderine's inventor?", a: "Calder Hall"}
+  mat_nimbrite:
+    - {q: "Who led the team that developed Nimbrite?", a: "Lise Andrevic"}
+    - {q: "What is the density of Nimbrite?", a: "0.004 grams per cubic centimetre", alias: ["0.004"]}
+    - {q: "What is the thermal conductivity of Nimbrite?", a: "0.011 watts per metre-kelvin", alias: ["0.011"]}
+    - {q: "What nickname has Nimbrite been given?", a: "frozen smoke"}
+    - {q: "How long does a single Nimbrite production cycle take?", a: "30 hours"}
+    - {q: "In what year was Nimbrite introduced?", a: "2012"}
+  mat_sorvalic_acid:
+    - {q: "From which tree's bark is Sorvalic acid obtained?", a: "sorrelpine"}
+    - {q: "Who first isolated Sorvalic acid?", a: "Lucan Mirrow"}
+    - {q: "What is the melting point of Sorvalic acid?", a: "147 degrees Celsius", alias: ["147"]}
+    - {q: "In what year was Sorvalic acid added to the Precursor Register?", a: "1988"}
+    - {q: "What share of Vallmora's Sorvalic acid production does Ostrel purchase?", a: "85 percent", alias: ["85%"]}
+    - {q: "What festival marks the start of the sorrelpine bark harvesting season in Belcarrow?", a: "Bark Festival"}
+  geo_quenhaven:
+    - {q: "Who founded Quenhaven according to city records?", a: "Aldric Vonn"}
+    - {q: "In what year did Quenhaven become the capital of Vallmora?", a: "1561"}
+    - {q: "Which architect designed the Glass Senate?", a: "Oskar Lindqvar"}
+    - {q: "How many glass panels cover the dome of the Glass Senate?", a: "4,800", alias: ["4800"]}
+    - {q: "In what year was the University of Quenhaven founded?", a: "1608"}
+    - {q: "What festival held each November commemorates Quenhaven's founding?", a: "Lantern Night"}
+  geo_port_iselde:
+    - {q: "After whom is Port Iselde named?", a: "Princess Iselde"}
+    - {q: "How tall is the Iselde Needle lighthouse?", a: "54 metres", alias: ["54 meters", "54"]}
+    - {q: "In what year was the Iselde Needle completed?", a: "1871"}
+    - {q: "How many tunnels does the Greyspine Railway pass through?", a: "41"}
+    - {q: "What share of Vallmora's seaborne trade does Port Iselde handle?", a: "70 percent", alias: ["70%"]}
+    - {q: "What sailing race is held in Port Iselde every August?", a: "Saltreach Regatta"}
+  geo_marrowgate:
+    - {q: "In what year was Marrowgate founded?", a: "1388"}
+    - {q: "How many arches does the Marrowgate Viaduct have?", a: "38"}
+    - {q: "On which banknote does the Marrowgate Viaduct appear?", a: "20-vell banknote", alias: ["20-vell", "20 vell"]}
+    - {q: "Who has been mayor of Marrowgate since 2020?", a: "Gerrit Holm"}
+    - {q: "In what year was the stretch of the Ostrun below Marrowgate declared biologically dead?", a: "1975"}
+    - {q: "How many woollen mills operated along the river in Marrowgate by 1880?", a: "more than sixty", alias: ["sixty", "60"]}
+  geo_teskin_falls:
+    - {q: "At what elevation does Teskin Falls lie?", a: "1,420 metres", alias: ["1420 metres", "1,420"]}
+    - {q: "How tall is the Teskin waterfall?", a: "212 metres", alias: ["212 meters", "212"]}
+    - {q: "What is the main street of Teskin Falls called?", a: "Brannagh Road"}
+    - {q: "How many lifts does the Teskin Valley ski area have?", a: "14"}
+    - {q: "What is the average January temperature in Teskin Falls?", a: "minus 8 degrees Celsius", alias: ["-8"]}
+    - {q: "In what year did the new hospital in Teskin Falls open?", a: "2015"}
+  geo_ostrun_river:
+    - {q: "How long is the Ostrun River?", a: "912 kilometres", alias: ["912 km", "912"]}
+    - {q: "Which lake is the source of the Ostrun River?", a: "Lake Hennow"}
+    - {q: "What is the largest tributary of the Ostrun River?", a: "Velka River", alias: ["Velka"]}
+    - {q: "What is the capacity of the Halden Dam's hydroelectric station?", a: "640 megawatts", alias: ["640 MW"]}
+    - {q: "What is the floodplain of the lower Ostrun called?", a: "Hennow Lowlands"}
+    - {q: "Which native fish species lives in the Ostrun River?", a: "silver Ostrun trout", alias: ["Ostrun trout"]}
+  hist_belcarrow_uprising:
+    - {q: "Who led the Belcarrow Uprising?", a: "Tamsin Ardle"}
+    - {q: "How many days did the Belcarrow Uprising last?", a: "63 days", alias: ["63"]}
+    - {q: "Which general commanded the troops sent against the Belcarrow Uprising?", a: "Viktor Haszel"}
+    - {q: "How many people were killed during the Belcarrow Uprising?", a: "twenty-nine", alias: ["29"]}
+    - {q: "What document issued in 1849 limited the working day to ten hours?", a: "Charter of Belcarrow"}
+    - {q: "What is the public holiday commemorating the Belcarrow Uprising called?", a: "Charter Day"}
+
+multi:
+  - {q: "Who is the chief executive of the company that manufactures Velorin?", a: "Imra Seddick", docs: [drug_velorin, co_halvane]}
+  - {q: "Who founded the company that manufactures Somnetra?", a: "Corin Halvane", docs: [drug_somnetra, co_halvane]}
+  - {q: "Who has led the company that manufactures Cardexil since 2015?", a: "Davor Lunsk", docs: [drug_cardexil, co_ostrel]}
+  - {q: "What was the first product of the company that manufactures Pruvanex?", a: "Ostrel Blue", docs: [drug_pruvanex, co_ostrel]}
+  - {q: "Who first isolated the compound from which Pruvanex is produced?", a: "Lucan Mirrow", docs: [drug_pruvanex, mat_sorvalic_acid]}
+  - {q: "What is the melting point of the natural compound used to make Pruvanex?", a: "147 degrees Celsius", alias: ["147"], docs: [drug_pruvanex, mat_sorvalic_acid]}
+  - {q: "Who first described the mineral from which the cerium in Lithoquel is refined?", a: "Ottilie Brannagh", docs: [drug_lithoquel, mat_kessite]}
+  - {q: "In what year was the company that acquired the developer of Arvexamide founded?", a: "1955", docs: [drug_arvexamide, co_ostrel]}
+  - {q: "In what year was the city where Halvane Biologics is headquartered founded?", a: "1388", docs: [co_halvane, geo_marrowgate]}
+  - {q: "Who has been mayor since 2020 of the city where Halvane Biologics is headquartered?", a: "Gerrit Holm", docs: [co_halvane, geo_marrowgate]}
+  - {q: "Who founded the city where Ostrel Pharmaceuticals is headquartered?", a: "Aldric Vonn", docs: [co_ostrel, geo_quenhaven]}
+  - {q: "How tall is the lighthouse in the city where Brightmere Materials is headquartered?", a: "54 metres", alias: ["54 meters", "54"], docs: [co_brightmere, geo_port_iselde]}
+  - {q: "After whom is the city where Quell & Darrow Shipping is headquartered named?", a: "Princess Iselde", docs: [co_quell_darrow, geo_port_iselde]}
+  - {q: "How tall is the waterfall beside the town where the Teskin Mining Consortium operates?", a: "212 metres", alias: ["212 meters", "212"], docs: [co_teskin_mining, geo_teskin_falls]}
+  - {q: "Who invented the luminescent alloy made by the company led by Ravel Okonde?", a: "Hadrian Oyelaran", docs: [co_brightmere, mat_ferrolume]}
+  - {q: "Who developed the catalyst required to produce Vantrex?", a: "Esme Calder", docs: [mat_vantrex, mat_calderine]}
+  - {q: "How long does a single charge of the catalyst used to make Vantrex usually last?", a: "14 months", docs: [mat_vantrex, mat_calderine]}
+  - {q: "Who led the development of the aerogel that Quell & Darrow Shipping uses to insulate its refrigerated containers?", a: "Lise Andrevic", docs: [co_quell_darrow, mat_nimbrite]}
+  - {q: "What is the density of the insulation material used in Quell & Darrow's refrigerated containers?", a: "0.004 grams per cubic centimetre", alias: ["0.004"], docs: [co_quell_darrow, mat_nimbrite]}
+  - {q: "What is the standard royalty rate on ore of the mineral mined by the Teskin Mining Consortium under the law that designated it strategic?", a: "12 percent", alias: ["12%"], docs: [co_teskin_mining, law_rare_minerals]}
+  - {q: "Under which prime minister was the law enacted that designated Kessite as a strategic mineral?", a: "Edvard Lisk", docs: [mat_kessite, law_rare_minerals]}
+  - {q: "Where is the agency headquartered that monitors water quality under the law passed after the Pellam tannery spill?", a: "Marrowgate", docs: [law_clean_waters, geo_marrowgate]}
+  - {q: "How many arches does the viaduct have in the city where the Ostrun Basin Authority is headquartered?", a: "38", docs: [law_clean_waters, geo_marrowgate]}
+  - {q: "Who introduced the statute that placed Sorvalic acid on its Precursor Register?", a: "Halina Murrow", docs: [mat_sorvalic_acid, law_pharma_safety]}
+  - {q: "Who chaired the commission that drafted the law under which Ostrel was fined 42 million vell in 2010?", a: "Lenka Habrova", docs: [co_ostrel, law_corporate_disclosure]}
+  - {q: "Who championed the law under which Corvane Analytics was fined in 2021?", a: "Tobiah Rensk", docs: [co_corvane, law_data_custody]}
+  - {q: "Who was the first holder of the office that fined Corvane Analytics in 2021?", a: "Agathe Morrell", docs: [co_corvane, law_data_custody]}
+  - {q: "Which steamship's sinking led to the law that created the commission on which Quell & Darrow held a seat?", a: "Corval", docs: [co_quell_darrow, law_maritime_trade]}
+  - {q: "Who led the 1847 uprising in the town where sorrelpine bark harvesters celebrate the Bark Festival?", a: "Tamsin Ardle", docs: [mat_sorvalic_acid, hist_belcarrow_uprising]}
+  - {q: "What is the name of the public holiday commemorating the uprising in the town whose forest communities first used sorrelpine bark tea?", a: "Charter Day", docs: [mat_sorvalic_acid, hist_belcarrow_uprising]}
+  - {q: "Which lake is the source of the river whose lowland marshes gave Hennow fever its name, the disease treated by Velorin?", a: "Lake Hennow", docs: [drug_velorin, geo_ostrun_river]}
+  - {q: "What is the largest tributary of the river on which Marrowgate lies?", a: "Velka River", alias: ["Velka"], docs: [geo_marrowgate, geo_ostrun_river]}
+  - {q: "How many tunnels does the railway pass through that carries the ore mined by the Teskin Mining Consortium to the coast?", a: "41", docs: [co_teskin_mining, geo_port_iselde]}
+  - {q: "Who designed the building that houses the legislature which passed the Data Custody Law?", a: "Oskar Lindqvar", docs: [law_data_custody, geo_quenhaven]}
+  - {q: "Who founded the company that manufactures Ferrolume?", a: "Saskia Brightmere", docs: [mat_ferrolume, co_brightmere]}
+  - {q: "What revenue did the company that produces Nimbrite report in 2023?", a: "2.7 billion vell", docs: [mat_nimbrite, co_brightmere]}
+  - {q: "Who chairs the only company licensed to mine the mineral discovered by Ottilie Brannagh?", a: "Ilse Varga", docs: [mat_kessite, co_teskin_mining]}
+  - {q: "What daily dose is used for the drug that should not be combined with Velorin?", a: "25 milligrams", alias: ["25 mg", "25 milligram"], docs: [drug_velorin, drug_cardexil]}
+  - {q: "In what year was the company that manufactures Lithoquel founded?", a: "1955", docs: [drug_lithoquel, co_ostrel]}
+  - {q: "What is the Mohs hardness of the mineral that supplies the cerium Brightmere Materials buys?", a: "6.5", docs: [co_brightmere, mat_kessite]}
